@@ -32,13 +32,13 @@
   },
   {
    "fieldname": "author_description",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Author Description"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-04 18:41:20.586654",
+ "modified": "2023-04-04 18:45:09.424019",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Author",
