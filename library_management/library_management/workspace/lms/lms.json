@@ -22,7 +22,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-06-23 17:26:21.134643",
+ "modified": "2023-06-23 17:39:17.946956",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "LMS",
@@ -31,7 +31,11 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "All"
+  }
+ ],
  "sequence_id": 21.0,
  "shortcuts": [],
  "title": "LMS"
