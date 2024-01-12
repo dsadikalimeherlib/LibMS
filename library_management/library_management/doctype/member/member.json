@@ -7,19 +7,32 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "member_information_tab",
   "naming_series",
+  "salutation",
+  "first_name",
   "member_name",
+  "middle_name",
+  "last_name",
+  "birth_date",
   "membership_expiry_date",
-  "column_break_thg3z",
-  "membership_type"
+  "gender",
+  "membership_type",
+  "address_contact_tab",
+  "add_address",
+  "column_break_cap21",
+  "add_contact",
+  "address_html",
+  "member_address"
  ],
  "fields": [
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Series",
-   "options": "NPO-MEM-.YYYY.-",
+   "options": "MLJS.#####",
    "reqd": 1
   },
   {
@@ -27,7 +40,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Member Name",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "membership_expiry_date",
@@ -35,22 +48,87 @@
    "label": "Membership Expiry Date"
   },
   {
-   "fieldname": "column_break_thg3z",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "membership_type",
    "fieldtype": "Link",
    "label": "Membership Type",
    "options": "Membership Type"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "salutation",
+   "fieldtype": "Link",
+   "label": "Salutation",
+   "options": "Salutation"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "birth_date",
+   "fieldtype": "Date",
+   "label": "Birth Date"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "label": "Gender",
+   "options": "Gender"
+  },
+  {
+   "fieldname": "member_information_tab",
+   "fieldtype": "Tab Break",
+   "label": "Member Information"
+  },
+  {
+   "fieldname": "address_contact_tab",
+   "fieldtype": "Tab Break",
+   "label": "Address & Contact"
+  },
+  {
+   "fieldname": "column_break_cap21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "add_contact",
+   "fieldtype": "Button",
+   "label": "Add Contact"
+  },
+  {
+   "fieldname": "add_address",
+   "fieldtype": "Button",
+   "label": "Add Address"
+  },
+  {
+   "fieldname": "address_html",
+   "fieldtype": "HTML",
+   "label": "Address_HTML"
+  },
+  {
+   "fieldname": "member_address",
+   "fieldtype": "Link",
+   "label": "Member Address",
+   "options": "Address"
   }
  ],
- "index_web_pages_for_search": 1,
+ "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2023-06-24 18:40:41.128456",
+ "modified": "2024-01-12 11:48:48.158516",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -66,8 +144,8 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }

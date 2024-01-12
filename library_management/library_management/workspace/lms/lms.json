@@ -1,22 +1,71 @@
 {
- "category": "Modules",
  "charts": [],
- "creation": "2023-06-23 19:49:19.556869",
- "developer_mode_only": 0,
- "disable_user_customization": 0,
+ "content": "[{\"id\":\"fYC6BqvpLI\",\"type\":\"header\",\"data\":{\"text\":\"<b>Your Shortcuts</b><br>\",\"col\":12}},{\"id\":\"ScjQUni4sG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Member\",\"col\":3}},{\"id\":\"i1mZS-4zQh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Membership\",\"col\":3}},{\"id\":\"8FYLSYlLVM\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"1hAaHh7yTf\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h3\\\">Masters</span>\",\"col\":12}},{\"id\":\"h_UPPe439y\",\"type\":\"card\",\"data\":{\"card_name\":\"Book Master\",\"col\":4}},{\"id\":\"kTwnDL_kDW\",\"type\":\"card\",\"data\":{\"card_name\":\"Author & Editor\",\"col\":4}},{\"id\":\"5cQrsAvmpr\",\"type\":\"card\",\"data\":{\"card_name\":\"Membership\",\"col\":4}},{\"id\":\"JSn0jdpaeK\",\"type\":\"card\",\"data\":{\"card_name\":\"Address & Contact\",\"col\":4}}]",
+ "creation": "2024-01-10 16:21:03.690486",
+ "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
- "extends_another_page": 0,
+ "for_user": "",
  "hide_custom": 0,
  "idx": 0,
- "is_default": 0,
- "is_standard": 1,
+ "is_hidden": 0,
  "label": "LMS",
  "links": [
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Book Master",
+   "link_count": 4,
+   "link_type": "",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Book",
+   "link_count": 0,
+   "link_to": "Book",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Book Cover",
+   "link_count": 0,
+   "link_to": "Book Cover",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Book Condition",
+   "link_count": 0,
+   "link_to": "Book Condition",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Book Type",
+   "link_count": 0,
+   "link_to": "Book Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Membership",
+   "link_count": 3,
+   "link_type": "",
    "onboard": 0,
    "type": "Card Break"
   },
@@ -24,24 +73,27 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Member",
+   "link_count": 0,
    "link_to": "Member",
    "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
    "label": "Membership",
+   "link_count": 0,
    "link_to": "Membership",
    "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
    "label": "Membership Type",
+   "link_count": 0,
    "link_to": "Membership Type",
    "link_type": "DocType",
    "onboard": 0,
@@ -50,33 +102,18 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Non Profit Settings",
-   "link_to": "Non Profit Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Volunteer",
+   "label": "Author & Editor",
+   "link_count": 5,
+   "link_type": "",
    "onboard": 0,
    "type": "Card Break"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Volunteer",
-   "link_to": "Volunteer",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Volunteer Type",
-   "link_to": "Volunteer Type",
+   "label": "Author",
+   "link_count": 0,
+   "link_to": "Author",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -84,31 +121,58 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Chapter",
+   "label": "Editor",
+   "link_count": 0,
+   "link_to": "Editor",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Publication",
+   "link_count": 0,
+   "link_to": "Publication",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Translator",
+   "link_count": 0,
+   "link_to": "Translator",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Language",
+   "link_count": 0,
+   "link_to": "Language",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Address & Contact",
+   "link_count": 3,
+   "link_type": "",
    "onboard": 0,
    "type": "Card Break"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Chapter",
-   "link_to": "Chapter",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Donation",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Donor",
-   "link_to": "Donor",
+   "label": "Address",
+   "link_count": 0,
+   "link_to": "Address",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -116,8 +180,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Donor Type",
-   "link_to": "Donor Type",
+   "label": "Contact",
+   "link_count": 0,
+   "link_to": "Contact",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -125,60 +190,42 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Donation",
-   "link_to": "Donation",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Tax Exemption Certification (India)",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Tax Exemption 80G Certificate",
-   "link_to": "Tax Exemption 80G Certificate",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Grant Application",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Grant Application",
-   "link_to": "Grant Application",
+   "label": "Address Template",
+   "link_count": 0,
+   "link_to": "Address Template",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2023-06-24 10:38:20.008782",
+ "modified": "2024-01-11 18:48:04.731566",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "LMS",
- "onboarding": "",
- "owner": "rahemanalilal.tech@gmail.com",
- "pin_to_bottom": 0,
- "pin_to_top": 0,
+ "number_cards": [],
+ "owner": "ramjanlal.tech@gmail.com",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 5.0,
  "shortcuts": [
   {
+   "color": "Grey",
    "doc_view": "List",
    "label": "Member",
    "link_to": "Member",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Membership",
+   "link_to": "Membership",
+   "stats_filter": "[]",
    "type": "DocType"
   }
- ]
+ ],
+ "title": "LMS"
 }

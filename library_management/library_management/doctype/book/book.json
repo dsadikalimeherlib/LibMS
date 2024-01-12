@@ -1,0 +1,202 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:title",
+ "creation": "2024-01-10 16:51:46.147568",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "book_code",
+  "book_type",
+  "subject",
+  "language",
+  "column_break_bvext",
+  "book_tag",
+  "isbn",
+  "year_of_publication",
+  "publication",
+  "column_break_81u21",
+  "author",
+  "edition",
+  "translator",
+  "location",
+  "price",
+  "book_details_section",
+  "editor",
+  "no_of_copies",
+  "no_of_pages",
+  "description",
+  "column_break_y5d8z",
+  "book_condition",
+  "book_cover",
+  "donated_book",
+  "volume"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "unique": 1
+  },
+  {
+   "fieldname": "book_code",
+   "fieldtype": "Data",
+   "label": "Book Code"
+  },
+  {
+   "fieldname": "book_type",
+   "fieldtype": "Link",
+   "label": "Book Type",
+   "options": "Book Type"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject"
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Data",
+   "label": "Language"
+  },
+  {
+   "fieldname": "column_break_bvext",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "book_tag",
+   "fieldtype": "Data",
+   "label": "Book Tag"
+  },
+  {
+   "fieldname": "isbn",
+   "fieldtype": "Data",
+   "label": "ISBN"
+  },
+  {
+   "fieldname": "year_of_publication",
+   "fieldtype": "Data",
+   "label": "Year of Publication"
+  },
+  {
+   "fieldname": "publication",
+   "fieldtype": "Link",
+   "label": "Publication",
+   "options": "Publication"
+  },
+  {
+   "fieldname": "column_break_81u21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "author",
+   "fieldtype": "Link",
+   "label": "Author",
+   "options": "Author"
+  },
+  {
+   "fieldname": "edition",
+   "fieldtype": "Data",
+   "label": "Edition"
+  },
+  {
+   "fieldname": "translator",
+   "fieldtype": "Link",
+   "label": "Translator",
+   "options": "Translator"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "book_details_section",
+   "fieldtype": "Section Break",
+   "label": "Book Details"
+  },
+  {
+   "fieldname": "editor",
+   "fieldtype": "Link",
+   "label": "Editor",
+   "options": "Editor"
+  },
+  {
+   "fieldname": "no_of_copies",
+   "fieldtype": "Int",
+   "label": "No of Copies"
+  },
+  {
+   "fieldname": "no_of_pages",
+   "fieldtype": "Int",
+   "label": "No of Pages"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_y5d8z",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "book_condition",
+   "fieldtype": "Link",
+   "label": "Book Condition",
+   "options": "Book Condition"
+  },
+  {
+   "fieldname": "book_cover",
+   "fieldtype": "Link",
+   "label": "Book Cover",
+   "options": "Book Cover"
+  },
+  {
+   "fieldname": "donated_book",
+   "fieldtype": "Select",
+   "label": "Donated Book",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "volume",
+   "fieldtype": "Data",
+   "label": "Volume"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-01-10 18:06:37.243429",
+ "modified_by": "Administrator",
+ "module": "Library Management",
+ "name": "Book",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:book_cover",
  "creation": "2023-04-04 18:50:10.869622",
  "default_view": "List",
  "doctype": "DocType",
@@ -13,15 +14,17 @@
   {
    "fieldname": "book_cover",
    "fieldtype": "Data",
-   "label": "Book Cover"
+   "label": "Book Cover",
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-04 18:50:10.869622",
+ "modified": "2024-01-10 17:49:39.363883",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Cover",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

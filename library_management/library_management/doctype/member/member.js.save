@@ -10,14 +10,14 @@
 frappe.ui.form.on('Member', {
     add_address: function (frm) {
         // Trigger the custom function when the button is clicked
-            openNewDocType(frm);
+            openNewDocType();
     }
 });
 // Your custom function to open the new DocType
-function openNewDocType(frm) {
+function openNewDocType() {
     frappe.route_options = {
         // Set any default values for the new DocType fields here
-        "address_title": frm.doc.name
+        "address_title": doc.nameMember	
     };
     frappe.new_doc("Address");
 }

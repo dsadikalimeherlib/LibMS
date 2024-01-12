@@ -1,29 +1,23 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "naming_series:",
+ "autoname": "field:author_name",
  "creation": "2023-04-04 18:41:18.112880",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "naming_series",
   "author_name",
   "author_sec",
   "author_description"
  ],
  "fields": [
   {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "naming_series",
-   "options": "AUTH.####"
-  },
-  {
    "fieldname": "author_name",
    "fieldtype": "Data",
-   "label": "Author Name"
+   "label": "Author Name",
+   "unique": 1
   },
   {
    "fieldname": "author_sec",
@@ -38,11 +32,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-04 18:45:09.424019",
+ "modified": "2024-01-10 17:54:53.203887",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Author",
- "naming_rule": "By \"Naming Series\" field",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
