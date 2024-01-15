@@ -9,7 +9,8 @@
   "membership_type",
   "amount",
   "razorpay_plan_id",
-  "linked_item"
+  "linked_item",
+  "days"
  ],
  "fields": [
   {
@@ -41,13 +42,19 @@
    "label": "Linked Item",
    "options": "Item",
    "unique": 1
+  },
+  {
+   "fieldname": "days",
+   "fieldtype": "Data",
+   "label": "Days"
   }
  ],
  "links": [],
- "modified": "2023-06-23 20:16:10.293742",
+ "modified": "2024-01-12 19:35:57.136538",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Membership Type",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -66,5 +73,6 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }

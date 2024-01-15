@@ -19,11 +19,13 @@
   "gender",
   "membership_type",
   "address_contact_tab",
-  "add_address",
-  "column_break_cap21",
-  "add_contact",
+  "member_address",
   "address_html",
-  "member_address"
+  "display_address",
+  "column_break_bbcfs",
+  "member_contact",
+  "display_contact",
+  "contact_html"
  ],
  "fields": [
   {
@@ -97,20 +99,6 @@
    "label": "Address & Contact"
   },
   {
-   "fieldname": "column_break_cap21",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "add_contact",
-   "fieldtype": "Button",
-   "label": "Add Contact"
-  },
-  {
-   "fieldname": "add_address",
-   "fieldtype": "Button",
-   "label": "Add Address"
-  },
-  {
    "fieldname": "address_html",
    "fieldtype": "HTML",
    "label": "Address_HTML"
@@ -120,11 +108,36 @@
    "fieldtype": "Link",
    "label": "Member Address",
    "options": "Address"
+  },
+  {
+   "fieldname": "display_address",
+   "fieldtype": "Read Only",
+   "label": "Display Address"
+  },
+  {
+   "fieldname": "column_break_bbcfs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "member_contact",
+   "fieldtype": "Link",
+   "label": "Member Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "display_contact",
+   "fieldtype": "Small Text",
+   "label": "display_contact"
+  },
+  {
+   "fieldname": "contact_html",
+   "fieldtype": "HTML",
+   "label": "contact_HTML"
   }
  ],
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-01-12 11:48:48.158516",
+ "modified": "2024-01-12 18:31:02.362134",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
