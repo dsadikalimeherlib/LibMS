@@ -10,7 +10,8 @@
   "amount",
   "razorpay_plan_id",
   "linked_item",
-  "days"
+  "days",
+  "benefit"
  ],
  "fields": [
   {
@@ -47,10 +48,15 @@
    "fieldname": "days",
    "fieldtype": "Data",
    "label": "Days"
+  },
+  {
+   "fieldname": "benefit",
+   "fieldtype": "Data",
+   "label": "Benefit"
   }
  ],
  "links": [],
- "modified": "2024-01-12 19:35:57.136538",
+ "modified": "2024-01-15 19:05:50.878342",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Membership Type",

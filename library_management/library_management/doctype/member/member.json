@@ -22,10 +22,14 @@
   "member_address",
   "address_html",
   "display_address",
+  "mobile_number",
   "column_break_bbcfs",
-  "member_contact",
-  "display_contact",
-  "contact_html"
+  "image",
+  "other_information_section",
+  "id_document",
+  "id_document_no",
+  "id_attachment",
+  "remark"
  ],
  "fields": [
   {
@@ -119,25 +123,51 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "member_contact",
-   "fieldtype": "Link",
-   "label": "Member Contact",
-   "options": "Contact"
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "in_preview": 1,
+   "label": "Image",
+   "options": "image",
+   "print_hide": 1
   },
   {
-   "fieldname": "display_contact",
+   "fetch_from": "member_address.phone",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "other_information_section",
+   "fieldtype": "Section Break",
+   "label": "Other Information"
+  },
+  {
+   "fieldname": "id_document",
+   "fieldtype": "Select",
+   "label": "ID Document",
+   "options": "\nPassport\nPan Card\nVoter Id Card\nEmployee Id Card\nRation Card\nOther"
+  },
+  {
+   "fieldname": "id_document_no",
+   "fieldtype": "Data",
+   "label": "ID Document No"
+  },
+  {
+   "fieldname": "id_attachment",
+   "fieldtype": "Attach",
+   "label": "ID Attachment"
+  },
+  {
+   "fieldname": "remark",
    "fieldtype": "Small Text",
-   "label": "display_contact"
-  },
-  {
-   "fieldname": "contact_html",
-   "fieldtype": "HTML",
-   "label": "contact_HTML"
+   "label": "Remark"
   }
  ],
+ "image_field": "image",
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-01-12 18:31:02.362134",
+ "modified": "2024-01-15 19:01:17.585371",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
