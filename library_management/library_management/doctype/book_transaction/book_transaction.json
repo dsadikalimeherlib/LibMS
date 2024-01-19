@@ -7,18 +7,101 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "book_transaction"
+  "member_information_section",
+  "transaction_type",
+  "member",
+  "member_name",
+  "membership_status",
+  "column_break_qg935",
+  "book",
+  "book_title",
+  "section_break_8mgcp",
+  "issue_date",
+  "due_date",
+  "issue_remarks",
+  "amended_from"
  ],
  "fields": [
   {
-   "fieldname": "book_transaction",
+   "fieldname": "transaction_type",
+   "fieldtype": "Select",
+   "label": "Transaction Type",
+   "options": "Issue\nReturn"
+  },
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "label": "Member",
+   "options": "Member"
+  },
+  {
+   "fetch_from": "member.member_name",
+   "fieldname": "member_name",
    "fieldtype": "Data",
-   "label": "Book Transaction"
+   "label": "Member Name"
+  },
+  {
+   "fieldname": "book",
+   "fieldtype": "Link",
+   "label": "Book",
+   "options": "Book"
+  },
+  {
+   "fieldname": "column_break_qg935",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "book.title",
+   "fieldname": "book_title",
+   "fieldtype": "Data",
+   "label": "Book Title"
+  },
+  {
+   "fieldname": "section_break_8mgcp",
+   "fieldtype": "Section Break",
+   "label": "Issue Information"
+  },
+  {
+   "fieldname": "member_information_section",
+   "fieldtype": "Section Break",
+   "label": "Member Information"
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "label": "Issue Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "issue_remarks",
+   "fieldtype": "Small Text",
+   "label": "Issue Remarks"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Book Transaction",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "member.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2023-04-04 18:51:03.425116",
+ "modified": "2024-01-19 19:35:59.244612",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",

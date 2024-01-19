@@ -68,7 +68,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Membership Status",
-   "options": "New\nCurrent\nExpired\nPending\nCancelled"
+   "options": "New\nActive\nCurrent\nExpired\nPending\nCancelled"
   },
   {
    "fieldname": "membership_validity_section",
@@ -159,7 +159,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-12 19:40:46.787775",
+ "modified": "2024-01-18 17:16:06.469477",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Membership",

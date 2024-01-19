@@ -2,17 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Membership', {
-	// refresh: function(frm) {
-
-	// }
 	membership_type: function(frm) {
-        // Get the current date
         var From = frm.doc.from_date;
-
-        // Calculate another date based on the current date (e.g., 30 days later)
         var To = frappe.datetime.add_days(From, frm.doc.days);
-
-        // Set the calculated date in another field (e.g., 'another_date_field')
         frm.set_value('to_date', To);
     },
 	from_date: function(frm) {
@@ -28,5 +20,25 @@ frappe.ui.form.on('Membership', {
                 var To = frappe.datetime.add_days(From, frm.doc.days);
                 frm.set_value('to_date', To);
             }
+    },
+	validate:function(frm){
+        var today = frappe.datetime.get_today();
+        if(today >= frm.doc.from_date && today <= frm.doc.to_date ){
+        //if(frm.doc.from_date <= today <= frm.doc.to_date ){
+            frm.set_value('membership_status',"Active")
+            frappe.msgprint(__('Membership Active.'));
+            //frappe.validated = false;
+        }
+        else if(today <= frm.doc.from_date && today <= frm.doc.to_date )
+        {
+            frm.set_value('membership_status',"Pending")
+            frappe.msgprint(__('Membership has Pending.'));
+        }
+        else
+        {
+            frm.set_value('membership_status',"Expired")
+            frappe.msgprint(__('Membership has expired.'));
+        }
     }
+
 });
