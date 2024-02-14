@@ -3,11 +3,15 @@
 
 # import frappe
 from frappe.model.document import Document
-from frappe.contacts.address_and_contact import (
-	delete_contact_and_address,
-	load_address_and_contact,
-)
 
 class Member(Document):
-	def before_save(self):
-		self.member_name = f'{self.first_name} {self.middle_name or ""} {self.last_name or ""}'
+    def before_save(self):
+        self.member_name = f'{self.first_name} {self.middle_name or ""} {self.last_name or ""}'
+        if self.get('__islocal'):
+            new_customer = frappe.new_doc('Customer')
+            new_customer.update({
+                'customer_code': self.name,
+                'customer_name': self.member_name
+            })
+            new_customer.insert(ignore_permissions=True)
+            frappe.msgprint(f"Customer created successfully:")

@@ -1,29 +1,29 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:book_type",
+ "autoname": "field:book_category",
  "creation": "2024-01-10 17:38:02.495886",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "book_type"
+  "book_category"
  ],
  "fields": [
   {
-   "fieldname": "book_type",
+   "fieldname": "book_category",
    "fieldtype": "Data",
-   "label": "Book Type",
+   "label": "Book Category",
    "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-10 18:47:20.268052",
+ "modified": "2024-02-01 11:41:12.514748",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Book Type",
+ "name": "Book Category",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [

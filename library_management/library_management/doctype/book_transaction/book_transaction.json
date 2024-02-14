@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:member",
  "creation": "2023-04-04 18:51:03.425116",
  "default_view": "List",
  "doctype": "DocType",
@@ -15,6 +16,7 @@
   "column_break_qg935",
   "book",
   "book_title",
+  "book_access_no",
   "section_break_8mgcp",
   "issue_date",
   "due_date",
@@ -26,13 +28,14 @@
    "fieldname": "transaction_type",
    "fieldtype": "Select",
    "label": "Transaction Type",
-   "options": "Issue\nReturn"
+   "options": "Issue\nReturn\nReserve"
   },
   {
    "fieldname": "member",
    "fieldtype": "Link",
    "label": "Member",
-   "options": "Member"
+   "options": "Member",
+   "unique": 1
   },
   {
    "fetch_from": "member.member_name",
@@ -67,6 +70,7 @@
    "label": "Member Information"
   },
   {
+   "default": "Today",
    "fieldname": "issue_date",
    "fieldtype": "Date",
    "label": "Issue Date"
@@ -96,15 +100,22 @@
    "fieldname": "membership_status",
    "fieldtype": "Data",
    "label": "Membership Status"
+  },
+  {
+   "fieldname": "book_access_no",
+   "fieldtype": "Int",
+   "label": "Book Access No",
+   "options": "book"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-19 19:35:59.244612",
+ "modified": "2024-02-01 19:16:30.543762",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

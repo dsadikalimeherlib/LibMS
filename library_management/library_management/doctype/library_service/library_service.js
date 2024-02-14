@@ -1,7 +1,7 @@
-// Copyright (c) 2023, ramjanali and contributors
+// Copyright (c) 2024, ramjanali and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Membership Type', {
+frappe.ui.form.on('Library Service', {
 	// refresh: function(frm) {
 
 	// }

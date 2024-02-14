@@ -4,5 +4,5 @@
 # import frappe
 from frappe.model.document import Document
 
-class BookType(Document):
+class LibraryService(Document):
 	pass

@@ -4,7 +4,7 @@
 import frappe
 from frappe.model.document import Document
 
-class Book(Document):
+class LibraryBook(Document):
 	def validate(self):
 		frappe.msgprint(f"Hello Update")
 		self.sample()

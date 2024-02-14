@@ -17,7 +17,7 @@
   "birth_date",
   "membership_expiry_date",
   "gender",
-  "membership_type",
+  "library_service",
   "membership_status",
   "dashboard_tab",
   "address_contact_tab",
@@ -55,12 +55,6 @@
    "fieldname": "membership_expiry_date",
    "fieldtype": "Data",
    "label": "Membership Expiry Date"
-  },
-  {
-   "fieldname": "membership_type",
-   "fieldtype": "Link",
-   "label": "Membership Type",
-   "options": "Membership Type"
   },
   {
    "allow_in_quick_entry": 1,
@@ -188,12 +182,18 @@
    "fieldtype": "Tab Break",
    "label": "Connection",
    "show_dashboard": 1
+  },
+  {
+   "fieldname": "library_service",
+   "fieldtype": "Link",
+   "label": "Library Service",
+   "options": "Library Service"
   }
  ],
  "image_field": "image",
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-01-19 18:39:18.657553",
+ "modified": "2024-02-01 18:28:30.086626",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
@@ -213,6 +213,7 @@
    "write": 1
   }
  ],
+ "search_fields": "member_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

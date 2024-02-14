@@ -103,11 +103,14 @@ app_license = "MIT"
 # Hook on document methods and events
 
 # doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
+# 	# "*": {
+# 	# 	"on_update": "method",
+# 	# 	"on_cancel": "method",
+# 	# 	"on_trash": "method"
+# 	# },
+#     "Book": {
+# 		"after_insert": "library_management.library_management.doctype.book.events.after_insert",
+# 	}
 # }
 
 # Scheduled Tasks

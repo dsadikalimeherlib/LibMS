@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Membership', {
-	membership_type: function(frm) {
+	library_service: function(frm) {
         var From = frm.doc.from_date;
         var To = frappe.datetime.add_days(From, frm.doc.days);
         frm.set_value('to_date', To);

@@ -8,7 +8,7 @@
  "field_order": [
   "member",
   "member_name",
-  "membership_type",
+  "library_service",
   "column_break_3",
   "company",
   "membership_status",
@@ -42,14 +42,6 @@
    "fieldtype": "Data",
    "label": "Member Name",
    "read_only": 1
-  },
-  {
-   "fieldname": "membership_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Membership Type",
-   "options": "Membership Type",
-   "reqd": 1
   },
   {
    "fieldname": "column_break_3",
@@ -151,15 +143,21 @@
    "label": "Payment ID"
   },
   {
-   "fetch_from": "membership_type.days",
+   "fetch_from": "library_service.days",
    "fieldname": "days",
    "fieldtype": "Data",
    "label": "Days"
+  },
+  {
+   "fieldname": "library_service",
+   "fieldtype": "Link",
+   "label": "Library Service",
+   "options": "Library Service"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-18 17:16:06.469477",
+ "modified": "2024-02-01 18:12:52.064504",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Membership",

@@ -1,8 +1,8 @@
-# Copyright (c) 2023, ramjanali and contributors
+# Copyright (c) 2024, ramjanali and contributors
 # For license information, please see license.txt
 
 # import frappe
 from frappe.model.document import Document
 
-class MembershipType(Document):
+class BookAccessNo(Document):
 	pass

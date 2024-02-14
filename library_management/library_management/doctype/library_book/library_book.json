@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:title",
- "creation": "2024-01-10 16:51:46.147568",
+ "creation": "2024-02-13 17:52:15.635587",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -51,9 +51,23 @@
    "label": "Book Code"
   },
   {
+   "fieldname": "book_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Book Category",
+   "options": "Book Category",
+   "reqd": 1
+  },
+  {
    "fieldname": "subject",
    "fieldtype": "Data",
    "label": "Subject"
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Link",
+   "label": "Language",
+   "options": "Language"
   },
   {
    "fieldname": "column_break_bvext",
@@ -175,12 +189,6 @@
    "print_hide": 1
   },
   {
-   "fieldname": "language",
-   "fieldtype": "Link",
-   "label": "Language",
-   "options": "Language"
-  },
-  {
    "fieldname": "section_break_faist",
    "fieldtype": "Section Break"
   },
@@ -189,14 +197,6 @@
    "fieldtype": "Table",
    "label": "Book Access",
    "options": "Book Access"
-  },
-  {
-   "fieldname": "book_category",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Book Category",
-   "options": "Book Category",
-   "reqd": 1
   }
  ],
  "image_field": "image",
@@ -212,10 +212,10 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-02-07 10:53:55.764129",
+ "modified": "2024-02-13 17:52:15.635587",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Book",
+ "name": "Library Book",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [

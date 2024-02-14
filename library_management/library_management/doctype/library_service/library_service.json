@@ -1,28 +1,19 @@
 {
  "actions": [],
- "autoname": "field:membership_type",
- "creation": "2017-09-18 12:56:56.343999",
+ "autoname": "field:library_service",
+ "creation": "2024-02-01 18:15:15.003442",
+ "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "membership_type",
+  "library_service",
   "amount",
   "razorpay_plan_id",
   "linked_item",
-  "days",
-  "benefit"
+  "days"
  ],
  "fields": [
-  {
-   "fieldname": "membership_type",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Membership Type",
-   "reqd": 1,
-   "unique": 1
-  },
   {
    "fieldname": "amount",
    "fieldtype": "Float",
@@ -50,16 +41,20 @@
    "label": "Days"
   },
   {
-   "fieldname": "benefit",
+   "fieldname": "library_service",
    "fieldtype": "Data",
-   "label": "Benefit"
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Library Service1",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "links": [],
- "modified": "2024-01-15 19:05:50.878342",
+ "modified": "2024-02-01 18:28:07.698746",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Membership Type",
+ "name": "Library Service",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
