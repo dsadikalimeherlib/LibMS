@@ -8,18 +8,16 @@ frappe.ui.form.on('Membership', {
         frm.set_value('to_date', To);
     },
 	from_date: function(frm) {
-        
         if (frm.doc.from_date < get_today()) {
-                frappe.msgprint(__("You can not select past date in From Date"));
-                frappe.validated = false;
-		frm.doc.from_date = frappe.datetime.get_today();
-            }
-            else
-            {
-                var From = frm.doc.from_date;
-                var To = frappe.datetime.add_days(From, frm.doc.days);
-                frm.set_value('to_date', To);
-            }
+            frappe.msgprint(__("You can not select past date in From Date"));
+            frappe.validated = false;
+	        frm.doc.from_date = frappe.datetime.get_today();            
+        }
+        else{
+            var From = frm.doc.from_date;
+            var To = frappe.datetime.add_days(From, frm.doc.days);
+            frm.set_value('to_date', To);
+        }
     },
 	validate:function(frm){
         var today = frappe.datetime.get_today();

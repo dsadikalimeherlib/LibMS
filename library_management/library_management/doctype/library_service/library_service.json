@@ -11,7 +11,8 @@
   "amount",
   "razorpay_plan_id",
   "linked_item",
-  "days"
+  "days",
+  "complimentary_service"
  ],
  "fields": [
   {
@@ -45,13 +46,19 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Library Service1",
+   "label": "Library Service",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "complimentary_service",
+   "fieldtype": "Link",
+   "label": "Complimentary Service",
+   "options": "Library Service"
   }
  ],
  "links": [],
- "modified": "2024-02-01 18:28:07.698746",
+ "modified": "2024-02-15 19:59:32.789344",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Service",

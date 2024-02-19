@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-15 19:09:04.325141",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "image_description",
+  "default",
+  "image"
+ ],
+ "fields": [
+  {
+   "fieldname": "image_description",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Image Description",
+   "options": "Front\nBack-Cover"
+  },
+  {
+   "default": "0",
+   "fieldname": "default",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Default"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-02-15 19:11:59.183406",
+ "modified_by": "Administrator",
+ "module": "Library Management",
+ "name": "Book Images",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

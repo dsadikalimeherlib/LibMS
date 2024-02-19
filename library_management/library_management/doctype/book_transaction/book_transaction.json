@@ -14,9 +14,8 @@
   "member_name",
   "membership_status",
   "column_break_qg935",
-  "book",
+  "asset",
   "book_title",
-  "book_access_no",
   "section_break_8mgcp",
   "issue_date",
   "due_date",
@@ -44,17 +43,11 @@
    "label": "Member Name"
   },
   {
-   "fieldname": "book",
-   "fieldtype": "Link",
-   "label": "Book",
-   "options": "Book"
-  },
-  {
    "fieldname": "column_break_qg935",
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "book.title",
+   "fetch_from": "asset.asset_name",
    "fieldname": "book_title",
    "fieldtype": "Data",
    "label": "Book Title"
@@ -102,16 +95,16 @@
    "label": "Membership Status"
   },
   {
-   "fieldname": "book_access_no",
-   "fieldtype": "Int",
-   "label": "Book Access No",
-   "options": "book"
+   "fieldname": "asset",
+   "fieldtype": "Link",
+   "label": "Access No",
+   "options": "Asset"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-01 19:16:30.543762",
+ "modified": "2024-02-14 17:45:56.070922",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",
