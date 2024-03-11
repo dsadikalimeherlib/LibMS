@@ -26,7 +26,7 @@ frappe.ui.form.on('Member', {
 			return {
 				filters: {
 					'link_doctype': 'Member',
-					'link_name': doc.name
+					'link_name': doc.member_name
 				}
 			}
 		})
@@ -34,7 +34,7 @@ frappe.ui.form.on('Member', {
 			return {
 				filters: {
 					'link_doctype': 'Member',
-					'link_name': doc.name
+					'link_name': doc.member_name
 				}
 			}
 		})

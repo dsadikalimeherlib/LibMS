@@ -10,6 +10,8 @@
  "field_order": [
   "isbn_section",
   "isbn",
+  "column_break_ymum",
+  "search",
   "books_details_section",
   "title",
   "book_code",
@@ -45,6 +47,7 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title",
+   "reqd": 1,
    "unique": 1
   },
   {
@@ -83,7 +86,8 @@
   {
    "fieldname": "isbn",
    "fieldtype": "Data",
-   "label": "ISBN"
+   "label": "ISBN",
+   "reqd": 1
   },
   {
    "fieldname": "year_of_publication",
@@ -104,7 +108,8 @@
    "fieldname": "author",
    "fieldtype": "Link",
    "label": "Author",
-   "options": "Author"
+   "options": "Author",
+   "reqd": 1
   },
   {
    "fieldname": "edition",
@@ -210,6 +215,16 @@
    "fieldtype": "Table",
    "label": "Book Images",
    "options": "Book Images"
+  },
+  {
+   "fieldname": "column_break_ymum",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Press search after fill Correct ISBN",
+   "fieldname": "search",
+   "fieldtype": "Button",
+   "label": "Search"
   }
  ],
  "image_field": "image",
@@ -225,7 +240,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-02-15 19:10:15.610536",
+ "modified": "2024-03-07 16:14:48.621252",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",

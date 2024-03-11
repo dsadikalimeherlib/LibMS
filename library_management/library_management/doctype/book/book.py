@@ -16,7 +16,7 @@ class Book(Document):
     #     if self.is_new():
     #         frappe.msgprint("Book is new")
     #         self.create_item_from_book()
-
+        
     def create_item_from_book(self):
         if self.is_new():
             frappe.msgprint("Creating Item from Book")
