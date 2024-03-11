@@ -23,12 +23,16 @@
   "membership_details",
   "dashboard_tab",
   "address_contact_tab",
-  "add_address",
+  "section_break_zhdv",
   "member_address",
   "address_html",
   "display_address",
-  "mobile_number",
   "column_break_bbcfs",
+  "customer_primary_contact",
+  "contact_html",
+  "display_contact",
+  "mobile_number",
+  "email_id",
   "image",
   "other_information_section",
   "id_document",
@@ -205,9 +209,30 @@
    "read_only": 1
   },
   {
-   "fieldname": "add_address",
-   "fieldtype": "Button",
-   "label": "Add Address"
+   "fieldname": "section_break_zhdv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": ".",
+   "fieldname": "customer_primary_contact",
+   "fieldtype": "Link",
+   "label": "Customer Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Read Only",
+   "label": "Email ID"
+  },
+  {
+   "fieldname": "contact_html",
+   "fieldtype": "HTML",
+   "label": "Contact_HTML "
+  },
+  {
+   "fieldname": "display_contact",
+   "fieldtype": "Read Only",
+   "label": "Display Contact"
   }
  ],
  "image_field": "image",
@@ -218,7 +243,7 @@
    "link_fieldname": "customer_name"
   }
  ],
- "modified": "2024-02-15 19:02:40.165367",
+ "modified": "2024-03-05 18:05:50.655047",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
