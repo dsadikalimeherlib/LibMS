@@ -1,7 +1,7 @@
-// Copyright (c) 2023, ramjanali and contributors
+// Copyright (c) 2024, ramjanali and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Membership', {
+frappe.ui.form.on('Library Membership', {
 	library_service: function(frm) {
         var From = frm.doc.from_date;
         var To = frappe.datetime.add_days(From, frm.doc.days);
@@ -38,5 +38,4 @@ frappe.ui.form.on('Membership', {
             frappe.msgprint(__('Membership has expired.'));
         }
     }
-
 });

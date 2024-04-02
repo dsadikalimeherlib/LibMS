@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_guest_to_view": 1,
  "allow_rename": 1,
  "autoname": "field:title",
  "creation": "2024-02-14 11:23:24.741076",
@@ -18,16 +19,17 @@
   "language",
   "column_break_bvext",
   "book_tag",
-  "year_of_publication",
+  "author",
+  "translator",
+  "editor",
   "publication",
   "column_break_81u21",
-  "author",
   "edition",
-  "translator",
-  "location",
+  "volume",
+  "year_of_publication",
   "price",
-  "book_details_section",
-  "editor",
+  "location",
+  "book_more_details_section",
   "no_of_copies",
   "no_of_pages",
   "description",
@@ -35,10 +37,17 @@
   "book_condition",
   "book_cover",
   "donated_book",
-  "volume",
   "image",
+  "donor_name",
+  "donor_mobile",
+  "donor_location",
+  "remarks",
+  "copies",
+  "donation_date",
   "section_break_faist",
-  "book_images"
+  "book_images",
+  "route",
+  "published"
  ],
  "fields": [
   {
@@ -46,11 +55,6 @@
    "fieldtype": "Data",
    "label": "Title",
    "unique": 1
-  },
-  {
-   "fieldname": "book_code",
-   "fieldtype": "Data",
-   "label": "Book Code"
   },
   {
    "fieldname": "book_category",
@@ -61,6 +65,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "book_code.subject",
    "fieldname": "subject",
    "fieldtype": "Data",
    "label": "Subject"
@@ -126,12 +131,6 @@
    "fieldname": "price",
    "fieldtype": "Currency",
    "label": "Price"
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "book_details_section",
-   "fieldtype": "Section Break",
-   "label": "Book Details"
   },
   {
    "fieldname": "editor",
@@ -210,10 +209,72 @@
    "fieldtype": "Table",
    "label": "Book Images",
    "options": "Book Images"
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "route"
+  },
+  {
+   "default": "0",
+   "fieldname": "published",
+   "fieldtype": "Check",
+   "label": "Published"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "book_more_details_section",
+   "fieldtype": "Section Break",
+   "label": "Book More Details"
+  },
+  {
+   "fieldname": "book_code",
+   "fieldtype": "Link",
+   "label": "Book Code",
+   "options": "DDC"
+  },
+  {
+   "depends_on": "eval:doc.donated_book == \"Yes\"",
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "label": "Donor name",
+   "mandatory_depends_on": "eval:doc.donated_book == \"Yes\""
+  },
+  {
+   "depends_on": "eval:doc.donated_book == \"Yes\"",
+   "fieldname": "donor_mobile",
+   "fieldtype": "Data",
+   "label": "Donor Mobile"
+  },
+  {
+   "depends_on": "eval:doc.donated_book == \"Yes\"",
+   "fieldname": "donor_location",
+   "fieldtype": "Data",
+   "label": "Donor Location"
+  },
+  {
+   "depends_on": "eval:doc.donated_book == \"Yes\"",
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "depends_on": "eval:doc.donated_book == \"Yes\"",
+   "fieldname": "copies",
+   "fieldtype": "Data",
+   "label": "No of Copies"
+  },
+  {
+   "depends_on": "eval:doc.donated_book == \"Yes\"",
+   "fieldname": "donation_date",
+   "fieldtype": "Date",
+   "label": "Donation Date"
   }
  ],
+ "has_web_view": 1,
  "image_field": "image",
  "index_web_pages_for_search": 1,
+ "is_published_field": "title",
  "links": [
   {
    "link_doctype": "Item",
@@ -225,7 +286,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-02-15 19:10:15.610536",
+ "modified": "2024-03-27 16:00:15.993399",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
@@ -243,8 +304,19 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Member",
+   "select": 1,
+   "share": 1
   }
  ],
+ "route": "book",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

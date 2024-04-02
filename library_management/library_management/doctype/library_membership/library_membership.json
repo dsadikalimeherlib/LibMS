@@ -1,7 +1,8 @@
 {
  "actions": [],
- "autoname": "NPO-MSH-.YYYY.-.#####",
- "creation": "2017-09-11 11:39:18.492184",
+ "autoname": "NPO-MS-.YYYY.-.#####",
+ "creation": "2024-02-22 18:02:35.013054",
+ "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -45,6 +46,12 @@
    "read_only": 1
   },
   {
+   "fieldname": "library_service",
+   "fieldtype": "Link",
+   "label": "Library Service",
+   "options": "Library Service"
+  },
+  {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
@@ -67,6 +74,12 @@
    "fieldname": "membership_validity_section",
    "fieldtype": "Section Break",
    "label": "Validity"
+  },
+  {
+   "fetch_from": "library_service.days",
+   "fieldname": "days",
+   "fieldtype": "Data",
+   "label": "Days"
   },
   {
    "default": "Today",
@@ -110,6 +123,7 @@
    "options": "Currency"
   },
   {
+   "fetch_from": "library_service.amount",
    "fieldname": "amount",
    "fieldtype": "Float",
    "label": "Amount"
@@ -144,23 +158,11 @@
    "label": "Payment ID"
   },
   {
-   "fetch_from": "library_service.days",
-   "fieldname": "days",
-   "fieldtype": "Data",
-   "label": "Days"
-  },
-  {
-   "fieldname": "library_service",
-   "fieldtype": "Link",
-   "label": "Library Service",
-   "options": "Library Service"
-  },
-  {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Membership",
+   "options": "Library Membership",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -169,14 +171,16 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-15 16:02:45.154381",
+ "modified": "2024-03-26 13:20:58.862985",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Membership",
+ "name": "Library Membership",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -184,7 +188,18 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "All",
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Member",
    "share": 1,
    "write": 1
   }

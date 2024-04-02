@@ -13,9 +13,12 @@
   "member",
   "member_name",
   "membership_status",
+  "mobile",
   "column_break_qg935",
   "asset",
   "book_title",
+  "asset_location",
+  "otp",
   "section_break_8mgcp",
   "issue_date",
   "due_date",
@@ -27,7 +30,7 @@
    "fieldname": "transaction_type",
    "fieldtype": "Select",
    "label": "Transaction Type",
-   "options": "Issue\nReturn\nReserve"
+   "options": "Issue\nReturn\nReserve\nRenew"
   },
   {
    "fieldname": "member",
@@ -97,14 +100,35 @@
   {
    "fieldname": "asset",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Access No",
-   "options": "Asset"
+   "options": "Asset",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "asset.location",
+   "fieldname": "asset_location",
+   "fieldtype": "Link",
+   "label": "Asset Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "otp",
+   "fieldtype": "Data",
+   "label": "OTP"
+  },
+  {
+   "fetch_from": "member.mobile",
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "label": "Mobile",
+   "options": "Phone"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-14 17:45:56.070922",
+ "modified": "2024-03-26 13:55:15.493796",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",
@@ -112,6 +136,8 @@
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -121,6 +147,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

@@ -19,6 +19,7 @@
   "gender",
   "library_service",
   "membership_status",
+  "notify_by",
   "membership_details_section",
   "membership_details",
   "dashboard_tab",
@@ -27,9 +28,11 @@
   "member_address",
   "address_html",
   "display_address",
-  "mobile_number",
   "column_break_bbcfs",
   "image",
+  "mobile",
+  "verify",
+  "otp",
   "other_information_section",
   "id_document",
   "id_document_no",
@@ -103,6 +106,7 @@
    "label": "Address & Contact"
   },
   {
+   "depends_on": "eval: !doc.__islocal",
    "fieldname": "address_html",
    "fieldtype": "HTML",
    "label": "Address_HTML"
@@ -130,12 +134,6 @@
    "label": "Image",
    "options": "image",
    "print_hide": 1
-  },
-  {
-   "fetch_from": "member_address.phone",
-   "fieldname": "mobile_number",
-   "fieldtype": "Data",
-   "label": "Mobile Number"
   },
   {
    "fieldname": "other_information_section",
@@ -201,24 +199,51 @@
    "fieldname": "membership_details",
    "fieldtype": "Table",
    "label": "Membership Details",
-   "options": "Membership Details",
-   "read_only": 1
+   "options": "Membership Details"
   },
   {
    "fieldname": "add_address",
    "fieldtype": "Button",
    "label": "Add Address"
+  },
+  {
+   "fieldname": "notify_by",
+   "fieldtype": "Select",
+   "label": "Notify By",
+   "options": "None\nBoth\nSMS\nEmail"
+  },
+  {
+   "fetch_from": "member_address.phone",
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "verify",
+   "fieldtype": "Button",
+   "label": "Verify"
+  },
+  {
+   "fieldname": "otp",
+   "fieldtype": "Data",
+   "label": "otp"
   }
  ],
  "image_field": "image",
+ "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [
   {
    "link_doctype": "Customer",
    "link_fieldname": "customer_name"
+  },
+  {
+   "link_doctype": "Library Membership",
+   "link_fieldname": "member"
   }
  ],
- "modified": "2024-02-15 19:02:40.165367",
+ "modified": "2024-03-27 16:57:15.315458",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
@@ -236,8 +261,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Member",
+   "share": 1,
+   "write": 1
   }
  ],
+ "route": "member",
  "search_fields": "member_name",
  "sort_field": "modified",
  "sort_order": "DESC",

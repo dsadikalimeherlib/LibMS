@@ -1,41 +1,56 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:author_name",
- "creation": "2023-04-04 18:41:18.112880",
- "default_view": "List",
+ "autoname": "field:ddc",
+ "creation": "2024-03-26 13:37:33.465434",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "author_name",
-  "author_sec",
-  "author_description"
+  "section_break_zgjn",
+  "ddc",
+  "subject",
+  "description",
+  "amended_from"
  ],
  "fields": [
   {
-   "fieldname": "author_name",
+   "fieldname": "section_break_zgjn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "DDC",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "ddc",
    "fieldtype": "Data",
-   "label": "Author Name",
+   "label": "DDC",
    "unique": 1
   },
   {
-   "fieldname": "author_sec",
+   "fieldname": "subject",
    "fieldtype": "Data",
-   "label": "Author Sect"
+   "label": "Subject"
   },
   {
-   "fieldname": "author_description",
+   "fieldname": "description",
    "fieldtype": "Small Text",
-   "label": "Author Description"
+   "label": "Description"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-03-26 15:40:33.037436",
+ "modified": "2024-03-27 15:48:28.406612",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Author",
+ "name": "DDC",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
@@ -49,6 +64,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

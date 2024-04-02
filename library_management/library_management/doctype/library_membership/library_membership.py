@@ -6,7 +6,7 @@ from frappe.utils import today
 from frappe import _
 from frappe.model.document import Document
 
-class Membership(Document):
+class LibraryMembership(Document):
     def validate(self):
         try:
             self.update_member_details()
@@ -33,7 +33,8 @@ class Membership(Document):
         try:
             member_doc = frappe.get_doc("Member", self.member)
             child_table_entry = member_doc.append("membership_details", {})
-            child_table_entry.membership = self.name
+            child_table_entry.library_membership = self.name
+            child_table_entry.library_service = self.library_service
             child_table_entry.from_date = self.from_date
             child_table_entry.to_date = self.to_date
             child_table_entry.membership_status = self.membership_status
@@ -43,9 +44,9 @@ class Membership(Document):
 
     def auto_expired(self):
         try:
-            expired_details = frappe.get_all("Membership", filters={"to_date": ("<", today())}, fields=["name", "to_date"])
+            expired_details = frappe.get_all("Library Membership", filters={"to_date": ("<", today())}, fields=["name", "to_date"])
             for expire in expired_details:
-                member_doc = frappe.get_doc("Membership", expire.name)
+                member_doc = frappe.get_doc("Library Membership", expire.name)
                 member_doc.membership_status = "Expired"
                 member_doc.save()
                 self.new_membership_create()

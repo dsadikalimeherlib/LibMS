@@ -9,7 +9,8 @@
  "field_order": [
   "erpnext_integration",
   "default_asset_location",
-  "customer_group"
+  "customer_group",
+  "default_asset_category"
  ],
  "fields": [
   {
@@ -29,12 +30,18 @@
    "fieldtype": "Link",
    "label": "Customer Group",
    "options": "Customer Group"
+  },
+  {
+   "fieldname": "default_asset_category",
+   "fieldtype": "Link",
+   "label": "Default Asset Category",
+   "options": "Asset Category"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-02-15 18:36:54.260294",
+ "modified": "2024-03-09 10:45:17.419963",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Setting",

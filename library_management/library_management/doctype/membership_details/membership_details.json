@@ -3,23 +3,15 @@
  "allow_rename": 1,
  "creation": "2024-02-15 11:01:54.732184",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "membership",
+  "library_membership",
   "library_service",
   "from_date",
   "to_date",
   "membership_status"
  ],
  "fields": [
-  {
-   "fieldname": "membership",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Membership",
-   "options": "Membership"
-  },
   {
    "fetch_from": "membership.from_date",
    "fieldname": "from_date",
@@ -47,12 +39,19 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Library Service"
+  },
+  {
+   "fieldname": "library_membership",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Library Membership",
+   "options": "Library Membership"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-02-15 20:05:02.824613",
+ "modified": "2024-03-13 18:28:41.252777",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Membership Details",
