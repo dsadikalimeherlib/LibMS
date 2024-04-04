@@ -12,6 +12,7 @@
   "isbn",
   "column_break_ymum",
   "search",
+  "disabled",
   "books_details_section",
   "title",
   "book_code",
@@ -38,6 +39,7 @@
   "book_cover",
   "donated_book",
   "volume",
+  "book_url",
   "image",
   "section_break_faist",
   "book_images"
@@ -225,6 +227,17 @@
    "fieldname": "search",
    "fieldtype": "Button",
    "label": "Search"
+  },
+  {
+   "fieldname": "book_url",
+   "fieldtype": "Attach",
+   "label": "Book Url"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
   }
  ],
  "image_field": "image",
@@ -240,7 +253,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-03-07 16:14:48.621252",
+ "modified": "2024-04-01 22:04:57.720540",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
