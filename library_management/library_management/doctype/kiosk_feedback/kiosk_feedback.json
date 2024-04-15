@@ -1,0 +1,54 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-04-05 15:56:50.498983",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_hhdb",
+  "first_name",
+  "enter_your_commentscomplains_in_the_space_provided_below"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_hhdb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "enter_your_commentscomplains_in_the_space_provided_below",
+   "fieldtype": "Small Text",
+   "label": "Enter your comments/Complains in the space provided below"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-04-05 16:26:46.339188",
+ "modified_by": "Administrator",
+ "module": "Library Management",
+ "name": "Kiosk Feedback",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
