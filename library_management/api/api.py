@@ -33,6 +33,7 @@ def fetch_books(title=None):
             bk.subject,
             bk.no_of_pages,
             bk.book_url,
+            bk.type,
             bi.image,
         )
         .where(bk.disabled == 0)
