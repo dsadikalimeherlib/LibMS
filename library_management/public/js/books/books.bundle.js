@@ -7,13 +7,16 @@ import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 
-import { loadCSS } from './../utils';
+import { loadCSS, loadPdfJs } from '../utils';
 
 // Loading Vuetify CSS
 loadCSS('https://cdn.jsdelivr.net/npm/vuetify@3.5.14/dist/vuetify.min.css');
 
 // Loading Material Design Icons CSS
 loadCSS('https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css');
+
+// Loading pdfjs JS
+loadPdfJs("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js");
 
 class Book {
     constructor(wrapper) {

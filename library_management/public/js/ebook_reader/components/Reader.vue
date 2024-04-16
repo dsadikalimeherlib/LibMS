@@ -20,6 +20,7 @@
             >
               <v-card-text>
                 <div v-if="book.type === 'epub'" id="epub-render-area" style="height: calc(80vh - 80px);"></div>
+                <canvas v-else-if= "book.type === 'pdf'" id="pdf-canvas"> </canvas>
               </v-card-text>
             </v-card>
           </v-col>
@@ -32,7 +33,7 @@
       </v-main>
       <v-footer padless height="45">
         <!-- <v-slider v-model="sliderValue" :step="0.01" :format="lableFromPercentage" @change="onSliderValueChange" /> -->
-        page footer
+        <!-- page footer -->
       </v-footer>
 
       <!-- <buble-menu ref="bubleMenu" @highlight-btn-click="highlightSelection" /> -->
@@ -63,6 +64,9 @@ export default {
       url: '',
       bookInstance: null,
       rendition: null,
+      pdfDoc: null,
+      page: 1,
+      totalPages: 0,
     };
   },
   methods: {
@@ -72,7 +76,9 @@ export default {
 
         if (this.book.type === 'epub') {
           this.loadEPUB();
-        } 
+        } else if (this.book.type === 'pdf') {
+          this.loadPDF();
+        }
       }
     },
 
@@ -93,15 +99,54 @@ export default {
         console.error('Error loading book:', error);
       }
     },
+    async loadPDF() {
+      try {
+        const loadingTask = pdfjsLib.getDocument(this.url);
+        this.pdfDoc = await loadingTask.promise;
+        this.totalPages = this.pdfDoc.numPages;
+        this.renderPDFPage();
+        this.show = true;
+
+      } catch (error) {
+        console.error('Error loading PDF:', error);
+      }
+    },
+    async renderPDFPage() {
+      try {
+        const page = await this.pdfDoc.getPage(this.page);
+        const canvas = document.getElementById('pdf-canvas');
+        const context = canvas.getContext('2d');
+        const viewport = page.getViewport({scale: 1.25});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport,
+        };
+        await page.render(renderContext).promise;
+
+      } catch (error) {
+        console.error('Error rendering page:', error);
+      }
+    },
     nextPage() {
       if (this.book.type === 'epub' && this.rendition) {
         this.rendition.next();
-      }
+
+      } else if (this.book.type === 'pdf' && this.page < this.totalPages) {
+        this.page++;
+        this.renderPDFPage();
+     }
     },
     previousPage() {
       if (this.book.type === 'epub' && this.rendition) {
         this.rendition.prev();
-      }
+
+      }else if (this.book.type === 'pdf' && this.page > 1) {
+        this.page--;
+        this.renderPDFPage();
+     }
     },
     closeReader() {
       if (this.rendition) {
@@ -125,5 +170,10 @@ export default {
 
 #epub-render-area {
   max-height: 80vh;
+}
+#pdf-canvas {
+  height: calc(80vh - 80px);
+  width: 700px;
+  overflow: auto;
 }
 </style>
