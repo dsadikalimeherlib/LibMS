@@ -3,6 +3,15 @@ import { createPinia } from 'pinia';
 import { useBooksStore } from './store';
 import BooksComponent from './Books.vue';
 
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+
+import { loadCSS } from './../utils';
+
+// Loading Vuetify CSS
+loadCSS('https://cdn.jsdelivr.net/npm/vuetify@3.5.14/dist/vuetify.min.css');
+
 class Book {
     constructor(wrapper) {
         this.wrapper = $(wrapper);
@@ -22,13 +31,20 @@ class Book {
     }
 
     setup_page() {
-        console.log("page loaded....!!");
+        const vuetify = createVuetify({
+            icons: {
+                defaultSet: 'mdi',
+            },
+            components,
+            directives,
+        })
 
         const pinia = createPinia();
 
         const app = createApp(BooksComponent);
-        SetVueGlobals(app)
+        SetVueGlobals(app);
 
+        app.use(vuetify);
         app.use(pinia);
 
         this.bookstore = useBooksStore();
