@@ -12,6 +12,9 @@ import { loadCSS } from './../utils';
 // Loading Vuetify CSS
 loadCSS('https://cdn.jsdelivr.net/npm/vuetify@3.5.14/dist/vuetify.min.css');
 
+// Loading Material Design Icons CSS
+loadCSS('https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css');
+
 class Book {
     constructor(wrapper) {
         this.wrapper = $(wrapper);
