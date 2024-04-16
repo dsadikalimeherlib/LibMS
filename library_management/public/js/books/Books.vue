@@ -32,7 +32,7 @@
                     <div class="card-body book-items-card-body">
                         <div class="container p-0">
                             <div class="row">
-                                <div v-for="item in bookstore.books" :key="item.title" class="col-12 col-md-6 col-lg-3 mb-3">
+                                <div v-for="item in bookstore.books" :key="item.title" class="col-12 col-md-6 col-lg-3 mb-3" @click="selectBook(item)">
                                     <div class="card" style="height: 300px;">
                                         <img class="card-img-top book-img" 
                                             :src="item.image ? item.image : 'https://placehold.co/150?text=Item'" alt="Card image cap">
@@ -41,7 +41,6 @@
                                             <h6 class="card-text ml-0 mb-3">By: {{ item.author }}</h6>
                                             <h6 class="card-text ml-0 mb-3">subjects: {{ item.subject }}</h6>
                                         </div>
-                                        <!-- <button @click="bookstore.add_item(item)" class="btn btn-primary" type="button">Add</button> -->
                                     </div>
                                 </div>
                             </div>
@@ -50,18 +49,34 @@
                 </div>
             </div>
         </div>
+        <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <template>
+                <Reader :book="selectedBook" :show="isReaderOpen" @close-reader="isReaderOpen = false" />
+            </template>
+        </v-dialog>
     </div>
 </template>
 
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useBooksStore } from './store';
-let bookstore = useBooksStore();
+import Reader from '../ebook_reader/components/Reader.vue';
+
+
+const bookstore = useBooksStore();
+const selectedBook = ref(null);
+const isReaderOpen = ref(false);
+
+const selectBook = (book) => {
+    selectedBook.value = book;
+    isReaderOpen.value = true;
+    
+}
 
 onMounted(() => {
     bookstore.get_books();
-})
+});
 </script>
 
 
