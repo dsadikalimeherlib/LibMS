@@ -40,6 +40,7 @@
   "donated_book",
   "volume",
   "book_url",
+  "type",
   "image",
   "section_break_faist",
   "book_images"
@@ -135,7 +136,6 @@
    "label": "Price"
   },
   {
-   "collapsible": 1,
    "fieldname": "book_details_section",
    "fieldtype": "Section Break",
    "label": "Book Details"
@@ -231,13 +231,19 @@
   {
    "fieldname": "book_url",
    "fieldtype": "Attach",
-   "label": "Book Url"
+   "label": "Book URL"
   },
   {
    "default": "0",
    "fieldname": "disabled",
    "fieldtype": "Check",
    "label": "Disabled"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Book Type",
+   "options": "\nepub\npdf"
   }
  ],
  "image_field": "image",
@@ -253,7 +259,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-04-01 22:04:57.720540",
+ "modified": "2024-04-13 03:27:40.722141",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
