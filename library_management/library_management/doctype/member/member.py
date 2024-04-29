@@ -1,6 +1,3 @@
-# Copyright (c) 2023, ramjanali and contributors
-# For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
 from frappe.contacts.address_and_contact import (
@@ -19,7 +16,6 @@ class Member(Document):
                 'doctype': 'Customer',
                 'customer_code': self.name,
                 'customer_name': self.member_name
-                #'customer_group': frappe.db.get_value('Library Setting',customer_group')
             })
             frappe.msgprint("Customer created successfully")
             customer_doc.insert()

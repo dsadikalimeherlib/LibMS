@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_guest_to_view": 1,
  "allow_rename": 1,
  "autoname": "field:title",
  "creation": "2024-02-14 11:23:24.741076",
@@ -11,6 +10,9 @@
  "field_order": [
   "isbn_section",
   "isbn",
+  "column_break_ymum",
+  "search",
+  "disabled",
   "books_details_section",
   "title",
   "book_code",
@@ -19,17 +21,16 @@
   "language",
   "column_break_bvext",
   "book_tag",
-  "author",
-  "translator",
-  "editor",
+  "year_of_publication",
   "publication",
   "column_break_81u21",
+  "author",
   "edition",
-  "volume",
-  "year_of_publication",
-  "price",
+  "translator",
   "location",
-  "book_more_details_section",
+  "price",
+  "book_details_section",
+  "editor",
   "no_of_copies",
   "no_of_pages",
   "description",
@@ -37,6 +38,8 @@
   "book_condition",
   "book_cover",
   "donated_book",
+  "book_url",
+  "type",
   "image",
   "donor_name",
   "donor_mobile",
@@ -54,7 +57,13 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title",
+   "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "book_code",
+   "fieldtype": "Data",
+   "label": "Book Code"
   },
   {
    "fieldname": "book_category",
@@ -65,7 +74,6 @@
    "reqd": 1
   },
   {
-   "fetch_from": "book_code.subject",
    "fieldname": "subject",
    "fieldtype": "Data",
    "label": "Subject"
@@ -88,7 +96,8 @@
   {
    "fieldname": "isbn",
    "fieldtype": "Data",
-   "label": "ISBN"
+   "label": "ISBN",
+   "reqd": 1
   },
   {
    "fieldname": "year_of_publication",
@@ -109,7 +118,8 @@
    "fieldname": "author",
    "fieldtype": "Link",
    "label": "Author",
-   "options": "Author"
+   "options": "Author",
+   "reqd": 1
   },
   {
    "fieldname": "edition",
@@ -131,6 +141,11 @@
    "fieldname": "price",
    "fieldtype": "Currency",
    "label": "Price"
+  },
+  {
+   "fieldname": "book_details_section",
+   "fieldtype": "Section Break",
+   "label": "Book Details"
   },
   {
    "fieldname": "editor",
@@ -211,6 +226,33 @@
    "options": "Book Images"
   },
   {
+   "fieldname": "column_break_ymum",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Press search after fill Correct ISBN",
+   "fieldname": "search",
+   "fieldtype": "Button",
+   "label": "Search"
+  },
+  {
+   "fieldname": "book_url",
+   "fieldtype": "Attach",
+   "label": "Book URL"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Book Type",
+   "options": "\nepub\npdf"
+  },
+  {
    "fieldname": "route",
    "fieldtype": "Data",
    "label": "route"
@@ -286,7 +328,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-03-27 16:00:15.993399",
+ "modified": "2024-04-13 03:27:40.722141",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",

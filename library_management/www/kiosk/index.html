@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kiosk</title>
+    <!-- Add your CSS file link here -->
+	<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/library_management/kiosk/styles.css">
+    <link rel="stylesheet" type="text/css" href="/assets/library_management/kiosk/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.43VRAUDL.css">
+	<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.GEVD75K5.css">
+	<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.ZV3Z734H.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<script>
+		window.frappe = {};
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = {{ dev_server }};
+		window.socketio_port = {{ (frappe.socketio_port or 9000) }};
+		window.show_language_picker = {{ show_language_picker or 'false' }};
+	</script>
+</head>
+<body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
+	
+	{% include "public/icons/timeless/icons.svg" %}
+	{% include "public/icons/espresso/icons.svg" %}
+	
+	{% block base_scripts %}
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {{ boot }}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	{{ include_script('frappe-web.bundle.js') }}
+	{% endblock %}
+
+	{%- for link in web_include_js %}
+	{{ include_script(link) }}
+	{%- endfor -%}
+
+	{%- block script %}
+		{% if colocated_js -%}
+			<script>{{ colocated_js }}</script>
+		{%- endif %}
+	{%- endblock %}
+	<!-- csrf_token -->
+	{%- block body_include %}{{ body_include or "" }}{% endblock -%}
+	
+    <div class="wrapper">
+    <div class="shadow"></div>
+    <div class="side_bar">
+        <div class="side_bar_top">
+            <div class="logo_wrap">
+                <a href="#">
+                    <img src="/assets/library_management/kiosk/books.png" alt="logo">
+                    <span class="text" style="font-weight: 900;">Library Kiosk</span>
+                </a>
+            </div>
+            <div class="side_bar_menu">
+                <div class="menu"><ion-icon class="i" name="arrow-forward-outline"></ion-icon></div>
+            </div>
+        </div>
+        <div class="side_bar_bottom">
+            <ul>
+                <li class="active">
+                    <span class="top_curve"></span>
+                    <a href="#home">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="home-sharp"></ion-icon>  </span>
+                        <span class="item" style="font-weight :900;text-align: left;">Home</span></a>
+                    <span class="bottom_curve"></span>
+                </li>
+                <li>
+                    <span class="top_curve"></span>
+                    <a href="#books">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="book-sharp"></ion-icon></span>
+                        <span class="item" style="font-weight :900;">Books</span></a>
+                    <span class="bottom_curve"></span>
+                </li>
+                <li>
+                    <span class="top_curve"></span>
+                    <a href="#membership">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="wallet-sharp"></ion-icon></span>
+                        <span class="item" style="font-weight :900;">Membership</span></a>
+                    <span class="bottom_curve"></span>
+                </li>
+				<li>
+					<span class="top_curve"></span>
+					<a href="#services">
+						<span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="library-sharp"></ion-icon></span>
+						<span class="item" style="font-weight :900;">Services & Charges</span></a>
+					<span class="bottom_curve"></span>
+				</li>
+				<li>
+                    <span class="top_curve"></span>
+                    <a href="#news">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="megaphone"></ion-icon></span>
+                        <span class="item" style="font-weight :900;">News & Announcement</span></a>
+                    <span class="bottom_curve"></span>
+                </li>
+                
+				<li>
+                    <span class="top_curve"></span>
+                    <a href="#contactus">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="headset-sharp"></ion-icon></span>
+                        <span class="item" style="font-weight :900;">Contact Us</span></a>
+                    <span class="bottom_curve"></span>
+                </li>
+				<li>
+                    <span class="top_curve"></span>
+                    <a href="#conditions">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="bookmarks"></ion-icon></span>
+                        <span class="item" style="font-weight :900;">Rules, Terms and conditions</span></a>
+                    <span class="bottom_curve"></span>
+                </li>
+				<li>
+                    <span class="top_curve"></span>
+                    <a href="#feedbacks">
+                        <span class="icon" style="margin-left: 0; margin-right: 3px;"><ion-icon name="newspaper-sharp"></ion-icon></span>
+                        <span class="item" style="font-weight :900;">Feedbacks</span></a>
+                    <span class="bottom_curve"></span>
+               </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="main_container">
+		<div class="home-content">
+			
+			<div style="display: flex; padding-left: 30px; width:70%;">
+				<div class="container fade-in" style="font-weight:700; display: flex; flex-wrap: wrap; justify-content: center; padding-top: 54px;">
+					<div class="w3-content w3-section" style="max-width:100%">
+					
+						<div class="mySlides w3-animate-top home-slide" style="width:100%">
+							<img src="/assets/library_management/kiosk/home2.jpg" style="width:100%" alt="Image 1">
+						</div>
+						<div class="mySlides w3-animate-bottom home-slide" style="width:100%">
+							<img src="/assets/library_management/kiosk/home1.jpg" style="width:100%" alt="Image 2">
+						</div>
+						<div class="mySlides w3-animate-top home-slide" style="width:100%">
+							<img src="/assets/library_management/kiosk/home3.jpg" style="width:100%" alt="Image 3">
+						</div>
+						<div class="mySlides w3-animate-bottom home-slide" style="width:100%">
+							<img src="/assets/library_management/kiosk/home4.jpg" style="width:100%" alt="Image 4">
+						</div>
+						<!-- Add more slides with different images if needed -->
+					</div>
+				</div>
+				
+
+				<div class="w3-content w3-section" style="max-width:100%">
+					
+					<div class="mySlides w3-animate-top home-slide" style="width:100%">
+						<img src="/assets/library_management/kiosk/home2.jpg" style="width:100%" alt="Image 1">
+					</div>
+					<div class="mySlides w3-animate-bottom home-slide" style="width:100%">
+						<img src="/assets/library_management/kiosk/home1.jpg" style="width:100%" alt="Image 2">
+					</div>
+					<div class="mySlides w3-animate-top home-slide" style="width:100%">
+						<img src="/assets/library_management/kiosk/home3.jpg" style="width:100%" alt="Image 3">
+					</div>
+					<div class="mySlides w3-animate-bottom home-slide" style="width:100%">
+						<img src="/assets/library_management/kiosk/home4.jpg" style="width:100%" alt="Image 4">
+					</div>
+					<!-- Add more slides with different images if needed -->
+				</div>
+				<div class="w3-content w3-section" style="max-width:100%">
+					<img class="mySlide w3-animate-top" src="/assets/library_management/kiosk/home3.jpg" style="width:100%">
+					<img class="mySlide w3-animate-bottom" src="/assets/library_management/kiosk/home1.jpg" style="width:100%">
+					<img class="mySlide w3-animate-top" src="/assets/library_management/kiosk/home2.jpg" style="width:100%">
+					<img class="mySlide w3-animate-bottom" src="/assets/library_management/kiosk/home4.jpg" style="width:100%">
+				  </div>			
+			</div>
+		</div>
+		
+        <div class="books-content">
+			<div id="search">
+				<svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
+					<rect class="bar"/>
+					<g class="magnifier">
+						<circle class="glass"/>
+						<line class="handle" x1="32" y1="32" x2="44" y2="44"></line>
+					</g>
+					<g class="sparks">
+						<circle class="spark"/>
+						<circle class="spark"/>
+						<circle class="spark"/>
+					</g>
+					<g class="burst pattern-one">
+						<circle class="particle circle"/>
+						<path class="particle triangle"/>
+						<circle class="particle circle"/>
+						<path class="particle plus"/>
+						<rect class="particle rect"/>
+						<path class="particle triangle"/>
+					</g>
+					<g class="burst pattern-two">
+						<path class="particle plus"/>
+						<circle class="particle circle"/>
+						<path class="particle triangle"/>
+						<rect class="particle rect"/>
+						<circle class="particle circle"/>
+						<path class="particle plus"/>
+					</g>
+					<g class="burst pattern-three">
+						<circle class="particle circle"/>
+						<rect class="particle rect"/>
+						<path class="particle plus"/>
+						<path class="particle triangle"/>
+						<rect class="particle rect"/>
+						<path class="particle plus"/>
+					</g>
+				</svg>
+				<input style="color: #007bff;" type=search name=q aria-label="Search for inspiration"/>
+			</div>
+			<div class="row">
+				<div class="column" style="background-color:#aaa;">
+					<div class="book-info">
+						<img src="book_image.jpg" alt="Book Image" class="book-image">
+						<div class="book-details">
+							<p>Title</p>
+							<p>Author</p>
+							<p>Year</p>
+						</div>
+					</div>
+				</div>				
+				<div class="column" style="background-color:#aaa;">
+					<div class="book-info">
+						<img src="https://m.media-amazon.com/images/I/81EzbrasB3L._AC_UF1000,1000_QL80_.jpg" class="book-image">
+						<div class="book-details">
+							<p>S. Chand's Principles of Physics for Class XI</p>
+							<p>by Rohit Mehta (Author)</p>
+							<p>2009</p>
+						</div>
+					</div>
+				</div>					
+				<div class="column" style="background-color:#aaa;">
+					<div class="book-info">
+						<img src="book_image.jpg" alt="Book Image" class="book-image">
+						<div class="book-details">
+							<p>Title</p>
+							<p>Author</p>
+							<p>2009</p>
+						</div>
+					</div>
+				</div>					
+				<div class="column" style="background-color:#aaa;">
+					<div class="book-info">
+						<img src="book_image.jpg" alt="Book Image" class="book-image">
+						<div class="book-details">
+							<p>Title</p>
+							<p>Author</p>
+							<p>Year</p>
+						</div>
+					</div>
+				</div>	       
+			</div>
+		</div>
+		<div class="membership-content">
+			<div class="form-container" style="max-width: 1000px; margin: 0 auto; padding: 71px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+				<div class="form-section" id="personal-info-section" style="margin-bottom: 20px;">
+					<h2 style="margin-top: 0;margin-bottom: 4rem;">Personal Information</h2>
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="title" class="form-label" style="font-weight: bold;">Title:</label>
+							<select id="title" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+								<option value="prof">Prof</option>
+								<option value="master">Master</option>
+								<option value="miss">Miss</option>
+								<option value="madam">Madam</option>
+								<option value="mrs">Mrs</option>
+								<option value="dr">Dr</option>
+								<option value="mx">Mx</option>
+								<option value="ms">Ms</option>
+								<option value="mr">Mr</option>
+							</select>
+						</div>
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="first-name" class="form-label" style="font-weight: bold;">First Name:</label>
+							<input type="text" id="first-name" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+						<div class="form-group" style="flex: 1;">
+							<label for="middle-name" class="form-label" style="font-weight: bold;">Middle Name:</label>
+							<input type="text" id="middle-name" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+					</div>
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="last-name" class="form-label" style="font-weight: bold;">Last Name:</label>
+							<input type="text" id="last-name" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="birth-date" class="form-label" style="font-weight: bold;">Birth Date:</label>
+							<input type="date" id="birth-date" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+						<div class="form-group" style="flex: 1;">
+							<label for="gender" class="form-label" style="font-weight: bold;">Gender:</label>
+							<select id="gender" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+								<option value="other">Other</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="mobile-number" class="form-label" style="font-weight: bold;">Mobile Number:</label>
+							<input type="tel" id="mobile-number" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="primary-email" class="form-label" style="font-weight: bold;">Primary Email:</label>
+							<input type="email" id="primary-email" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+						<div class="form-group" style="flex: 1;">
+							<label for="secondary-email" class="form-label" style="font-weight: bold;">Secondary Email:</label>
+							<input type="email" id="secondary-email" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+						</div>
+					</div>
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="identity-proof" class="form-label" style="font-weight: bold;">Identity Proof:</label>
+							<select id="identity-proof" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+								<option value="pan-card">Pan Card</option>
+								<option value="passport">Passport</option>
+								<option value="voter-id">Voter Id Card</option>
+								<option value="employee-id">Employee Id Card</option>
+								<option value="ration-card">Ration Card</option>
+								<option value="other">Other</option>
+							</select>							
+						</div>
+						<div class="form-group" style="flex: 1; margin-right: 10px;">
+							<label for="id-document-number" class="form-label" style="font-weight: bold;">ID Document Number:</label>
+							<input type="text" id="id-document-number" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required>
+						</div>
+					</div>
+					<button class="form-button" onclick="showAddressSection()" style="padding: 10px 20px; background-color: #4424a7; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Next</button>
+				</div>
+		
+				<div class="form-section" id="address-section" style="display: none; margin-bottom: 20px;">
+					<h2 style="margin-top: 0;margin-bottom: 4rem;">Address</h2>
+					<!-- Address fields -->
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<!-- Address Line 1 -->
+						<div class="form-field" style="flex: 1; margin-right: 10px;">
+							<label for="address-line-1" style="font-weight: bold;">Address Line 1:</label>
+							<input type="text" id="address-line-1" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+						</div>
+						<!-- Address Line 2 -->
+						<div class="form-field" style="flex: 1; margin-right: 10px;">
+							<label for="address-line-2" style="font-weight: bold;">Address Line 2:</label>
+							<input type="text" id="address-line-2" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+						</div>
+						<!-- Village -->
+						<div class="form-field" style="flex: 1; margin-right: 10px;">
+							<label for="village" style="font-weight: bold;">Village:</label>
+							<input type="text" id="village" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+						</div>
+					</div>
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<!-- City -->
+						<div class="form-field" style="flex: 1; margin-right: 10px;">
+							<label for="city" style="font-weight: bold;">City:</label>
+							<select id="city" class="form-select" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+								<!-- Options for cities -->
+								<option value="">Select City</option>
+								<option value="city1">City 1</option>
+								<option value="city2">City 2</option>
+								<!-- Add more options as needed -->
+							</select>
+						</div>
+						<!-- State -->
+						<div class="form-field" style="flex: 1; margin-right: 10px;">
+							<label for="state" style="font-weight: bold;">State:</label>
+							<select id="state" class="form-select" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+								<!-- Options for states -->
+								<option value="">Select State</option>
+								<option value="state1">State 1</option>
+								<option value="state2">State 2</option>
+								<!-- Add more options as needed -->
+							</select>
+						</div>
+						<!-- Pincode -->
+						<div class="form-field" style="flex: 1;">
+							<label for="pincode" style="font-weight: bold;">Pincode:</label>
+							<input type="text" id="pincode" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+						</div>
+					</div>
+					<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+						<!-- Country -->
+						<div class="form-field" style="flex: 1; margin-right: 10px;">
+							<label for="country" style="font-weight: bold;">Country:</label>
+							<select id="country" class="form-select" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+								<!-- Options for countries -->
+								<option value="">Select Country</option>
+								<option value="country1">Country 1</option>
+								<option value="country2">Country 2</option>
+								<!-- Add more options as needed -->
+							</select>
+						</div>
+						<!-- Click here if both addresses are the same -->
+						<div id="policy-agreement" style="margin-top: 20px; display: flex;">
+							<input type="checkbox" id="agree-policy" style="width: 30%; margin-right: 23px;" required>
+							<label for="agree-policy">I agree to abide by the policies of the Meher Library & Jafari Seminary, and accept responsibility for all the materials and/or service fees charged to my membership. I understand that my failure to abide by the rules and policies of the Meher Library & Jafari Seminary may result in suspension or revocation of member privileges.</label>
+						</div>
+					</div>
+					<!-- Additional Address section if both addresses are not the same -->
+					<div id="additional-address-section" style="display: none;">
+						<!-- Address fields -->
+						<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+							<!-- Additional Address Line 1 -->
+							<div class="form-field" style="flex: 1; margin-right: 10px;">
+								<label for="additional-address-line-1" style="font-weight: bold;">Additional Address Line 1:</label>
+								<input type="text" id="additional-address-line-1" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+							<!-- Additional Address Line 2 -->
+							<div class="form-field" style="flex: 1; margin-right: 10px;">
+								<label for="additional-address-line-2" style="font-weight: bold;">Additional Address Line 2:</label>
+								<input type="text" id="additional-address-line-2" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+							<!-- Additional Village -->
+							<div class="form-field" style="flex: 1;">
+								<label for="additional-village" style="font-weight: bold;">Additional Village:</label>
+								<input type="text" id="additional-village" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+						</div>
+						<div class="form-row" style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
+							<!-- Additional City -->
+							<div class="form-field" style="flex: 1; margin-right: 10px;">
+								<label for="additional-city" style="font-weight: bold;">Additional City:</label>
+								<input type="text" id="additional-city" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+							<!-- Additional State -->
+							<div class="form-field" style="flex: 1; margin-right: 10px;">
+								<label for="additional-state" style="font-weight: bold;">Additional State:</label>
+								<input type="text" id="additional-state" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+							<!-- Additional Pincode -->
+							<div class="form-field" style="flex: 1; margin-right: 10px;">
+								<label for="additional-pincode" style="font-weight: bold;">Additional Pincode:</label>
+								<input type="text" id="additional-pincode" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+							<!-- Additional Country -->
+							<div class="form-field" style="flex: 1;">
+								<label for="additional-country" style="font-weight: bold;">Additional Country:</label>
+								<input type="text" id="additional-country" class="form-input" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+							</div>
+						</div>
+					</div>
+					<!-- Buttons for navigating back to Personal Information or submitting the form -->
+					<div class="form-buttons" style="display: flex; justify-content: space-between;">
+						<!-- Button to go back to Personal Information section -->
+						<button class="form-button" onclick="showPersonalInfoSection()" style="padding: 10px 20px; background-color: #302842 !important; border: none; border-radius: 5px; cursor: pointer; margin-right: 24px;">Prev</button>
+						<!-- Button to submit the form -->
+						<button class="form-button" onclick="nelson()" style="padding: 10px 20px; background-color: #4424a7; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
+					</div>
+					<!-- Agreement checkbox -->
+					
+				</div>
+				
+								
+			</div>
+		</div>
+		
+		<div class="feedbacks-content" style="width: 80%; margin: 50px auto; padding: 20px;  border-radius: 5px;">
+			<h1 style="text-align: center;">Feedback Form</h1>
+			<form id="feedback-form" style="max-width: 500px; margin: 0 auto;">
+			  <div class="form-group" style="margin-bottom: 20px;">
+				<label for="name" style="display: block; font-weight: bold;">Name:</label>
+				<input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+			  </div>
+			  
+			  <div class="form-group" style="margin-bottom: 20px;">
+				<label for="feedback" style="display: block; font-weight: bold;">Feedback:</label>
+				<textarea id="feedback" name="feedback" rows="5" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+			  </div>
+			  <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4424a7; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Submit</button>
+			</form>
+		  </div>
+        <div class="news-content">
+			<div class="news-container" style="padding: 20px; background-color: #f9f9f9;">
+				<h1 style="color: #4424a7; text-align: center; margin-bottom: 30px;">News and Announcements</h1>
+				
+				<div class="news-item" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px;">
+					<h2 style="color: #4424a7; font-size: 24px; margin-bottom: 10px; margin-top: 0 !important; font-weight: 700;">Important Announcement</h2>
+					<p style="font-size: 18px; color: #000;">We are pleased to announce the extension of library hours starting from next week. The library will now be open from 9:00 AM to 9:00 PM, Monday to Saturday.</p>
+					<p style="font-size: 16px; color: #666; margin-top: 10px;">Posted on: April 14, 2024</p>
+				</div>
+		
+				<div class="news-item" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px;">
+					<h2 style="color: #4424a7; font-size: 24px; margin-bottom: 10px;  margin-top: 0 !important; font-weight: 700;">New Library Services</h2>
+					<p style="font-size: 18px; color: #000;">We are excited to introduce new services at the library, including digital borrowing and online reservations. Visit us to learn more!</p>
+					<p style="font-size: 16px; color: #666; margin-top: 10px;">Posted on: April 10, 2024</p>
+				</div>
+		
+				<div class="news-item" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px;">
+					<h2 style="color: #4424a7; font-size: 24px; margin-bottom: 10px;  margin-top: 0 !important; font-weight: 700;">Library Closure Notice</h2>
+					<p style="font-size: 18px; color: #000;">Please note that the library will be closed for maintenance on April 20th. We apologize for any inconvenience caused.</p>
+					<p style="font-size: 16px; color: #666; margin-top: 10px;">Posted on: April 5, 2024</p>
+				</div>
+		
+				<div class="news-item" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px;">
+					<h2 style="color: #4424a7; font-size: 24px; margin-bottom: 10px;  margin-top: 0 !important; font-weight: 700;">Upcoming Events</h2>
+					<p style="font-size: 18px; color: #000;">Don't miss our upcoming book club meeting on April 25th at 6:00 PM. Join us for lively discussions and refreshments!</p>
+					<p style="font-size: 16px; color: #666; margin-top: 10px;">Posted on: April 1, 2024</p>
+				</div>
+			</div>
+        </div>
+        <div class="conditions-content" style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+			<div class="tnc-container" style="max-width: 800px; margin: 50px auto; padding: 20px; background-color: #f7f7f7; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+				<h1 style="text-align: center; font-weight: 800;">Terms and Conditions</h1>
+				<div class="tnc-accordion" >
+					<div class="tnc-accordion-item" style=" padding-bottom: 18px;">
+						<button class="tnc-accordion-title" style="background-color: #4424a7; padding: 10px; cursor: pointer; position: relative; font-weight: 800; font-size: 17px;">General Conditions
+							<i class="fa fa-chevron-down" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);"></i>
+						</button>
+						<div class="tnc-accordion-content" style="padding: 10px; display: none;">
+							<p  style="color: #000;">The members can use the library for the purpose of study and research. In addition, those who are not the members, can also use the library adhering to the institution's policy.
+							
+							The CCTVs are installed in the library premises. We regret the inconvenience caused to your privacy but the CCTVs are required for security reasons.
+							
+							The applicant needs to fill in all the required details to become the member of the library. (For more information, please see the membership details discussed below.)
+							
+							Kindly deposit your luggage in the locker and obtain the token.
+							
+							The purpose of Meher Library & Jafari Seminary is to help gain knowledge. It is a private institution and retains the right to revoke the membership and also the permission to enter and use the estate if they engage in criminal behaviour and breach of the rules and procedures of the institution.
+							</p>
+						</div>
+					</div>
+					<div class="tnc-accordion-item" style=" padding-bottom: 18px;">
+						<button class="tnc-accordion-title" style="font-weight: 800; font-size: 17px; background-color: #4424a7; padding: 10px; cursor: pointer; position: relative;">Rules for using the library
+							<i class="fa fa-chevron-down" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);"></i>
+						</button>
+						<div class="tnc-accordion-content" style="padding: 10px; display: none;">
+							<p style="color: #000;">The membership card is required to issue a book. The books will not be issued in case of failure to carry the membership card.
+		
+							The maximum of 4 books can be issued on one membership card at a time.
+		
+							The book(s) can be issued to the member for the limit of 30 days.
+		
+							The books must be returned to the library before the limit of 30 days. In case of failure to return the issued book within the allowed limit, the member shall have to pay ₹10/- per day per book.
+		
+							An issued book can be renewed only if another member has not reserved the said book.
+		
+							In case of any damage done to the issued book and the usability of the book gets over, the member needs to pay the total price of the book.
+		
+							The visitors who have not obtained the membership of the library can use the library by paying ₹ 50/- per day. Such visitors will not be issued any book.
+							</p>
+						</div>
+					</div>
+					<div class="tnc-accordion-item" style=" padding-bottom: 18px;">
+						<button class="tnc-accordion-title" style="font-weight: 800; font-size: 17px; background-color: #4424a7; padding: 10px; cursor: pointer; position: relative;">Other Services
+							<i class="fa fa-chevron-down" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);"></i>
+						</button>
+						<div class="tnc-accordion-content" style="padding: 10px; display: none;">
+							<p style="color: #000;">The e-library service shall be provided to the members wherein he/she can access the books in digitized format. Print, copy, and scan services will be provided to the members.</p>
+						</div>
+					</div>
+					<div class="tnc-accordion-item" style="padding-bottom: 18px;">
+						<button class="tnc-accordion-title" style="font-weight: 800; font-size: 17px; background-color: #4424a7; padding: 10px; cursor: pointer; position: relative;">Acknowledgement
+							<i class="fa fa-chevron-down" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);"></i>
+						</button>
+						<div class="tnc-accordion-content" style="padding: 10px; display: none;">
+							<p style="color: #000;">I agree to abide by the policies of Meher Library & Jafari Seminary and accept responsibility for all the materials and / or service fees charged to my membership. I understand that my failure to abide by the rules and policies of the institute may result in Suspension or revocation of member privileges.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+		<div class="services-content" style="padding: 43px;">
+			<div class="service-card" style="border: 1px solid #4424a7; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
+				<div class="service-title" style="font-weight: 800; font-size: 20px; margin-bottom: 10px;">Borrow Book</div>
+				<table class="service-table" style="width: 100%; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">SR. NO.</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">TYPE</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">FEES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">1</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 6 Month</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">₹ 1,200/-</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">2</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 1 Year</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">₹ 2,400/-</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">3</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 5 Year</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">₹ 12,000/-</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="service-title" style="font-weight: 800; font-size: 20px; margin-bottom: 10px;">Benefits</div>
+				<table class="service-table" style="width: 100%; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">SR. NO.</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">TYPE</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">BENEFITS</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">1</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 6 Month</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">Borrow up to 4 books at a time</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">2</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 1 Year</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">Borrow up to 4 books at a time</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">3</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 5 Year</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">Borrow up to 4 books at a time. The applicant can appoint one nominee from his family.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		
+			<div class="service-card" style="border: 1px solid #4424a7; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
+				<div class="service-title" style="font-weight: 800; font-size: 20px; margin-bottom: 10px;">Reading Area</div>
+				<table class="service-table" style="width: 100%; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">SR. NO.</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">TYPE</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">FEES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">1</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 1 Month</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">₹ 800/-</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		
+			<div class="service-card" style="border: 1px solid #4424a7; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
+				<div class="service-title" style="font-weight: 800; font-size: 20px; margin-bottom: 10px;">Research Desk</div>
+				<table class="service-table" style="width: 100%; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">SR. NO.</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">TYPE</th>
+							<th style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left; background-color: #4424a7; color: #fff;">FEES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">1</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">For 1 Month</td>
+							<td style="border-bottom: 1px solid #ddd; padding: 8px; text-align: left;">₹ 2,000/-</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		
+			<p style="color: #4424a7; font-size: 18px; margin-top: 20px;">
+				Note: An application will have to pay a one-time registration fee of ₹ 300/-. The application should submit identity proof viz. election card, driving licence, passport, etc.
+			</p>
+        </div>
+
+		<div class="contactus-content" style="padding: 20px; background-color: #f9f9f9; text-align: center;">
+			<div class="container fade-in" style="display: flex; flex-wrap: wrap; justify-content: center;">
+				<div class="card" style="width: 352px; padding: 20px; margin: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;">
+					<h2 style="color: #4424a7;"><i class="fas fa-map-marker-alt"></i> Address</h2>
+					<p style="color: black;">Meher Library & Jafari Seminary Library<br>Maktabah Jafariyah, Sedrana Square,<br>Gujarat (384151)</p>
+					<div class="qr-code" id="addressQR" style="width: 148px; height: 174px; margin: 10px auto;"></div>
+				</div>
+	
+				<div class="card" style="width: 352px; padding: 20px; margin: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;">
+					<h2 style="color: #4424a7;"><i class="far fa-envelope"></i> Email Us</h2>
+					<p style="color: black;">For inquiries: info@meherlibrary.org</p>
+					<div class="qr-code" id="emailQR" style="width: 148px; height: 174px; margin: 10px auto;"></div>
+					<a style="color: #007bff; text-decoration: none; transition: color 0.3s ease; display: block; margin-top: 10px;">Send Email</a>
+					
+				</div>
+	
+				<div class="card" style="width: 352px; padding: 20px; margin: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;">
+					<h2 style="color: #4424a7;"><i class="fab fa-whatsapp"></i> WhatsApp</h2>
+					<p style="color: black;">Text your message to: +91-75750 82767</p>
+					<div class="qr-code" id="whatsappQR" style="width: 148px; height: 174px; margin: 10px auto;"></div>
+					<a style="color: #007bff; text-decoration: none; transition: color 0.3s ease; display: block; margin-top: 10px;">Chat on WhatsApp</a>
+				</div>
+	
+				<div class="card" style="width: 352px; padding: 20px; margin: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;">
+					<h2 style="color: #4424a7;"><i class="fab fa-telegram"></i> Telegram</h2>
+					<p style="color: black;">Text your message to: +91-75750 82767</p>
+					<div class="qr-code" id="telegramQR" style="width: 148px; height: 174px; margin: 10px auto;"></div>
+					<a  style="color: #007bff; text-decoration: none; transition: color 0.3s ease; display: block; margin-top: 10px;">Join Telegram</a>
+				</div>
+	
+				<div class="card" style="width: 352px; padding: 20px; margin: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;">
+					<h2 style="color: #4424a7;"><i class="fas fa-globe"></i> Website</h2>
+					<p style="color: black;">Visit our website: <a href="http://www.meherlibrary.org" style="color: #007bff; text-decoration: none;">www.meherlibrary.org</a></p>
+					<div class="qr-code" id="websiteQR" style="width: 148px; height: 174px; margin: 10px auto;"></div>
+				</div>
+			</div>
+		</div>
+		
+    </div>
+  
+
+	<!-- <script src="/assets/library_management/kiosk/scripts.js"></script> -->
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.LXM7LQGA.js"></script>
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.KVNSLF44.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/qrcode.min.js"></script>
+    <script>
+        // Generate QR codes for each contact detail
+        function generateQRCode(text, elementId) {
+            var qrCode = new QRCode(document.getElementById(elementId), {
+                text: text,
+                width: 150,
+                height: 150,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+		generateQRCode("http://www.meherlibrary.org", "websiteQR");
+        generateQRCode("library@example.com", "emailQR");
+		generateQRCode("Maktabah Jafariyah, Sedrana Square", "addressQR");
+        generateQRCode("123-456-7890", "whatsappQR");
+        generateQRCode("t.me/library", "telegramQR");
+        generateQRCode("+91-75750 82767", "phoneQR");
+		
+    </script>
+	<script>
+			function myFunction() {
+			var formData = {};
+			var form = document.getElementById("membership-form");
+			
+
+			for (var i = 0; i < form.elements.length; i++) {
+				var field = form.elements[i];
+				if (field.name) {
+					formData[field.name] = field.value;
+				}
+			}
+		}
+	function nelson() {
+    // Gather form data
+    var formData = {
+        'salutation': $('#title').val(),
+        'first_name': $('#first-name').val(),
+        'middle_name': $('#middle-name').val(),
+        'last_name': $('#last-name').val(),
+        'birth_date': $('#birth-date').val(),
+        'gender': $('#gender').val(),
+        'mobile_number': $('#mobile-number').val(),
+        'primary_email': $('#primary-email').val(),
+        'secondary_email': $('#secondary-email').val(),
+        'identity_proof': $('#identity-proof').val(),
+        'id_document_number': $('#id-document-number').val(),
+        'address_line_1': $('#address-line-1').val(),
+        'address_line_2': $('#address-line-2').val(),
+        'village': $('#village').val(),
+        'city': $('#city').val(),
+        'state': $('#state').val(),
+        'pincode': $('#pincode').val(),
+        'country': $('#country').val(),
+        'agree_policy': $('#agree-policy').prop('checked')
+    };
+	
+    // Send data via Frappe AJAX
+    frappe.call({
+        method: 'library_management.library_management.doctype.member.member.create_membership_record',
+        args: {
+            'data': JSON.stringify(formData)
+        },
+        callback: function(r) {
+            if (!r.exc) {
+                // Handle success response
+                console.log(r.message);
+                // Show success message
+                
+            } else {
+                // Handle error response
+                console.error(r.exc);
+                // Show error message
+                // frappe.throw(r.exc);
+                
+            }
+        }
+    });
+	}
+
+		document.addEventListener("DOMContentLoaded", function() {
+		// Select all sidebar li items and main container
+		var li_items = document.querySelectorAll(".side_bar_bottom ul li");
+		var main_container = document.querySelector(".main_container");
+
+		// Loop through each sidebar li item
+		li_items.forEach(function(li_main) {
+			// Add click event listener to each sidebar item
+			li_main.addEventListener("click", function() {
+				// Remove 'active' class from all sidebar items
+				li_items.forEach(function(li) {
+					li.classList.remove("active");
+				});
+				// Add 'active' class to the clicked sidebar item
+				li_main.classList.add("active");
+
+				// Determine the content to display based on the clicked item
+				var contentClass = li_main.querySelector("a").getAttribute("href").substring(1) + "-content";
+				// Hide all content divs
+				var allContents = main_container.querySelectorAll(".main_container > div");
+				allContents.forEach(function(content) {
+					content.style.display = "none";
+				});
+				// Show the corresponding content based on the clicked item
+				var selectedContent = main_container.querySelector("." + contentClass);
+				if (selectedContent) {
+					selectedContent.style.display = "block";
+				}
+			});
+		});
+
+			// Sidebar menu toggle
+			var side_bar_menu = document.querySelector(".side_bar_menu");
+			var wrapper = document.querySelector(".wrapper");
+
+			side_bar_menu.addEventListener("click", function() {
+				wrapper.classList.toggle("active");
+			});
+
+			// Hide all content divs except for the home content initially
+			var homeContent = document.querySelector(".home-content");
+			var allContents = main_container.querySelectorAll(".main_container > div");
+			allContents.forEach(function(content) {
+				if (content !== homeContent) {
+					content.style.display = "none";
+				}
+			});
+
+
+
+
+			// Start carousel
+			var myIndex = 0;
+			carousel();
+
+			function carousel() {
+				var i;
+				var x = document.getElementsByClassName("mySlides");
+				for (i = 0; i < x.length; i++) {
+					x[i].style.display = "none";
+				}
+				var y = document.getElementsByClassName("mySlide");
+				for (i = 0; i < y.length; i++) {
+					y[i].style.display = "none";
+				}
+				myIndex++;
+				if (myIndex > x.length + y.length) {
+					myIndex = 1;
+				}
+				if (myIndex <= x.length) {
+					x[myIndex - 1].style.display = "block";
+				} else {
+					y[myIndex - x.length - 1].style.display = "block";
+				}
+				setTimeout(carousel, 3000);
+			}
+			});
+
+	document.addEventListener('DOMContentLoaded', function () {
+    const accordionItems = document.querySelectorAll('.tnc-accordion-item');
+
+    accordionItems.forEach(item => {
+        const title = item.querySelector('.tnc-accordion-title');
+        const content = item.querySelector('.tnc-accordion-content');
+
+        title.addEventListener('click', function () {
+            content.classList.toggle('active');
+        });
+    });
+});
+
+	</script>
+			<script>
+				const accordionTitles = document.querySelectorAll('.tnc-accordion-title');
+				const accordionContents = document.querySelectorAll('.tnc-accordion-content');
+			
+				accordionTitles.forEach((title, index) => {
+					title.addEventListener('click', () => {
+						const isOpen = accordionContents[index].style.display === 'block';
+			
+						// Close all accordion contents
+						accordionContents.forEach(content => {
+							content.style.display = 'none';
+						});
+			
+						// Toggle current accordion content
+						if (!isOpen) {
+							accordionContents[index].style.display = 'block';
+						}
+					});
+				});
+
+			function showAddressSection() {
+            document.getElementById('personal-info-section').style.display = 'none';
+            document.getElementById('address-section').style.display = 'block';
+        	}
+
+        	function showPersonalInfoSection() {
+            document.getElementById('address-section').style.display = 'none';
+            document.getElementById('personal-info-section').style.display = 'block';
+        	}
+
+        	function submitForm() {
+            // Perform form submission or validation here
+            // This is just a placeholder function
+            alert('Form submitted!');
+        	}
+
+			$(document).ready(function() {
+			$('#feedback-form').submit(function(event) {
+				// Prevent default form submission
+				event.preventDefault();
+
+				// Gather form data
+				var formData = {
+					'name': $('#name').val(),
+					'feedback': $('#feedback').val()
+				};
+				console.log(formData)	
+				// Send data via Frappe AJAX
+				frappe.call({
+					method: 'library_management.library_management.doctype.kiosk_feedback.kiosk_feedback.submit_feedback',
+					args: {
+						'data': JSON.stringify(formData)
+					},
+
+					callback: function(r) {
+						if (!r.exc) {
+							// Handle success response
+							console.log(r.message);
+							// Show success message
+							Swal.fire({
+								title: "Thank you!",
+								text: "Your feedback has been submitted successfully!",
+								icon: "success"
+							});
+							// Clear form fields
+							$('#name').val('');
+							$('#feedback').val('');
+						} else {
+							// Handle error response
+							console.error(r.exc);
+							// Show error message
+							frappe.throw(r.exc);
+							Swal.fire({
+								title: "Oops!",
+								text: "An error occurred while submitting the feedback. Please try again later.",
+								icon: "error"
+							});
+						}
+					}
+				});
+			});
+		});
+
+			</script>
+	
+</body>
+</html>
