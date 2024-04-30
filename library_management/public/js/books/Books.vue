@@ -1,62 +1,63 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-12 col-lg-12">
-                <div class="card book-items-card">
-                    <div class="card-header">
-                        <div class="container">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <h4 class="card-title mb-0">Books</h4>
-                                </div>
-                                <!-- <div v-for="category in bookstore.item_categories" :key="category.name" class="filter-btn">
-                                    <button @click="bookstore.get_items_by_category(category.name)" class="btn btn-sm btn-primary">{{ category.name }}</button>
-                                </div> -->
-                                <div class="col-6 p-0">
-                                    <div class="input-group search-bar text-muted">
-                                        <div class="w-100">
-                                            <input @input="bookstore.search_books()" v-model="bookstore.search_book"
-                                                id="navbar-search" type="text" class="form-control pl-5"
-                                                placeholder="Search Books">
-                                        </div>
-                                        <span class="search-icon">
-                                            <svg class="icon icon-sm">
-                                                <use href="#icon-search"></use>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body book-items-card-body">
-                        <div class="container p-0">
-                            <div class="row">
-                                <div v-for="item in bookstore.books" :key="item.title" class="col-12 col-md-6 col-lg-3 mb-3" @click="selectBook(item)">
-                                    <div class="card" style="height: 300px;">
-                                        <img class="card-img-top book-img" 
-                                            :src="item.image ? item.image : 'https://placehold.co/150?text=Item'" alt="Card image cap">
-                                        <div class="card-body mt-0" style="overflow: hidden; text-overflow: ellipsis;">
-                                            <h4 class="card-title mt-0 d-sm-inline-flex">{{ item.title }}</h4>
-                                            <h6 class="card-text ml-0 mb-3">By: {{ item.author }}</h6>
-                                            <h6 class="card-text ml-0 mb-3">subjects: {{ item.subject }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <v-container fluid class="pa-0 ma-0">
+        <v-row class="align-center pa-0 ma-0">
+            <v-col cols="12">
+                <v-card outlined>
+                    <v-toolbar color="info">
+                        <v-toolbar-title>Book List</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                        <v-text-field bg-color="white" color="blue darken-2" rounded-lg dense
+                            v-model="bookstore.search_book" append-icon="mdi-magnify" label="Search Books"
+                            @input="bookstore.search_books()" single-line hide-details>
+                        </v-text-field>
+                    </v-toolbar>
+                    <v-divider></v-divider>
+                    <v-container class="overflow-y-auto" style="max-height: calc(100vh - 112px);">
+                        <v-row align="center" class="fill-height" justify="center">
+                            <template v-for="item in bookstore.books" :key="item.title">
+                                <v-col cols="12" sm="6" md="4" lg="3">
+                                    <v-hover v-slot="{ isHovering, props }">
+                                        <v-card :class="{ 'on-hover': isHovering }" :elevation="isHovering ? 12 : 2"
+                                            v-bind="props" @click="selectBook(item)">
+                                            <v-img :src="item.image ? item.image
+                                                : 'https://placehold.co/150?text=Item'" height="300px"
+                                                class="white--text align-end">
+                                            </v-img>
+                                            <v-card-subtitle
+                                                class="text-h6 text-center text-body-3 text-sm-left text-dark d-flex flex-column">
+                                                <p class="mt-1 text-center">
+                                                    {{ item.title }}
+                                                </p>
+                                            </v-card-subtitle>
+                                            <v-card-text class="pa-1">
+                                                <p class="ma-0 text-body-6 text-sm-left">
+                                                    By: <span class="font-weight-medium">{{ item.author }}</span>
+                                                </p>
+                                                <p class="text-caption text-sm-left">
+                                                    Subject: <span class="font-weight-medium">{{ item.subject }}</span>
+                                                </p>
+                                                <div class="text-center justify-content" v-show="isHovering">
+                                                    <v-btn @click.stop="selectBook(item)" class="mt-2"
+                                                        :class="{ 'show-btns': isHovering }" color="info">
+                                                        <span class="mdi mdi-read"></span>
+                                                        Read
+                                                    </v-btn>
+                                                </div>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-hover>
+                                </v-col>
+                            </template>
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </v-col>
+        </v-row>
         <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
-            <template>
-                <Reader :book="selectedBook" :show="isReaderOpen" @close-reader="isReaderOpen = false" />
-            </template>
+            <Reader :book="selectedBook" :show="isReaderOpen" @close-reader="isReaderOpen = false" />
         </v-dialog>
-    </div>
+    </v-container>
 </template>
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -71,7 +72,6 @@ const isReaderOpen = ref(false);
 const selectBook = (book) => {
     selectedBook.value = book;
     isReaderOpen.value = true;
-    
 }
 
 onMounted(() => {
@@ -80,30 +80,8 @@ onMounted(() => {
 </script>
 
 
-<style lang="scss" scoped>
-.book-items-card {
-    height: calc(100vh - 150px);
-}
-
-.book-items-card-body {
-    overflow: auto;
-}
-
-.book-img {
-    height: 200px;
-    width: auto;
-    object-fit: contain;
-}
-
-.card-header {
-    background-color: white;
-}
-
-@media only screen and (max-width: 768px) {
-
-    .book-items-card {
-        height: calc(50vh);
-    }
-
+<style scoped>
+.v-card img {
+    object-fit: cover;
 }
 </style>
