@@ -1,22 +1,32 @@
-# Copyright (c) 2023, ramjanali and contributors
-# For license information, please see license.txt
-
 import frappe
+from frappe.utils import today
+from frappe import _
 from frappe.model.document import Document
 
 class BookTransaction(Document):
-    def on_submit(self):
-        self.on_submit_asset_update()
+    # @frappe.whitelist()
+    # def on_submit(self):
+    #     self.create_book_ledger()
+    def validate(self):
+        try:
+            self.create_book_ledger()
+        except Exception as e:
+            frappe.msgprint(f"An error occurred: {e}")
+    
+    def create_book_ledger(self):
+        if self.is_new():
+            frappe.msgprint("Creating Book Ledger Entry")
+            try:
+                book_transaction_details = frappe.get_all('Book Transaction Detail',
+                                                       filters={'parent': self.name},
+                                                       fields=['*'])
+                for detail in book_transaction_details:
+                    book_ledger_entry = frappe.new_doc('Book Ledger')
+                    book_ledger_entry.member = self.member
+                    # Add other necessary fields here
+                    book_ledger_entry.save()
 
-    def on_submit_asset_update(self):
-        book_details = frappe.get_doc("Asset", self.asset)
-        frappe.msgprint(f"Item created successfully: {book_details}")
-        if book_details:
-            if self.transaction_type == "Issue":
-                book_details.status = self.transaction_type
-                book_details.save()
-                frappe.msgprint("Item updated successfully")
-            else:
-                book_details.status = "Available"
-                book_details.save()
-                frappe.msgprint("Item updated successfully")
+                frappe.msgprint("Book Ledger Entries created successfully.")
+                
+            except Exception as e:
+                frappe.msgprint(_("An error occurred while creating new membership: {0}").format(str(e)))

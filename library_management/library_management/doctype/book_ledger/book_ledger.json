@@ -8,20 +8,24 @@
  "engine": "InnoDB",
  "field_order": [
   "member",
-  "section_break_2kewq",
   "member_name",
-  "member_image",
   "membership_status",
-  "section_break_dd5n7",
-  "scan_barcode",
-  "section_break_ji9bd",
-  "book_transaction_detail",
-  "amended_from"
+  "amended_from",
+  "column_break_vnzr",
+  "transaction_type",
+  "transaction_no",
+  "transaction_date",
+  "due_date",
+  "section_break_oeiq",
+  "access_no",
+  "book_title",
+  "is_cancelled"
  ],
  "fields": [
   {
    "fieldname": "member",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Member",
    "options": "Member"
   },
@@ -36,21 +40,11 @@
    "search_index": 1
   },
   {
-   "fieldname": "section_break_2kewq",
-   "fieldtype": "Section Break"
-  },
-  {
    "fetch_from": "member.member_name",
    "fieldname": "member_name",
    "fieldtype": "Data",
    "label": "Member Name",
    "read_only": 1
-  },
-  {
-   "fetch_from": "member.image",
-   "fieldname": "member_image",
-   "fieldtype": "Image",
-   "label": "Member Image"
   },
   {
    "fetch_from": "member.membership_status",
@@ -59,30 +53,62 @@
    "label": "Membership Status"
   },
   {
-   "fieldname": "section_break_dd5n7",
-   "fieldtype": "Section Break"
+   "fieldname": "column_break_vnzr",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "scan_barcode",
+   "fieldname": "transaction_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Transaction Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "transaction_no",
    "fieldtype": "Data",
-   "label": "Scan Barcode",
-   "options": "Barcode"
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_standard_filter": 1,
+   "label": "Transaction No"
   },
   {
-   "fieldname": "section_break_ji9bd",
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "label": "Transaction Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "section_break_oeiq",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "book_transaction_detail",
-   "fieldtype": "Table",
-   "label": "Book Transaction Detail",
-   "options": "Book Transaction Detail"
+   "fieldname": "access_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Access No",
+   "options": "Asset"
+  },
+  {
+   "fetch_from": "access_no.asset_name",
+   "fieldname": "book_title",
+   "fieldtype": "Data",
+   "label": "Book Title"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_cancelled",
+   "fieldtype": "Check",
+   "label": "Is cancelled"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-15 19:53:05.848356",
+ "modified": "2024-05-03 19:21:19.067450",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Ledger",
@@ -96,8 +122,9 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "System Manager",
+   "role": "All",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
