@@ -76,3 +76,15 @@ function generateOTP() {
     }
     return otp;
 }
+frappe.ui.form.on("Book Transaction Detail", {
+    access_no: function(frm, cdt, cdn) {
+        var child_doc = locals[cdt][cdn];
+        var due = frappe.datetime.add_days(child_doc.transaction_date, 30);
+        frappe.model.set_value(cdt, cdn, 'due_date', due);
+    },
+    transaction_date: function(frm, cdt, cdn) {
+        var child_doc = locals[cdt][cdn];
+        var due = frappe.datetime.add_days(child_doc.transaction_date, 30);
+        frappe.model.set_value(cdt, cdn, 'due_date', due);
+    },
+});
