@@ -24,15 +24,17 @@ class Book {
         this.page = frappe.ui.make_app_page({
             parent: wrapper,
         });
-        this.sidebar = this.wrapper.find(".layout-side-section");
-        this.main_section = this.wrapper.find(".layout-main-section");
+        // this.sidebar = this.wrapper.find(".layout-side-section");
+        // this.main_section = this.wrapper.find(".layout-main-section");
+        // this.main_section = this.wrapper.find(".layout-main");
+        // this.main_section = this.wrapper.find(".page-container");
         this.wrapper.bind("show", () => {
             this.show();
         });
     }
 
     show() {
-        this.page.set_title(__("Books"));
+        // this.page.set_title(__("Books"));
         this.setup_page();
     }
 
@@ -43,7 +45,7 @@ class Book {
             },
             components,
             directives,
-        })
+        });
 
         const pinia = createPinia();
 
@@ -54,7 +56,9 @@ class Book {
         app.use(pinia);
 
         this.bookstore = useBooksStore();
-        this.$books = app.mount(this.main_section.get(0));
+        // this.$books = app.mount(this.main_section.get(0));
+        this.$books = app.mount(".page-container");
+        // this.$books = app.mount("#body");
 
     }
 }
