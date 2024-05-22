@@ -20,7 +20,6 @@
             >
               <v-card-text>
                 <div v-if="book.type === 'epub'" id="epub-render-area" style="height: calc(80vh - 80px);"></div>
-                <canvas v-else-if= "book.type === 'pdf'" id="pdf-canvas"> </canvas>
               </v-card-text>
             </v-card>
           </v-col>
@@ -116,7 +115,7 @@ export default {
         const page = await this.pdfDoc.getPage(this.page);
         const canvas = document.getElementById('pdf-canvas');
         const context = canvas.getContext('2d');
-        const viewport = page.getViewport({scale: 1.25});
+        const viewport = page.getViewport({ scale: 1.25 });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
@@ -137,16 +136,16 @@ export default {
       } else if (this.book.type === 'pdf' && this.page < this.totalPages) {
         this.page++;
         this.renderPDFPage();
-     }
+      }
     },
     previousPage() {
       if (this.book.type === 'epub' && this.rendition) {
         this.rendition.prev();
 
-      }else if (this.book.type === 'pdf' && this.page > 1) {
+      } else if (this.book.type === 'pdf' && this.page > 1) {
         this.page--;
         this.renderPDFPage();
-     }
+      }
     },
     closeReader() {
       if (this.rendition) {
