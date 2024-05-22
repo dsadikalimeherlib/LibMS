@@ -56,7 +56,10 @@
                         </v-col>
                     </v-row>
                     <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
-                        <Reader :book="selectedBook" :show="isReaderOpen" @close-reader="isReaderOpen = false" />
+                        <Reader v-if="selectedBook.type === 'epub'" :book="selectedBook" :show="isReaderOpen"
+                            @close-reader="isReaderOpen = false" />
+                        <PdfReader v-if="selectedBook.type === 'pdf'" :book="selectedBook" :show="isReaderOpen"
+                            @close-reader="isReaderOpen = false" />
                     </v-dialog>
                 </v-container>
             </v-main>
@@ -69,6 +72,7 @@ import { ref, onMounted } from 'vue';
 import { useBooksStore } from './store';
 import Sidebar from '../ebook_reader/components/Sidebar.vue';
 import Reader from '../ebook_reader/components/Reader.vue';
+import PdfReader from '../ebook_reader/components/pdf/PdfReader.vue';
 
 
 const bookstore = useBooksStore();
