@@ -2,10 +2,33 @@
     <v-dialog v-model="show" fullscreen hide-overlay>
         <v-app>
             <v-app-bar dense elevatedwill>
+                <PdfTitlebar :title="book.title" @close-reader="closeReader" @toggle-toc="toggleToc" />
             </v-app-bar>
             <v-main>
                 <v-row>
-                    
+                    <!-- Table of Contents Sidebar -->
+                    <v-col cols="2" v-if="isTocVisible" hover class="d-flex justify-start align-items-left">
+                        <v-navigation-drawer permanent class="deep-purple lighten-1 white--text" width="300">
+                            <v-list v-model:opened="showToc" :lines="false" density="compact" dense nav>
+                                <v-list-group value="Toc">
+                                    <template v-slot:activator="{ props }">
+                                        <v-list-item v-bind="props" title="Table of Content">
+                                            <template v-slot:prepend>
+                                                <v-btn icon="mdi-table-of-contents" size="large" variant="text"></v-btn>
+                                            </template>
+                                        </v-list-item>
+                                    </template>
+                                    <v-list-item v-for="(item, index) in toc" :key="item.id"
+                                        @click="navigateToPage(item.pageNumber)" link>
+                                        <v-list-item-title class="wrap-text">
+                                            {{ index + 1 }}. {{ item.title }}
+                                            <!-- ------- {{ item.pageNumber }} -->
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </v-list-group>
+                            </v-list>
+                        </v-navigation-drawer>
+                    </v-col>
                     <v-col class="d-flex justify-start align-items-center">
                         <v-btn icon @click="previousPage">
                             <v-icon>mdi-chevron-left</v-icon>
@@ -25,7 +48,7 @@
                             </v-btn>
                         </div>
 
-                        
+
                     </v-col>
                 </v-row>
                 <v-row>
@@ -48,9 +71,13 @@
 
 <script>
 
+import PdfTitlebar from './PdfTitlebar.vue';
 
 export default {
     name: 'PdfReader',
+    components: {
+        PdfTitlebar,
+    },
     props: {
         book: {
             type: Object,
@@ -113,7 +140,60 @@ export default {
                 console.error('Error rendering page:', error);
             }
         },
-        
+        async loadToc() {
+            const outline = await this.pdfDoc.getOutline();
+            if (outline) {
+                this.toc = await this.parseOutlineItems(outline);
+            }
+        },
+        async parseOutlineItems(items, result = []) {
+            for (const item of items) {
+                if (item.dest) {
+                    try {
+                        let pageNumber = null;
+                        if (typeof item.dest === 'string') {
+                            const destination = await this.pdfDoc.getDestination(item.dest);
+                            if (destination) {
+                                if (typeof destination === 'string') {
+                                    // Handle named destination
+                                    const destRef = await this.pdfDoc.getDestination(destination[0]);
+                                    pageNumber = destRef ? await this.pdfDoc.getPageIndex(destRef[0]) + 1 : null;
+                                } else if (destination instanceof Array && destination[0]) {
+                                    // Handle explicit destination
+                                    pageNumber = await this.pdfDoc.getPageIndex(destination[0]) + 1;
+                                }
+                            }
+                        } else if (item.dest instanceof Array && item.dest[0]) {
+                            pageNumber = await this.pdfDoc.getPageIndex(item.dest[0]) + 1;
+
+                        }
+
+                        result.push({
+                            id: item.dest,
+                            title: item.title.trim(),
+                            pageNumber,
+                        });
+                    } catch (error) {
+                        result.push({
+                            id: item.dest,
+                            title: item.title.trim(),
+                            pageNumber: null,
+                        });
+                    }
+                }
+                if (item.items.length) {
+                    await this.parseOutlineItems(item.items, result);
+                }
+            }
+            return result;
+        },
+        navigateToPage(pageNum) {
+            pageNum = parseInt(pageNum, 10);
+            if (pageNum && pageNum >= 1 && pageNum <= this.totalPages) {
+                this.page = pageNum;
+                this.renderPage();
+            }
+        },
         nextPage() {
             if (this.book.type === 'pdf' && this.page < this.totalPages) {
                 this.page++;
