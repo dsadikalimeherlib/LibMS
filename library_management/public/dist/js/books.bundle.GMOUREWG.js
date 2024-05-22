@@ -34758,7 +34758,8 @@ This will fail in production.`);
   // sfc-template:/home/dev2/projects/v15/apps/library_management/library_management/public/js/ebook_reader/components/pdf/PdfReader.vue?type=template
   var _withScopeId = (n) => (pushScopeId("data-v-a177b853"), n = n(), popScopeId(), n);
   var _hoisted_12 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("canvas", { id: "pdf-canvas" }, null, -1));
-  var _hoisted_2 = { class: "mx-2" };
+  var _hoisted_2 = { class: "mb-2" };
+  var _hoisted_3 = { class: "mx-2" };
   function render5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_PdfTitlebar = resolveComponent("PdfTitlebar");
     const _component_v_app_bar = resolveComponent("v-app-bar");
@@ -34928,6 +34929,39 @@ This will fail in production.`);
                             ]),
                             _: 1
                           }, 8, ["onClick"])
+                        ]),
+                        createCommentVNode(" Add zoom in and zoom out "),
+                        createBaseVNode("div", _hoisted_2, [
+                          createVNode(_component_v_btn, {
+                            icon: "",
+                            onClick: $options.zoomOut,
+                            class: "mr-2"
+                          }, {
+                            default: withCtx(() => [
+                              createVNode(_component_v_icon, null, {
+                                default: withCtx(() => [
+                                  createTextVNode("mdi-minus")
+                                ]),
+                                _: 1
+                              })
+                            ]),
+                            _: 1
+                          }, 8, ["onClick"]),
+                          createVNode(_component_v_btn, {
+                            icon: "",
+                            onClick: $options.zoomIn,
+                            class: "mr-2"
+                          }, {
+                            default: withCtx(() => [
+                              createVNode(_component_v_icon, null, {
+                                default: withCtx(() => [
+                                  createTextVNode("mdi-plus")
+                                ]),
+                                _: 1
+                              })
+                            ]),
+                            _: 1
+                          }, 8, ["onClick"])
                         ])
                       ]),
                       _: 1
@@ -34958,7 +34992,7 @@ This will fail in production.`);
                           ]),
                           _: 1
                         }, 8, ["onClick"]),
-                        createBaseVNode("span", _hoisted_2, "Page " + toDisplayString($data.page) + " of " + toDisplayString($data.totalPages), 1),
+                        createBaseVNode("span", _hoisted_3, "Page " + toDisplayString($data.page) + " of " + toDisplayString($data.totalPages), 1),
                         createVNode(_component_v_btn, {
                           icon: "",
                           onClick: $options.nextPage
@@ -35029,7 +35063,7 @@ This will fail in production.`);
   var _withScopeId2 = (n) => (pushScopeId("data-v-3dde91c7"), n = n(), popScopeId(), n);
   var _hoisted_13 = { id: "app-container" };
   var _hoisted_22 = { class: "mt-1 text-center" };
-  var _hoisted_3 = { class: "ma-0 text-body-6 text-sm-left" };
+  var _hoisted_32 = { class: "ma-0 text-body-6 text-sm-left" };
   var _hoisted_4 = { class: "font-weight-medium" };
   var _hoisted_5 = { class: "text-caption text-sm-left" };
   var _hoisted_6 = { class: "font-weight-medium" };
@@ -35119,7 +35153,7 @@ This will fail in production.`);
                                                     }, 1024),
                                                     createVNode(_component_v_card_text, { class: "pa-1" }, {
                                                       default: withCtx(() => [
-                                                        createBaseVNode("p", _hoisted_3, [
+                                                        createBaseVNode("p", _hoisted_32, [
                                                           createTextVNode(" By: "),
                                                           createBaseVNode("span", _hoisted_4, toDisplayString(item.author), 1)
                                                         ]),
@@ -61052,4 +61086,4 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=books.bundle.OAH5667I.js.map
+//# sourceMappingURL=books.bundle.GMOUREWG.js.map

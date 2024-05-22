@@ -48,7 +48,15 @@
                             </v-btn>
                         </div>
 
-
+                        <!-- Add zoom in and zoom out -->
+                        <div class="mb-2">
+                            <v-btn icon @click="zoomOut" class="mr-2">
+                                <v-icon>mdi-minus</v-icon>
+                            </v-btn>
+                            <v-btn icon @click="zoomIn" class="mr-2">
+                                <v-icon>mdi-plus</v-icon>
+                            </v-btn>
+                        </div>
                     </v-col>
                 </v-row>
                 <v-row>
