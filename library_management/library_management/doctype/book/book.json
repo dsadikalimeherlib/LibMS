@@ -14,8 +14,8 @@
   "search",
   "disabled",
   "books_details_section",
-  "title",
   "book_code",
+  "title",
   "book_category",
   "subject",
   "language",
@@ -23,34 +23,36 @@
   "book_tag",
   "year_of_publication",
   "publication",
+  "location",
   "column_break_81u21",
   "author",
   "edition",
   "translator",
-  "location",
-  "price",
-  "book_details_section",
   "editor",
+  "book_details_section",
   "no_of_copies",
   "no_of_pages",
   "description",
   "column_break_y5d8z",
   "book_condition",
   "book_cover",
-  "donated_book",
+  "is_digital_book",
   "book_url",
-  "type",
+  "digital_file_type",
   "image",
+  "donation_details_section",
+  "donated_book",
   "donor_name",
   "donor_mobile",
   "donor_location",
-  "remarks",
-  "copies",
   "donation_date",
+  "copies",
+  "remarks",
   "section_break_faist",
   "book_images",
   "route",
-  "published"
+  "published",
+  "volume"
  ],
  "fields": [
   {
@@ -61,11 +63,6 @@
    "unique": 1
   },
   {
-   "fieldname": "book_code",
-   "fieldtype": "Data",
-   "label": "Book Code"
-  },
-  {
    "fieldname": "book_category",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -74,6 +71,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "book_code.subject",
    "fieldname": "subject",
    "fieldtype": "Data",
    "label": "Subject"
@@ -138,11 +136,6 @@
    "label": "Location"
   },
   {
-   "fieldname": "price",
-   "fieldtype": "Currency",
-   "label": "Price"
-  },
-  {
    "fieldname": "book_details_section",
    "fieldtype": "Section Break",
    "label": "Book Details"
@@ -188,7 +181,7 @@
    "fieldname": "donated_book",
    "fieldtype": "Select",
    "label": "Donated Book",
-   "options": "\nYes\nNo"
+   "options": "No\nYes"
   },
   {
    "fieldname": "volume",
@@ -247,12 +240,6 @@
    "label": "Disabled"
   },
   {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "label": "Book Type",
-   "options": "\nepub\npdf"
-  },
-  {
    "fieldname": "route",
    "fieldtype": "Data",
    "label": "route"
@@ -262,18 +249,6 @@
    "fieldname": "published",
    "fieldtype": "Check",
    "label": "Published"
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "book_more_details_section",
-   "fieldtype": "Section Break",
-   "label": "Book More Details"
-  },
-  {
-   "fieldname": "book_code",
-   "fieldtype": "Link",
-   "label": "Book Code",
-   "options": "DDC"
   },
   {
    "depends_on": "eval:doc.donated_book == \"Yes\"",
@@ -311,6 +286,29 @@
    "fieldname": "donation_date",
    "fieldtype": "Date",
    "label": "Donation Date"
+  },
+  {
+   "fieldname": "book_code",
+   "fieldtype": "Link",
+   "label": "Book Code",
+   "options": "DDC"
+  },
+  {
+   "fieldname": "donation_details_section",
+   "fieldtype": "Section Break",
+   "label": "Donation Details"
+  },
+  {
+   "fieldname": "is_digital_book",
+   "fieldtype": "Select",
+   "label": "Is Digital Book",
+   "options": "No\nYes"
+  },
+  {
+   "fieldname": "digital_file_type",
+   "fieldtype": "Select",
+   "label": "Digital File Type",
+   "options": "\nepub\npdf"
   }
  ],
  "has_web_view": 1,
@@ -328,7 +326,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-04-13 03:27:40.722141",
+ "modified": "2024-05-22 17:59:17.496690",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",

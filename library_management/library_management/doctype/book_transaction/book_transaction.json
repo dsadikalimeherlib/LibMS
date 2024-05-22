@@ -1,28 +1,24 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:member",
+ "autoname": "field:member_number",
  "creation": "2023-04-04 18:51:03.425116",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "member_information_section",
+  "type_section",
   "transaction_type",
-  "member",
+  "barcode",
+  "column_break_qg935",
+  "member_number",
   "member_name",
   "membership_status",
   "mobile",
-  "column_break_qg935",
-  "asset",
-  "book_title",
-  "asset_location",
   "otp",
   "section_break_8mgcp",
-  "issue_date",
-  "due_date",
-  "issue_remarks",
+  "book_transaction_detail",
   "amended_from"
  ],
  "fields": [
@@ -33,14 +29,7 @@
    "options": "Issue\nReturn\nReserve\nRenew"
   },
   {
-   "fieldname": "member",
-   "fieldtype": "Link",
-   "label": "Member",
-   "options": "Member",
-   "unique": 1
-  },
-  {
-   "fetch_from": "member.member_name",
+   "fetch_from": "member_number.member_name",
    "fieldname": "member_name",
    "fieldtype": "Data",
    "label": "Member Name"
@@ -50,36 +39,9 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "asset.asset_name",
-   "fieldname": "book_title",
-   "fieldtype": "Data",
-   "label": "Book Title"
-  },
-  {
    "fieldname": "section_break_8mgcp",
    "fieldtype": "Section Break",
-   "label": "Issue Information"
-  },
-  {
-   "fieldname": "member_information_section",
-   "fieldtype": "Section Break",
-   "label": "Member Information"
-  },
-  {
-   "default": "Today",
-   "fieldname": "issue_date",
-   "fieldtype": "Date",
-   "label": "Issue Date"
-  },
-  {
-   "fieldname": "due_date",
-   "fieldtype": "Date",
-   "label": "Due Date"
-  },
-  {
-   "fieldname": "issue_remarks",
-   "fieldtype": "Small Text",
-   "label": "Issue Remarks"
+   "label": "Book Information"
   },
   {
    "fieldname": "amended_from",
@@ -92,25 +54,10 @@
    "search_index": 1
   },
   {
-   "fetch_from": "member.membership_status",
+   "fetch_from": "member_number.membership_status",
    "fieldname": "membership_status",
    "fieldtype": "Data",
    "label": "Membership Status"
-  },
-  {
-   "fieldname": "asset",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Access No",
-   "options": "Asset",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "asset.location",
-   "fieldname": "asset_location",
-   "fieldtype": "Link",
-   "label": "Asset Location",
-   "options": "Location"
   },
   {
    "fieldname": "otp",
@@ -118,17 +65,46 @@
    "label": "OTP"
   },
   {
-   "fetch_from": "member.mobile",
+   "fetch_from": "member_number.mobile",
    "fieldname": "mobile",
    "fieldtype": "Data",
    "label": "Mobile",
    "options": "Phone"
+  },
+  {
+   "fieldname": "book_transaction_detail",
+   "fieldtype": "Table",
+   "label": "Book Transaction Detail",
+   "options": "Book Transaction Detail"
+  },
+  {
+   "fieldname": "type_section",
+   "fieldtype": "Section Break",
+   "label": "Type"
+  },
+  {
+   "fieldname": "member_number",
+   "fieldtype": "Link",
+   "label": "Member Number",
+   "options": "Member",
+   "unique": 1
+  },
+  {
+   "fieldname": "barcode",
+   "fieldtype": "Data",
+   "label": "barcode",
+   "options": "Barcode"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-03-26 13:55:15.493796",
+ "links": [
+  {
+   "link_doctype": "Book Ledger",
+   "link_fieldname": "transaction_no"
+  }
+ ],
+ "modified": "2024-05-11 17:37:21.646570",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",

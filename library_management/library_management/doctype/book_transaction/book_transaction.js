@@ -18,7 +18,6 @@ frappe.ui.form.on('Book Transaction', {
                 }
             }
         });
-
         frm.add_custom_button('Generate OTP', function() {
             var otp = generateOTP();
             frm.set_value('otp', otp);
@@ -43,19 +42,62 @@ frappe.ui.form.on('Book Transaction', {
             d.show();
         });
     },
+    onload: function(frm) {
+        frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function(doc, cdt, cdn) {
+            // Get the value of the "transaction_type" field
+            var transactionType = frm.doc.transaction_type;
 
+            // Set up the filter based on the value of "transaction_type"
+            var filters = {};
+
+            if (transactionType === "Issue") {
+                filters = {
+                    "status": "Available"
+                };
+            } else {
+                filters = {
+                    "status": "Issue"
+                };
+            }
+
+            return {
+                "filters": filters
+            };
+        };
+    },
     asset:function(frm){
         var issue = frm.doc.issue_date;
         var due = frappe.datetime.add_days(issue, 30);
         frm.set_value('due_date', due);
     },
-
     from_date: function(frm){
         var issue = frm.doc.issue_date;
         var due = frappe.datetime.add_days(issue, 30);
         frm.set_value('due_date', due);
     },
+    transaction_type: function(frm) {
+        frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function(doc, cdt, cdn) {
+            // Get the value of the "transaction_type" field
+            var transactionType = frm.doc.transaction_type;
 
+            // Set up the filter based on the value of "transaction_type"
+            var filters = {};
+
+            if (transactionType === "Issue") {
+                filters = {
+                    "status": "Available"
+                };
+            } else {
+                filters = {
+                    "status": "Issue"
+                };
+            }
+
+            return {
+                "filters": filters
+            };
+        };
+    }
 });
 
 function verify_member(frm, enteredOTP) {
