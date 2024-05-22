@@ -19,6 +19,9 @@
   "to_date",
   "column_break_8",
   "member_since_date",
+  "month",
+  "section_break_btgb",
+  "library_membership_details",
   "payment_details",
   "paid",
   "currency",
@@ -86,15 +89,13 @@
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "From",
-   "reqd": 1
+   "label": "From"
   },
   {
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "To",
-   "reqd": 1
+   "label": "To"
   },
   {
    "fieldname": "column_break_8",
@@ -166,12 +167,28 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "label": "Month",
+   "options": "\n1\n3\n6\n9\n12"
+  },
+  {
+   "fieldname": "section_break_btgb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "library_membership_details",
+   "fieldtype": "Table",
+   "label": "Library Membership Details",
+   "options": "Library Membership Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-03-26 13:20:58.862985",
+ "modified": "2024-05-11 18:59:08.955607",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Membership",

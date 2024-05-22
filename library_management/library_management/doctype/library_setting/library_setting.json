@@ -10,7 +10,8 @@
   "erpnext_integration",
   "default_asset_location",
   "customer_group",
-  "default_asset_category"
+  "default_asset_category",
+  "number_of_book_allowed"
  ],
  "fields": [
   {
@@ -36,12 +37,17 @@
    "fieldtype": "Link",
    "label": "Default Asset Category",
    "options": "Asset Category"
+  },
+  {
+   "fieldname": "number_of_book_allowed",
+   "fieldtype": "Int",
+   "label": "Number of book allowed"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-03-09 10:45:17.419963",
+ "modified": "2024-05-08 13:25:16.269293",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Setting",
