@@ -6,7 +6,6 @@
             </v-app-bar>
             <v-main>
                 <v-row>
-                    <!-- Table of Contents Sidebar -->
                     <v-col cols="2" v-if="isTocVisible" hover class="d-flex justify-start align-items-left">
                         <v-navigation-drawer permanent class="deep-purple lighten-1 white--text" width="300">
                             <v-list v-model:opened="showToc" :lines="false" density="compact" dense nav>
@@ -34,45 +33,41 @@
                             <v-icon>mdi-chevron-left</v-icon>
                         </v-btn>
                     </v-col>
-                    <v-col class="align-items-center">
-                        <v-card class="mx-auto mt-8" max-width="1000" max-height="800" hover>
-                            <v-card-text>
+                    <v-col class="justify-center align-items-center">
+                        <div class="pdf-container">
+                            <v-card class="mt-0" hover>
                                 <canvas id="pdf-canvas"> </canvas>
-                            </v-card-text>
-                        </v-card>
+                            </v-card>
+                        </div>
                     </v-col>
                     <v-col class="d-flex justify-end align-items-center">
-                        <div>
-                            <v-btn icon @click="nextPage">
-                                <v-icon>mdi-chevron-right</v-icon>
-                            </v-btn>
-                        </div>
-
-                        <!-- Add zoom in and zoom out -->
-                        <div class="mb-2">
-                            <v-btn icon @click="zoomOut" class="mr-2">
-                                <v-icon>mdi-minus</v-icon>
-                            </v-btn>
-                            <v-btn icon @click="zoomIn" class="mr-2">
-                                <v-icon>mdi-plus</v-icon>
-                            </v-btn>
-                        </div>
+                        <v-btn icon @click="nextPage">
+                            <v-icon>mdi-chevron-right</v-icon>
+                        </v-btn>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-footer padless height="45" class="mt-6 d-flex justify-center align-center">
-                        <v-spacer></v-spacer>
-                        <v-btn icon @click="previousPage">
-                            <v-icon>mdi-arrow-left</v-icon>
-                        </v-btn>
-                        <span class="mx-2">Page {{ page }} of {{ totalPages }}</span>
-                        <v-btn icon @click="nextPage">
-                            <v-icon>mdi-arrow-right</v-icon>
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                    </v-footer>
-                </v-row>
             </v-main>
+            <v-bottom-navigation class="bg-light">
+                <v-spacer></v-spacer>
+                <div class="d-flex justify-center align-items-center">
+                    <v-btn icon @click="previousPage">
+                        <v-icon>mdi-arrow-left</v-icon>
+                    </v-btn>
+                    <span class="mx-2">Page {{ page }} of {{ totalPages }}</span>
+                    <v-btn icon @click="nextPage">
+                        <v-icon>mdi-arrow-right</v-icon>
+                    </v-btn>
+                </div>
+                <v-spacer></v-spacer>
+                <div class="d-flex justify-end align-items-right">
+                    <v-btn icon size="small" @click="zoomOut" class="mb-2">
+                        <v-icon>mdi-minus</v-icon>
+                    </v-btn>
+                    <v-btn icon size="small" @click="zoomIn" class="mb-2">
+                        <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                </div>
+            </v-bottom-navigation>
         </v-app>
     </v-dialog>
 </template>
@@ -104,7 +99,7 @@ export default {
             toc: [],
             isTocVisible: false,
             manualPage: '',
-            scale: 6,
+            scale: 0.5,
             showToc: ["Toc"],
         };
     },
@@ -134,13 +129,20 @@ export default {
                 const page = await this.pdfDoc.getPage(this.page);
                 const canvas = document.getElementById('pdf-canvas');
                 const context = canvas.getContext('2d');
+
+                const container = canvas.parentElement;
+                const containerWidth = container.clientWidth;
+                console.log('containerWidth', containerWidth);
                 const viewport = page.getViewport({ scale: this.scale });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                const scale = containerWidth / viewport.width;
+                const scaledViewport = page.getViewport({ scale: scale });
+
+                canvas.width = scaledViewport.width;
+                canvas.height = scaledViewport.height;
 
                 const renderContext = {
                     canvasContext: context,
-                    viewport: viewport,
+                    viewport: scaledViewport,
                 };
                 await page.render(renderContext).promise;
 
@@ -226,13 +228,17 @@ export default {
             this.isTocVisible = !this.isTocVisible;
         },
         zoomIn() {
-            this.scale *= 1.1; // Increase scale by 10%
-            this.renderPage();
+            const pdfCanvas = document.querySelector('#pdf-canvas');
+            pdfCanvas.style.width = `${pdfCanvas.offsetWidth * 1.1}px`;
+            pdfCanvas.style.height = `${pdfCanvas.offsetHeight * 1.1}px`;
         },
+
         zoomOut() {
-            this.scale /= 1.1; // Decrease scale by 10%
-            this.renderPage();
-        },
+            const pdfCanvas = document.querySelector('#pdf-canvas');
+            pdfCanvas.style.width = `${pdfCanvas.offsetWidth / 1.1}px`;
+            pdfCanvas.style.height = `${pdfCanvas.offsetHeight / 1.1}px`;
+        }
+
     },
     created() {
         this.loadPdf();
@@ -241,14 +247,24 @@ export default {
 </script>
 
 <style scoped>
-.v-card-text {
-    overflow: auto;
+.v-card {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.pdf-container {
+    overflow-y: auto;
+    max-height: 80vh;
+    width: 100%;
+    display: block;
+    justify-content: center;
 }
 
 #pdf-canvas {
-    height: calc(80vh - 80px);
     width: 700px;
-    overflow: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .wrap-text {
