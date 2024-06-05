@@ -1,27 +1,27 @@
-<template>
-    <v-toolbar density="compact">
-        <v-app-bar-nav-icon @click="$emit('toggle-toc')" />
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-toolbar-title>{{ title }}</v-toolbar-title>
-        <v-spacer></v-spacer>
+    <template>
+        <v-toolbar density="compact" flat>
+            <v-app-bar-nav-icon @click="$emit('toggle-toc')" />
+            <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
+            <v-toolbar-title>{{ title }}</v-toolbar-title>
+            <v-spacer></v-spacer>
 
-        <v-btn icon>
-            <v-icon>mdi-crosshairs-gps</v-icon>
-        </v-btn>
+            <v-btn icon>
+                <v-icon>mdi-crosshairs-gps</v-icon>
+            </v-btn>
 
-        <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
+            <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
 
-        <v-btn icon @click="toggleFullscreen">
-            <v-icon>{{ isfullScreen ? 'mdi-window-minimize' : 'mdi-window-maximize' }}</v-icon>
-        </v-btn>
-        <v-btn icon small @click="CloseReader">
-            <v-icon>mdi-close</v-icon>
-        </v-btn>
-    </v-toolbar>
-</template>
+            <v-btn icon @click="toggleFullscreen">
+                <v-icon>{{ isfullScreen ? 'mdi-window-minimize' : 'mdi-window-maximize' }}</v-icon>
+            </v-btn>
+            <v-btn icon small @click="CloseReader">
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+        </v-toolbar>
+    </template>
 
 
 <script>
