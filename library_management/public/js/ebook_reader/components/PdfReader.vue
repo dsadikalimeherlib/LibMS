@@ -53,7 +53,10 @@
                     <v-btn icon @click="previousPage">
                         <v-icon>mdi-arrow-left</v-icon>
                     </v-btn>
-                    <span class="mx-2">Page {{ page }} of {{ totalPages }}</span>
+                    <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)"
+                        @mouseleave="updatePlaceholder" class="mx-2 page-input-field" min="1" :max="totalPages" outlined
+                        dense small>
+                    </v-text-field>
                     <v-btn icon @click="nextPage">
                         <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>
@@ -105,7 +108,8 @@ export default {
     },
     watch: {
         page(newVal) {
-            this.manualPage = newVal;
+            this.manualPage = newVal.toString();
+            this.updatePlaceholder();
         }
     },
     methods: {
@@ -118,6 +122,7 @@ export default {
                 this.totalPages = this.pdfDoc.numPages;
                 this.loadToc();
                 this.renderPage();
+                this.updatePlaceholder();
                 this.show = true;
 
             } catch (error) {
@@ -132,7 +137,6 @@ export default {
 
                 const container = canvas.parentElement;
                 const containerWidth = container.clientWidth;
-                console.log('containerWidth', containerWidth);
                 const viewport = page.getViewport({ scale: this.scale });
                 const scale = containerWidth / viewport.width;
                 const scaledViewport = page.getViewport({ scale: scale });
@@ -202,18 +206,25 @@ export default {
             if (pageNum && pageNum >= 1 && pageNum <= this.totalPages) {
                 this.page = pageNum;
                 this.renderPage();
+                this.updatePlaceholder();
             }
         },
+        updatePlaceholder() {
+            this.manualPage = `${this.page}/${this.totalPages}`;
+        },
+
         nextPage() {
             if (this.book.type === 'pdf' && this.page < this.totalPages) {
                 this.page++;
                 this.renderPage();
+                this.updatePlaceholder();
             }
         },
         previousPage() {
             if (this.book.type === 'pdf' && this.page > 1) {
                 this.page--;
                 this.renderPage();
+                this.updatePlaceholder();
             }
         },
         closeReader() {
@@ -271,5 +282,11 @@ export default {
     white-space: normal;
     word-wrap: break-word;
     width: 100%;
+}
+
+.page-input-field .v-field__input {
+    width: 40px;
+    font-weight: bold;
+    color: black;
 }
 </style>
