@@ -228,12 +228,11 @@ export default {
             }
         },
         closeReader() {
-            if (this.rendition) {
-                this.rendition.destroy();
-                this.bookInstance = null;
-                this.bookTitle = '';
-                this.show = false;
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
             }
+            this.show = false;
+            this.$emit('close-reader');
         },
         toggleToc() {
             this.isTocVisible = !this.isTocVisible;
