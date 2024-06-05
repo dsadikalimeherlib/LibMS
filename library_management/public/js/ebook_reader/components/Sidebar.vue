@@ -1,6 +1,9 @@
 <template>
     <v-toolbar color="primary">
-        <v-app-bar-nav-icon @click="toggleSidebar"></v-app-bar-nav-icon>
+        <template v-slot:prepend>
+            <v-app-bar-nav-icon @click="toggleSidebar"></v-app-bar-nav-icon>
+            <v-tooltip activator="parent" location="bottom">Toggle Sidebar</v-tooltip>
+        </template>
         <v-spacer></v-spacer>
         <v-toolbar-title>Book List</v-toolbar-title>
         <v-spacer></v-spacer>
