@@ -25114,6 +25114,7 @@ This will fail in production.`);
   // sfc-template:/home/dev2/projects/v15/apps/library_management/library_management/public/js/ebook_reader/components/Sidebar.vue?type=template
   function render(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_v_app_bar_nav_icon = resolveComponent("v-app-bar-nav-icon");
+    const _component_v_tooltip = resolveComponent("v-tooltip");
     const _component_v_spacer = resolveComponent("v-spacer");
     const _component_v_toolbar_title = resolveComponent("v-toolbar-title");
     const _component_v_text_field = resolveComponent("v-text-field");
@@ -25126,8 +25127,19 @@ This will fail in production.`);
     const _component_v_navigation_drawer = resolveComponent("v-navigation-drawer");
     return openBlock(), createElementBlock(Fragment, null, [
       createVNode(_component_v_toolbar, { color: "primary" }, {
-        default: withCtx(() => [
+        prepend: withCtx(() => [
           createVNode(_component_v_app_bar_nav_icon, { onClick: $options.toggleSidebar }, null, 8, ["onClick"]),
+          createVNode(_component_v_tooltip, {
+            activator: "parent",
+            location: "bottom"
+          }, {
+            default: withCtx(() => [
+              createTextVNode("Toggle Sidebar")
+            ]),
+            _: 1
+          })
+        ]),
+        default: withCtx(() => [
           createVNode(_component_v_spacer),
           createVNode(_component_v_toolbar_title, null, {
             default: withCtx(() => [
@@ -34548,6 +34560,7 @@ This will fail in production.`);
   // sfc-template:/home/dev2/projects/v15/apps/library_management/library_management/public/js/ebook_reader/components/PdfTitlebar.vue?type=template
   function render4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_v_app_bar_nav_icon = resolveComponent("v-app-bar-nav-icon");
+    const _component_v_tooltip = resolveComponent("v-tooltip");
     const _component_v_spacer = resolveComponent("v-spacer");
     const _component_v_toolbar_title = resolveComponent("v-toolbar-title");
     const _component_v_icon = resolveComponent("v-icon");
@@ -34557,10 +34570,21 @@ This will fail in production.`);
       density: "compact",
       flat: ""
     }, {
-      default: withCtx(() => [
+      prepend: withCtx(() => [
         createVNode(_component_v_app_bar_nav_icon, {
           onClick: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("toggle-toc"))
         }),
+        createVNode(_component_v_tooltip, {
+          activator: "parent",
+          location: "bottom"
+        }, {
+          default: withCtx(() => [
+            createTextVNode("Table of Content")
+          ]),
+          _: 1
+        })
+      ]),
+      default: withCtx(() => [
         createVNode(_component_v_spacer),
         createVNode(_component_v_spacer),
         createVNode(_component_v_toolbar_title, null, {
@@ -34575,6 +34599,15 @@ This will fail in production.`);
             createVNode(_component_v_icon, null, {
               default: withCtx(() => [
                 createTextVNode("mdi-crosshairs-gps")
+              ]),
+              _: 1
+            }),
+            createVNode(_component_v_tooltip, {
+              activator: "parent",
+              location: "bottom"
+            }, {
+              default: withCtx(() => [
+                createTextVNode("Theme")
               ]),
               _: 1
             })
@@ -34602,7 +34635,26 @@ This will fail in production.`);
                 createTextVNode(toDisplayString($data.isfullScreen ? "mdi-window-minimize" : "mdi-window-maximize"), 1)
               ]),
               _: 1
-            })
+            }),
+            $data.isfullScreen ? (openBlock(), createBlock(_component_v_tooltip, {
+              key: 0,
+              activator: "parent",
+              location: "bottom"
+            }, {
+              default: withCtx(() => [
+                createTextVNode("Exit Full Screen")
+              ]),
+              _: 1
+            })) : !$data.isfullScreen ? (openBlock(), createBlock(_component_v_tooltip, {
+              key: 1,
+              activator: "parent",
+              location: "bottom"
+            }, {
+              default: withCtx(() => [
+                createTextVNode("Go Full Screen")
+              ]),
+              _: 1
+            })) : createCommentVNode("v-if", true)
           ]),
           _: 1
         }, 8, ["onClick"]),
@@ -34615,6 +34667,15 @@ This will fail in production.`);
             createVNode(_component_v_icon, null, {
               default: withCtx(() => [
                 createTextVNode("mdi-close")
+              ]),
+              _: 1
+            }),
+            createVNode(_component_v_tooltip, {
+              activator: "parent",
+              location: "bottom"
+            }, {
+              default: withCtx(() => [
+                createTextVNode("Close")
               ]),
               _: 1
             })
@@ -34806,6 +34867,7 @@ This will fail in production.`);
     const _component_PdfTitlebar = resolveComponent("PdfTitlebar");
     const _component_v_app_bar = resolveComponent("v-app-bar");
     const _component_v_btn = resolveComponent("v-btn");
+    const _component_v_tooltip = resolveComponent("v-tooltip");
     const _component_v_list_item = resolveComponent("v-list-item");
     const _component_v_list_item_title = resolveComponent("v-list-item-title");
     const _component_v_list_group = resolveComponent("v-list-group");
@@ -34877,6 +34939,15 @@ This will fail in production.`);
                                           icon: "mdi-table-of-contents",
                                           size: "large",
                                           variant: "text"
+                                        }),
+                                        createVNode(_component_v_tooltip, {
+                                          activator: "parent",
+                                          location: "bottom"
+                                        }, {
+                                          default: withCtx(() => [
+                                            createTextVNode("Content")
+                                          ]),
+                                          _: 1
                                         })
                                       ]),
                                       _: 2
@@ -34925,6 +34996,15 @@ This will fail in production.`);
                                 createTextVNode("mdi-chevron-left")
                               ]),
                               _: 1
+                            }),
+                            createVNode(_component_v_tooltip, {
+                              activator: "parent",
+                              location: "top"
+                            }, {
+                              default: withCtx(() => [
+                                createTextVNode("Previous Page")
+                              ]),
+                              _: 1
                             })
                           ]),
                           _: 1
@@ -34960,6 +35040,15 @@ This will fail in production.`);
                                 createTextVNode("mdi-chevron-right")
                               ]),
                               _: 1
+                            }),
+                            createVNode(_component_v_tooltip, {
+                              activator: "parent",
+                              location: "top"
+                            }, {
+                              default: withCtx(() => [
+                                createTextVNode("Next Page")
+                              ]),
+                              _: 1
                             })
                           ]),
                           _: 1
@@ -34985,6 +35074,15 @@ This will fail in production.`);
                       createVNode(_component_v_icon, null, {
                         default: withCtx(() => [
                           createTextVNode("mdi-arrow-left")
+                        ]),
+                        _: 1
+                      }),
+                      createVNode(_component_v_tooltip, {
+                        activator: "parent",
+                        location: "top"
+                      }, {
+                        default: withCtx(() => [
+                          createTextVNode("Previous Page")
                         ]),
                         _: 1
                       })
@@ -35013,6 +35111,15 @@ This will fail in production.`);
                           createTextVNode("mdi-arrow-right")
                         ]),
                         _: 1
+                      }),
+                      createVNode(_component_v_tooltip, {
+                        activator: "parent",
+                        location: "top"
+                      }, {
+                        default: withCtx(() => [
+                          createTextVNode("Next Page")
+                        ]),
+                        _: 1
                       })
                     ]),
                     _: 1
@@ -35032,6 +35139,15 @@ This will fail in production.`);
                           createTextVNode("mdi-minus")
                         ]),
                         _: 1
+                      }),
+                      createVNode(_component_v_tooltip, {
+                        activator: "parent",
+                        location: "top"
+                      }, {
+                        default: withCtx(() => [
+                          createTextVNode("zoomOut")
+                        ]),
+                        _: 1
                       })
                     ]),
                     _: 1
@@ -35046,6 +35162,15 @@ This will fail in production.`);
                       createVNode(_component_v_icon, null, {
                         default: withCtx(() => [
                           createTextVNode("mdi-plus")
+                        ]),
+                        _: 1
+                      }),
+                      createVNode(_component_v_tooltip, {
+                        activator: "parent",
+                        location: "top"
+                      }, {
+                        default: withCtx(() => [
+                          createTextVNode("zoomIn")
                         ]),
                         _: 1
                       })
@@ -61125,4 +61250,4 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=books.bundle.3D2AEH5Z.js.map
+//# sourceMappingURL=books.bundle.X2SWG7V6.js.map

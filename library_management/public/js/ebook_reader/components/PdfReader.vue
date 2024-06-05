@@ -14,6 +14,7 @@
                                         <v-list-item v-bind="props" title="Table of Content">
                                             <template v-slot:prepend>
                                                 <v-btn icon="mdi-table-of-contents" size="large" variant="text"></v-btn>
+                                                <v-tooltip activator="parent" location="bottom">Content</v-tooltip>
                                             </template>
                                         </v-list-item>
                                     </template>
@@ -31,6 +32,7 @@
                     <v-col class="d-flex justify-start align-items-center">
                         <v-btn icon @click="previousPage">
                             <v-icon>mdi-chevron-left</v-icon>
+                            <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
                         </v-btn>
                     </v-col>
                     <v-col class="justify-center align-items-center">
@@ -43,6 +45,7 @@
                     <v-col class="d-flex justify-end align-items-center">
                         <v-btn icon @click="nextPage">
                             <v-icon>mdi-chevron-right</v-icon>
+                            <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
                         </v-btn>
                     </v-col>
                 </v-row>
@@ -52,6 +55,7 @@
                 <div class="d-flex justify-center align-items-center">
                     <v-btn icon @click="previousPage">
                         <v-icon>mdi-arrow-left</v-icon>
+                        <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
                     </v-btn>
                     <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)"
                         @mouseleave="updatePlaceholder" class="mx-2 page-input-field" min="1" :max="totalPages" outlined
@@ -59,15 +63,18 @@
                     </v-text-field>
                     <v-btn icon @click="nextPage">
                         <v-icon>mdi-arrow-right</v-icon>
+                        <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
                     </v-btn>
                 </div>
                 <v-spacer></v-spacer>
                 <div class="d-flex justify-end align-items-right">
                     <v-btn icon size="small" @click="zoomOut" class="mb-2">
                         <v-icon>mdi-minus</v-icon>
+                        <v-tooltip activator="parent" location="top">zoomOut</v-tooltip>
                     </v-btn>
                     <v-btn icon size="small" @click="zoomIn" class="mb-2">
                         <v-icon>mdi-plus</v-icon>
+                        <v-tooltip activator="parent" location="top">zoomIn</v-tooltip>
                     </v-btn>
                 </div>
             </v-bottom-navigation>
