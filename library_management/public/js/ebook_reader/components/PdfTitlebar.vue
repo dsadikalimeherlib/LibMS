@@ -47,6 +47,9 @@ export default {
     },
     methods: {
         CloseReader() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
             this.$emit('close-reader');
         },
         toggleFullscreen() {
