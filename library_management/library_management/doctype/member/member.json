@@ -20,20 +20,15 @@
   "library_service",
   "membership_status",
   "notify_by",
+  "disable",
   "membership_details_section",
   "membership_details",
   "dashboard_tab",
   "address_contact_tab",
-  "section_break_zhdv",
   "member_address",
   "address_html",
   "display_address",
   "column_break_bbcfs",
-  "customer_primary_contact",
-  "contact_html",
-  "display_contact",
-  "mobile_number",
-  "email_id",
   "image",
   "mobile",
   "verify",
@@ -43,7 +38,8 @@
   "id_document_no",
   "id_attachment",
   "remark",
-  "connection_tab"
+  "connection_tab",
+  "add_address"
  ],
  "fields": [
   {
@@ -180,7 +176,7 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "New\nActive\nCurrent\nExpired\nPending\nCancelled",
+   "options": "New\nActive\nCurrent\nExpired\nPending\nTerminate\nCancelled",
    "read_only": 1
   },
   {
@@ -233,6 +229,12 @@
    "fieldname": "otp",
    "fieldtype": "Data",
    "label": "otp"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "label": "Disable"
   }
  ],
  "image_field": "image",
@@ -248,7 +250,7 @@
    "link_fieldname": "member"
   }
  ],
- "modified": "2024-03-27 16:57:15.315458",
+ "modified": "2024-06-06 12:33:55.174387",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",

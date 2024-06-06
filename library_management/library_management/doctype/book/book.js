@@ -22,9 +22,6 @@ frappe.ui.form.on('Book', {
                             if (bookInfo.image_url) {
                                 uploadThumbnail(frm, bookInfo.image_url);
                             }
-
-
-
                             // Check and create Author
                             createAuthor(frm, bookInfo.author);
 
@@ -45,9 +42,20 @@ frappe.ui.form.on('Book', {
             toggleSearchVisibility(frm);
         });
     },
+    disable: function(frm){
+        var is_disabled = frm.doc.disable;
+
+        // Update the membership status based on the checkbox value
+        if (is_disabled) {
+            frm.set_value('membership_status', 'Terminate');
+        } else {
+            //frm.set_value('membership_status', 'Active');
+        }
+    },
     before_save: function(frm) {
         if (frm.doc.isbn && !frm.doc.image) {
             fetchBookDetails(frm);
+            fetchNumberofcopi(frm);
         }
     
     // Retrieve book category from the document and call createBookCategory function
@@ -56,12 +64,18 @@ frappe.ui.form.on('Book', {
         createBookCategory(frm, bookCategory);
     }
     }
+
 });
+
+function fetchNumberofcopi(frm){
+    var num_of_copy = frm.get_all("Asset")
+}
 
 function toggleSearchVisibility(frm) {
     var showSearch = frm.doc.__unsaved || frm.doc.__islocal;
     frm.toggle_display('search', showSearch);
 }
+
 
 function uploadThumbnail(frm, thumbnailUrl) {
     let imageFile = new FormData();
