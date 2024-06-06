@@ -138,12 +138,8 @@ export default {
       if (document.fullscreenElement) {
         document.exitFullscreen();
       }
-      if (this.rendition) {
-        this.rendition.destroy();
-        this.bookInstance = null;
-        this.bookTitle = '';
-        this.show = false;
-      }
+      this.show = false;
+      this.$emit('close-reader');
     },
   },
   created() {

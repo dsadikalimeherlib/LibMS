@@ -34157,6 +34157,9 @@ This will fail in production.`);
     },
     methods: {
       CloseReader() {
+        if (document.isFullscreen) {
+          document.exitFullscreen();
+        }
         this.$emit("close-reader");
       },
       toggleFullscreen() {
@@ -34362,12 +34365,8 @@ This will fail in production.`);
         if (document.fullscreenElement) {
           document.exitFullscreen();
         }
-        if (this.rendition) {
-          this.rendition.destroy();
-          this.bookInstance = null;
-          this.bookTitle = "";
-          this.show = false;
-        }
+        this.show = false;
+        this.$emit("close-reader");
       }
     },
     created() {
@@ -61241,4 +61240,4 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=books.bundle.22KZNOQD.js.map
+//# sourceMappingURL=books.bundle.EJBG7VT5.js.map
