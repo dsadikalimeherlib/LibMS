@@ -8,9 +8,8 @@ class Book(WebsiteGenerator):
     def validate(self):
         # Uncomment the line below to create an item when the book is saved
         # self.create_item_from_book()
-        frappe.msgprint("Validation successful")
+        #frappe.msgprint("Validation successful")
         self.create_item_from_book()
-        # self.sample()
 
     # def sample(self):
     #     if self.is_new():
@@ -24,8 +23,8 @@ class Book(WebsiteGenerator):
             #category = frappe.get_value('Library Setting', filters={'name': 'default_asset_category'}, fieldname='default_asset_category')
             item_doc = frappe.get_doc({
                 'doctype': 'Item',
-                'item_code': self.title,
-                'item_name': self.title,
+                'item_code': self.name,
+                'item_name': self.book_title,
                 'item_group': self.book_category,
                 'is_stock_item': 0,
                 'include_item_in_manufacturing': 0,
@@ -36,3 +35,4 @@ class Book(WebsiteGenerator):
             item_doc.insert()
             self.item_name = item_doc.name
             frappe.msgprint("Item created successfully")
+

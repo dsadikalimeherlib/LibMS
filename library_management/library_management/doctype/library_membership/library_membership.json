@@ -9,17 +9,13 @@
  "field_order": [
   "member",
   "member_name",
-  "library_service",
   "column_break_3",
   "company",
   "membership_status",
   "membership_validity_section",
-  "days",
-  "from_date",
-  "to_date",
+  "column_break_ffjx",
   "column_break_8",
   "member_since_date",
-  "month",
   "section_break_btgb",
   "library_membership_details",
   "payment_details",
@@ -49,12 +45,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "library_service",
-   "fieldtype": "Link",
-   "label": "Library Service",
-   "options": "Library Service"
-  },
-  {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
@@ -71,31 +61,12 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Membership Status",
-   "options": "New\nActive\nCurrent\nExpired\nPending\nCancelled"
+   "options": "Active\nCurrent\nExpired\nPending\nCancelled"
   },
   {
    "fieldname": "membership_validity_section",
    "fieldtype": "Section Break",
    "label": "Validity"
-  },
-  {
-   "fetch_from": "library_service.days",
-   "fieldname": "days",
-   "fieldtype": "Data",
-   "label": "Days"
-  },
-  {
-   "default": "Today",
-   "fieldname": "from_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "From"
-  },
-  {
-   "fieldname": "to_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "To"
   },
   {
    "fieldname": "column_break_8",
@@ -169,12 +140,6 @@
    "search_index": 1
   },
   {
-   "fieldname": "month",
-   "fieldtype": "Select",
-   "label": "Month",
-   "options": "\n1\n3\n6\n9\n12"
-  },
-  {
    "fieldname": "section_break_btgb",
    "fieldtype": "Section Break"
   },
@@ -183,12 +148,16 @@
    "fieldtype": "Table",
    "label": "Library Membership Details",
    "options": "Library Membership Details"
+  },
+  {
+   "fieldname": "column_break_ffjx",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-11 18:59:08.955607",
+ "modified": "2024-06-05 12:54:57.145596",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Membership",

@@ -10,7 +10,7 @@
  "field_order": [
   "type_section",
   "transaction_type",
-  "barcode",
+  "scan_barcode",
   "column_break_qg935",
   "member_number",
   "member_name",
@@ -83,6 +83,7 @@
    "label": "Type"
   },
   {
+   "depends_on": "eval:doc.transaction_type != \"Return\" && doc.transaction_type != \"Renew\"",
    "fieldname": "member_number",
    "fieldtype": "Link",
    "label": "Member Number",
@@ -90,9 +91,9 @@
    "unique": 1
   },
   {
-   "fieldname": "barcode",
+   "fieldname": "scan_barcode",
    "fieldtype": "Data",
-   "label": "barcode",
+   "label": "Scan Barcode",
    "options": "Barcode"
   }
  ],
@@ -104,7 +105,7 @@
    "link_fieldname": "transaction_no"
   }
  ],
- "modified": "2024-05-11 17:37:21.646570",
+ "modified": "2024-06-05 15:05:23.880218",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",

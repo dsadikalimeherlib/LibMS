@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"fYC6BqvpLI\",\"type\":\"header\",\"data\":{\"text\":\"<b>Your Shortcuts</b><br>\",\"col\":12}},{\"id\":\"ScjQUni4sG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Member\",\"col\":3}},{\"id\":\"i1mZS-4zQh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Membership\",\"col\":3}},{\"id\":\"8FYLSYlLVM\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"1hAaHh7yTf\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h3\\\">Masters</span>\",\"col\":12}},{\"id\":\"h_UPPe439y\",\"type\":\"card\",\"data\":{\"card_name\":\"Book Master\",\"col\":4}},{\"id\":\"kTwnDL_kDW\",\"type\":\"card\",\"data\":{\"card_name\":\"Author & Editor\",\"col\":4}},{\"id\":\"5cQrsAvmpr\",\"type\":\"card\",\"data\":{\"card_name\":\"Membership\",\"col\":4}},{\"id\":\"KiHo9hc-XS\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"fa5oEpwQUH\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":4}}]",
+ "content": "[{\"id\":\"fYC6BqvpLI\",\"type\":\"header\",\"data\":{\"text\":\"<b>Your Shortcuts</b><br>\",\"col\":12}},{\"id\":\"ScjQUni4sG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Member\",\"col\":3}},{\"id\":\"HHwMMj0rIr\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Book Asset No\",\"col\":3}},{\"id\":\"8FYLSYlLVM\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"1hAaHh7yTf\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h3\\\">Masters</span>\",\"col\":12}},{\"id\":\"h_UPPe439y\",\"type\":\"card\",\"data\":{\"card_name\":\"Book Master\",\"col\":4}},{\"id\":\"kTwnDL_kDW\",\"type\":\"card\",\"data\":{\"card_name\":\"Author & Editor\",\"col\":4}},{\"id\":\"5cQrsAvmpr\",\"type\":\"card\",\"data\":{\"card_name\":\"Membership\",\"col\":4}},{\"id\":\"KiHo9hc-XS\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"fa5oEpwQUH\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":4}}]",
  "creation": "2024-01-10 16:21:03.690486",
  "custom_blocks": [],
  "docstatus": 0,
@@ -74,8 +74,47 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Membership",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Member",
+   "link_count": 0,
+   "link_to": "Member",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Library Service",
+   "link_count": 0,
+   "link_to": "Library Service",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Library Membership",
+   "link_count": 0,
+   "link_to": "Library Membership",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Transaction",
-   "link_count": 1,
+   "link_count": 2,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -93,8 +132,18 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "DCC",
+   "link_count": 0,
+   "link_to": "DDC",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Book Master",
-   "link_count": 4,
+   "link_count": 5,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -142,44 +191,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Membership",
-   "link_count": 3,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Member",
+   "label": "Barcode Generator",
    "link_count": 0,
-   "link_to": "Member",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Membership",
-   "link_count": 0,
-   "link_to": "Membership",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Library Service",
-   "link_count": 0,
-   "link_to": "Library Service",
+   "link_to": "Barcode Generator",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2024-02-01 18:29:00.062590",
+ "modified": "2024-06-05 13:02:36.858302",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "LMS",
@@ -192,18 +212,18 @@
  "sequence_id": 5.0,
  "shortcuts": [
   {
-   "color": "Grey",
+   "color": "Yellow",
    "doc_view": "List",
-   "label": "Member",
-   "link_to": "Member",
+   "label": "Book Asset No",
+   "link_to": "Asset",
    "stats_filter": "[]",
    "type": "DocType"
   },
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Membership",
-   "link_to": "Membership",
+   "label": "Member",
+   "link_to": "Member",
    "stats_filter": "[]",
    "type": "DocType"
   }

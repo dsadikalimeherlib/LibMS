@@ -59,6 +59,9 @@ app_license = "MIT"
 #	"methods": "library_management.utils.jinja_methods",
 #	"filters": "library_management.utils.jinja_filters"
 # }
+jinja = {
+    "methods": ["library_management.custom_api.generate_qrcode"]
+}
 
 # Installation
 # ------------

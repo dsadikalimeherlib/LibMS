@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:title",
+ "autoname": "naming_series:",
  "creation": "2024-02-14 11:23:24.741076",
  "default_view": "List",
  "doctype": "DocType",
@@ -10,12 +10,14 @@
  "field_order": [
   "isbn_section",
   "isbn",
+  "naming_series",
   "column_break_ymum",
   "search",
   "disabled",
   "books_details_section",
   "book_code",
   "title",
+  "book_title",
   "book_category",
   "subject",
   "language",
@@ -58,9 +60,8 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
-   "reqd": 1,
-   "unique": 1
+   "hidden": 1,
+   "label": "Title"
   },
   {
    "fieldname": "book_category",
@@ -69,12 +70,6 @@
    "label": "Book Category",
    "options": "Book Category",
    "reqd": 1
-  },
-  {
-   "fetch_from": "book_code.subject",
-   "fieldname": "subject",
-   "fieldtype": "Data",
-   "label": "Subject"
   },
   {
    "fieldname": "language",
@@ -94,8 +89,7 @@
   {
    "fieldname": "isbn",
    "fieldtype": "Data",
-   "label": "ISBN",
-   "reqd": 1
+   "label": "ISBN"
   },
   {
    "fieldname": "year_of_publication",
@@ -291,7 +285,8 @@
    "fieldname": "book_code",
    "fieldtype": "Link",
    "label": "Book Code",
-   "options": "DDC"
+   "options": "DDC",
+   "reqd": 1
   },
   {
    "fieldname": "donation_details_section",
@@ -309,6 +304,24 @@
    "fieldtype": "Select",
    "label": "Digital File Type",
    "options": "\nepub\npdf"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "naming series"
+  },
+  {
+   "fetch_from": "book_code.subject",
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject"
+  },
+  {
+   "fieldname": "book_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Book Title",
+   "reqd": 1
   }
  ],
  "has_web_view": 1,
@@ -326,11 +339,11 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-05-22 17:59:17.496690",
+ "modified": "2024-06-05 20:49:35.226200",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
- "naming_rule": "By fieldname",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

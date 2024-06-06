@@ -105,3 +105,13 @@ class BookTransaction(Document):
             
         except Exception as e:
             frappe.msgprint(_("An error occurred while canceling Book Ledger entries: {0}").format(str(e)))
+    
+    @frappe.whitelist()
+    def get_asset_by_barcode(barcode):
+        asset = frappe.get_doc('Asset', {'barcode': barcode})
+        if asset:
+            return {
+                'asset_name': asset.asset_name
+            }
+        else:
+            return None
