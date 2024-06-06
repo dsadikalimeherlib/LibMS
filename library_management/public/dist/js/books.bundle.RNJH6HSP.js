@@ -34286,63 +34286,27 @@ This will fail in production.`);
         url: "",
         bookInstance: null,
         rendition: null,
-        pdfDoc: null,
         page: 1,
         totalPages: 0
       };
     },
     methods: {
-      async renderPage() {
-        if (this.book && this.book.book_url) {
-          this.url = frappe.urllib.get_full_url(this.book.book_url);
-          if (this.book.type === "epub") {
-            this.loadEPUB();
-          } else if (this.book.type === "pdf") {
-            this.loadPDF();
-          }
-        }
-      },
       async loadEPUB() {
-        try {
-          this.bookInstance = new book_default(this.url);
-          await this.bookInstance.ready;
-          this.rendition = new rendition_default(this.bookInstance, {
-            width: "100%",
-            height: "100%"
-          });
-          this.rendition.attachTo("epub-render-area");
-          this.rendition.display();
-          this.show = true;
-        } catch (error) {
-          console.error("Error loading book:", error);
-        }
-      },
-      async loadPDF() {
-        try {
-          const loadingTask = pdfjsLib.getDocument(this.url);
-          this.pdfDoc = await loadingTask.promise;
-          this.totalPages = this.pdfDoc.numPages;
-          this.renderPDFPage();
-          this.show = true;
-        } catch (error) {
-          console.error("Error loading PDF:", error);
-        }
-      },
-      async renderPDFPage() {
-        try {
-          const page = await this.pdfDoc.getPage(this.page);
-          const canvas = document.getElementById("pdf-canvas");
-          const context = canvas.getContext("2d");
-          const viewport = page.getViewport({ scale: 1.25 });
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          const renderContext = {
-            canvasContext: context,
-            viewport
-          };
-          await page.render(renderContext).promise;
-        } catch (error) {
-          console.error("Error rendering page:", error);
+        if (this.book && this.book.book_url) {
+          try {
+            this.url = frappe.urllib.get_full_url(this.book.book_url);
+            this.bookInstance = new book_default(this.url);
+            await this.bookInstance.ready;
+            this.rendition = new rendition_default(this.bookInstance, {
+              width: "100%",
+              height: "100%"
+            });
+            this.rendition.attachTo("epub-render-area");
+            this.rendition.display();
+            this.show = true;
+          } catch (error) {
+            console.error("Error loading book:", error);
+          }
         }
       },
       nextPage() {
@@ -34370,7 +34334,7 @@ This will fail in production.`);
       }
     },
     created() {
-      this.renderPage();
+      this.loadEPUB();
     }
   };
 
@@ -61240,4 +61204,4 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=books.bundle.EJBG7VT5.js.map
+//# sourceMappingURL=books.bundle.RNJH6HSP.js.map
