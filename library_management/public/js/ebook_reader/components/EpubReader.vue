@@ -50,70 +50,30 @@ export default {
       url: '',
       bookInstance: null,
       rendition: null,
-      pdfDoc: null,
       page: 1,
       totalPages: 0,
     };
   },
   methods: {
-    async renderPage() {
-      if (this.book && this.book.book_url) {
-        this.url = frappe.urllib.get_full_url(this.book.book_url);
-
-        if (this.book.type === 'epub') {
-          this.loadEPUB();
-        } else if (this.book.type === 'pdf') {
-          this.loadPDF();
-        }
-      }
-    },
-
     async loadEPUB() {
-      try {
-        this.bookInstance = new Book(this.url);
-        await this.bookInstance.ready;
+      if (this.book && this.book.book_url) {
+        try {
+          this.url = frappe.urllib.get_full_url(this.book.book_url);
 
-        this.rendition = new Rendition(this.bookInstance, {
-          width: "100%",
-          height: "100%",
-        });
-        this.rendition.attachTo("epub-render-area");
-        this.rendition.display();
+          this.bookInstance = new Book(this.url);
+          await this.bookInstance.ready;
 
-        this.show = true;
-      } catch (error) {
-        console.error('Error loading book:', error);
-      }
-    },
-    async loadPDF() {
-      try {
-        const loadingTask = pdfjsLib.getDocument(this.url);
-        this.pdfDoc = await loadingTask.promise;
-        this.totalPages = this.pdfDoc.numPages;
-        this.renderPDFPage();
-        this.show = true;
+          this.rendition = new Rendition(this.bookInstance, {
+            width: "100%",
+            height: "100%",
+          });
+          this.rendition.attachTo("epub-render-area");
+          this.rendition.display();
 
-      } catch (error) {
-        console.error('Error loading PDF:', error);
-      }
-    },
-    async renderPDFPage() {
-      try {
-        const page = await this.pdfDoc.getPage(this.page);
-        const canvas = document.getElementById('pdf-canvas');
-        const context = canvas.getContext('2d');
-        const viewport = page.getViewport({ scale: 1.25 });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        const renderContext = {
-          canvasContext: context,
-          viewport: viewport,
-        };
-        await page.render(renderContext).promise;
-
-      } catch (error) {
-        console.error('Error rendering page:', error);
+          this.show = true;
+        } catch (error) {
+          console.error('Error loading book:', error);
+        }
       }
     },
     nextPage() {
@@ -143,7 +103,7 @@ export default {
     },
   },
   created() {
-    this.renderPage();
+    this.loadEPUB();
   },
 };
 </script>
