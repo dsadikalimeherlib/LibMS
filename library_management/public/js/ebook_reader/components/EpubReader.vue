@@ -25,6 +25,21 @@
           </v-col>
         </v-row>
       </v-main>
+      <v-bottom-navigation class="bg-light">
+        <v-spacer></v-spacer>
+        <div class="d-flex justify-center align-items-center">
+          <v-btn icon @click="previousPage">
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+          <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)" @mouseleave="updatePlaceholder"
+            class="mx-2 page-input-field" min="1" :max="totalPages" outlined dense small>
+          </v-text-field>
+          <v-btn icon @click="nextPage">
+            <v-icon>mdi-arrow-right</v-icon>
+          </v-btn>
+        </div>
+        <v-spacer></v-spacer>
+      </v-bottom-navigation>
     </v-app>
   </v-dialog>
 </template>
@@ -52,7 +67,14 @@ export default {
       rendition: null,
       page: 1,
       totalPages: 0,
+      manualPage: '',
     };
+  },
+  watch: {
+    page(newVal) {
+      this.manualPage = newVal.toString();
+      this.updatePlaceholder();
+    }
   },
   methods: {
     async loadEPUB() {
@@ -70,6 +92,7 @@ export default {
           this.rendition.attachTo("epub-render-area");
           this.rendition.display();
 
+          this.totalPages = this.bookInstance.spine.length;
           this.show = true;
         } catch (error) {
           console.error('Error loading book:', error);
@@ -78,21 +101,28 @@ export default {
     },
     nextPage() {
       if (this.book.type === 'epub' && this.rendition) {
-        this.rendition.next();
-
-      } else if (this.book.type === 'pdf' && this.page < this.totalPages) {
         this.page++;
-        this.renderPDFPage();
+        this.rendition.next();
+        this.updatePlaceholder();
       }
     },
     previousPage() {
       if (this.book.type === 'epub' && this.rendition) {
-        this.rendition.prev();
-
-      } else if (this.book.type === 'pdf' && this.page > 1) {
         this.page--;
-        this.renderPDFPage();
+        this.rendition.prev();
+        this.updatePlaceholder();
       }
+    },
+    navigateToPage(pageNum) {
+      pageNum = parseInt(pageNum, 10);
+      if (pageNum && pageNum >= 1 && pageNum <= this.totalPages) {
+        this.page = pageNum;
+        this.rendition.display(this.page);
+        this.updatePlaceholder();
+      }
+    },
+    updatePlaceholder() {
+      this.manualPage = `${this.page}/${this.totalPages}`;
     },
     closeReader() {
       if (document.fullscreenElement) {
