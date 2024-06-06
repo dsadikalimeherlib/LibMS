@@ -2,7 +2,7 @@
   <v-dialog v-model="show" fullscreen hide-overlay>
     <v-app>
       <v-app-bar dense elevatedwill>
-        <Titlebar :title="book.title" @close-reader="closeReader" />
+        <EpubTitlebar :title="book.title" @close-reader="closeReader" />
       </v-app-bar>
       <v-main>
         <v-row>
@@ -12,12 +12,7 @@
             </v-btn>
           </v-col>
           <v-col class="align-items-center">
-            <v-card
-              class="mx-auto mt-8"
-              max-width="1000"
-              max-height="800"
-              hover
-            >
+            <v-card class="mx-auto mt-8" max-width="1000" max-height="800" hover>
               <v-card-text>
                 <div v-if="book.type === 'epub'" id="epub-render-area" style="height: calc(80vh - 80px);"></div>
               </v-card-text>
@@ -30,26 +25,18 @@
           </v-col>
         </v-row>
       </v-main>
-      <v-footer padless height="45">
-        <!-- <v-slider v-model="sliderValue" :step="0.01" :format="lableFromPercentage" @change="onSliderValueChange" /> -->
-        <!-- page footer -->
-      </v-footer>
-
-      <!-- <buble-menu ref="bubleMenu" @highlight-btn-click="highlightSelection" /> -->
     </v-app>
   </v-dialog>
 </template>
 
 <script>
-// Import your components like toc-menu, bookmark-menu etc.
 import { Book, Rendition } from 'epubjs';
-
-import Titlebar from './Titlebar.vue';
+import EpubTitlebar from './EpubTitlebar.vue';
 
 export default {
-  name: 'Reader',
+  name: 'EpubReader',
   components: {
-    Titlebar,
+    EpubTitlebar,
   },
   props: {
     book: {
@@ -148,6 +135,9 @@ export default {
       }
     },
     closeReader() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
       if (this.rendition) {
         this.rendition.destroy();
         this.bookInstance = null;
@@ -170,6 +160,7 @@ export default {
 #epub-render-area {
   max-height: 80vh;
 }
+
 #pdf-canvas {
   height: calc(80vh - 80px);
   width: 700px;

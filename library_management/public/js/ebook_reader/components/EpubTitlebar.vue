@@ -18,7 +18,7 @@
       <v-icon>{{ isfullScreen ? 'mdi-window-minimize' : 'mdi-window-maximize' }}</v-icon>
     </v-btn>
     <v-btn icon small @click="CloseReader">
-        <v-icon>mdi-close</v-icon>
+      <v-icon>mdi-close</v-icon>
     </v-btn>
   </v-toolbar>
 </template>
@@ -27,7 +27,7 @@
 <script>
 
 export default {
-  name: 'Titlebar',
+  name: 'EpubTitlebar',
   props: {
     title: {
       default: 'Libms',
@@ -78,5 +78,4 @@ export default {
 .v-dialog--fullscreen {
   background-color: white;
 }
-
 </style>
