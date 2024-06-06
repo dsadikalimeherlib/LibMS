@@ -34287,8 +34287,15 @@ This will fail in production.`);
         bookInstance: null,
         rendition: null,
         page: 1,
-        totalPages: 0
+        totalPages: 0,
+        manualPage: ""
       };
+    },
+    watch: {
+      page(newVal) {
+        this.manualPage = newVal.toString();
+        this.updatePlaceholder();
+      }
     },
     methods: {
       async loadEPUB() {
@@ -34303,6 +34310,7 @@ This will fail in production.`);
             });
             this.rendition.attachTo("epub-render-area");
             this.rendition.display();
+            this.totalPages = this.bookInstance.spine.length;
             this.show = true;
           } catch (error) {
             console.error("Error loading book:", error);
@@ -34311,19 +34319,28 @@ This will fail in production.`);
       },
       nextPage() {
         if (this.book.type === "epub" && this.rendition) {
-          this.rendition.next();
-        } else if (this.book.type === "pdf" && this.page < this.totalPages) {
           this.page++;
-          this.renderPDFPage();
+          this.rendition.next();
+          this.updatePlaceholder();
         }
       },
       previousPage() {
         if (this.book.type === "epub" && this.rendition) {
-          this.rendition.prev();
-        } else if (this.book.type === "pdf" && this.page > 1) {
           this.page--;
-          this.renderPDFPage();
+          this.rendition.prev();
+          this.updatePlaceholder();
         }
+      },
+      navigateToPage(pageNum) {
+        pageNum = parseInt(pageNum, 10);
+        if (pageNum && pageNum >= 1 && pageNum <= this.totalPages) {
+          this.page = pageNum;
+          this.rendition.display(this.page);
+          this.updatePlaceholder();
+        }
+      },
+      updatePlaceholder() {
+        this.manualPage = `${this.page}/${this.totalPages}`;
       },
       closeReader() {
         if (document.fullscreenElement) {
@@ -34344,6 +34361,7 @@ This will fail in production.`);
     id: "epub-render-area",
     style: { "height": "calc(80vh - 80px)" }
   };
+  var _hoisted_2 = { class: "d-flex justify-center align-items-center" };
   function render3(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_EpubTitlebar = resolveComponent("EpubTitlebar");
     const _component_v_app_bar = resolveComponent("v-app-bar");
@@ -34354,11 +34372,14 @@ This will fail in production.`);
     const _component_v_card = resolveComponent("v-card");
     const _component_v_row = resolveComponent("v-row");
     const _component_v_main = resolveComponent("v-main");
+    const _component_v_spacer = resolveComponent("v-spacer");
+    const _component_v_text_field = resolveComponent("v-text-field");
+    const _component_v_bottom_navigation = resolveComponent("v-bottom-navigation");
     const _component_v_app = resolveComponent("v-app");
     const _component_v_dialog = resolveComponent("v-dialog");
     return openBlock(), createBlock(_component_v_dialog, {
       modelValue: $data.show,
-      "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.show = $event),
+      "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.show = $event),
       fullscreen: "",
       "hide-overlay": ""
     }, {
@@ -34443,6 +34464,55 @@ This will fail in production.`);
                   ]),
                   _: 1
                 })
+              ]),
+              _: 1
+            }),
+            createVNode(_component_v_bottom_navigation, { class: "bg-light" }, {
+              default: withCtx(() => [
+                createVNode(_component_v_spacer),
+                createBaseVNode("div", _hoisted_2, [
+                  createVNode(_component_v_btn, {
+                    icon: "",
+                    onClick: $options.previousPage
+                  }, {
+                    default: withCtx(() => [
+                      createVNode(_component_v_icon, null, {
+                        default: withCtx(() => [
+                          createTextVNode("mdi-arrow-left")
+                        ]),
+                        _: 1
+                      })
+                    ]),
+                    _: 1
+                  }, 8, ["onClick"]),
+                  createVNode(_component_v_text_field, {
+                    modelValue: $data.manualPage,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.manualPage = $event),
+                    onKeyup: _cache[1] || (_cache[1] = withKeys(($event) => $options.navigateToPage($data.manualPage), ["enter"])),
+                    onMouseleave: $options.updatePlaceholder,
+                    class: "mx-2 page-input-field",
+                    min: "1",
+                    max: $data.totalPages,
+                    outlined: "",
+                    dense: "",
+                    small: ""
+                  }, null, 8, ["modelValue", "onMouseleave", "max"]),
+                  createVNode(_component_v_btn, {
+                    icon: "",
+                    onClick: $options.nextPage
+                  }, {
+                    default: withCtx(() => [
+                      createVNode(_component_v_icon, null, {
+                        default: withCtx(() => [
+                          createTextVNode("mdi-arrow-right")
+                        ]),
+                        _: 1
+                      })
+                    ]),
+                    _: 1
+                  }, 8, ["onClick"])
+                ]),
+                createVNode(_component_v_spacer)
               ]),
               _: 1
             })
@@ -34814,7 +34884,7 @@ This will fail in production.`);
   // sfc-template:/home/dev2/projects/v15/apps/library_management/library_management/public/js/ebook_reader/components/PdfReader.vue?type=template
   var _withScopeId = (n) => (pushScopeId("data-v-64b5f53b"), n = n(), popScopeId(), n);
   var _hoisted_12 = { class: "pdf-container" };
-  var _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("canvas", { id: "pdf-canvas" }, null, -1));
+  var _hoisted_22 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("canvas", { id: "pdf-canvas" }, null, -1));
   var _hoisted_3 = { class: "d-flex justify-center align-items-center" };
   var _hoisted_4 = { class: "d-flex justify-end align-items-right" };
   function render5(_ctx, _cache, $props, $setup, $data, $options) {
@@ -34974,7 +35044,7 @@ This will fail in production.`);
                             hover: ""
                           }, {
                             default: withCtx(() => [
-                              _hoisted_2
+                              _hoisted_22
                             ]),
                             _: 1
                           })
@@ -35180,7 +35250,7 @@ This will fail in production.`);
   // sfc-template:/home/dev2/projects/v15/apps/library_management/library_management/public/js/books/Books.vue?type=template
   var _withScopeId2 = (n) => (pushScopeId("data-v-3dde91c7"), n = n(), popScopeId(), n);
   var _hoisted_13 = { id: "app-container" };
-  var _hoisted_22 = { class: "mt-1 text-center" };
+  var _hoisted_23 = { class: "mt-1 text-center" };
   var _hoisted_32 = { class: "ma-0 text-body-6 text-sm-left" };
   var _hoisted_42 = { class: "font-weight-medium" };
   var _hoisted_5 = { class: "text-caption text-sm-left" };
@@ -35265,7 +35335,7 @@ This will fail in production.`);
                                                     }, null, 8, ["src"]),
                                                     createVNode(_component_v_card_subtitle, { class: "text-h6 text-center text-body-3 text-sm-left text-dark d-flex flex-column" }, {
                                                       default: withCtx(() => [
-                                                        createBaseVNode("p", _hoisted_22, toDisplayString(item.title), 1)
+                                                        createBaseVNode("p", _hoisted_23, toDisplayString(item.title), 1)
                                                       ]),
                                                       _: 2
                                                     }, 1024),
@@ -61204,4 +61274,4 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=books.bundle.RNJH6HSP.js.map
+//# sourceMappingURL=books.bundle.URTX2PXJ.js.map
