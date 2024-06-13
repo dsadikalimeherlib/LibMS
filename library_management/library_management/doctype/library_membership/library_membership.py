@@ -60,8 +60,6 @@ class LibraryMembership(Document):
     #                                                     fields=['*'])
     #         for ns in new_service:
     #             for es in existing_service:
-
-        
     #     except Exception as e:
     #         frappe.msgprint(_("An error occurred while creating new membership: {0}").format(str(e)))
         
