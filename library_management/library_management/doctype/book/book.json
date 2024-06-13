@@ -135,6 +135,7 @@
    "options": "Editor"
   },
   {
+   "depends_on": "eval:doc.is_digital_book == \"No\"",
    "fieldname": "no_of_copies",
    "fieldtype": "Int",
    "label": "No of Copies"
@@ -217,6 +218,7 @@
    "label": "Search"
   },
   {
+   "depends_on": "eval:doc.is_digital_book == \"Yes\"",
    "fieldname": "book_url",
    "fieldtype": "Attach",
    "label": "Book URL"
@@ -294,6 +296,7 @@
    "options": "No\nYes"
   },
   {
+   "depends_on": "eval:doc.is_digital_book == \"Yes\"",
    "fieldname": "digital_file_type",
    "fieldtype": "Select",
    "label": "Digital File Type",
@@ -308,7 +311,8 @@
    "fetch_from": "book_code.subject",
    "fieldname": "subject",
    "fieldtype": "Data",
-   "label": "Subject"
+   "label": "Subject",
+   "read_only": 1
   },
   {
    "fieldname": "book_title",
@@ -340,7 +344,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-06-07 20:19:58.545757",
+ "modified": "2024-06-13 17:49:33.476588",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
