@@ -5,6 +5,9 @@ from frappe.model.document import Document
 
 class BookTransaction(Document):
     def validate(self):
+        # for rt in self.book_transaction_detail:
+        #     rt_data = frappe.db.get_value('Book Ledger',rt.access_no,['member'])
+        #     self.member = rt_data
         pass
         
     @frappe.whitelist()
@@ -71,9 +74,10 @@ class BookTransaction(Document):
                                                         fields=['*'])
                 for detail in book_transaction_details:
                     book_ledger_entry = frappe.new_doc('Book Ledger')
-                    book_ledger_entry.member = self.member_number
+                    book_ledger_entry.member = self.member
                     book_ledger_entry.transaction_no = self.name
-                    book_ledger_entry.transaction_type = self.doctype
+                    book_ledger_entry.transaction_type = self.transaction_type
+                    book_ledger_entry.voucher_type = self.doctype
                     book_ledger_entry.membership_status = self.membership_status
                     book_ledger_entry.access_no = detail.get('access_no')
                     book_ledger_entry.transaction_date = detail.get('transaction_date')

@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:member_number",
  "creation": "2023-04-04 18:51:03.425116",
  "default_view": "List",
  "doctype": "DocType",
@@ -11,12 +10,14 @@
   "type_section",
   "transaction_type",
   "scan_barcode",
+  "qr",
   "column_break_qg935",
-  "member_number",
+  "member",
   "member_name",
   "membership_status",
   "mobile",
   "otp",
+  "issued_book",
   "section_break_8mgcp",
   "book_transaction_detail",
   "amended_from"
@@ -29,7 +30,7 @@
    "options": "Issue\nReturn\nReserve\nRenew"
   },
   {
-   "fetch_from": "member_number.member_name",
+   "fetch_from": "member.member_name",
    "fieldname": "member_name",
    "fieldtype": "Data",
    "label": "Member Name"
@@ -54,7 +55,7 @@
    "search_index": 1
   },
   {
-   "fetch_from": "member_number.membership_status",
+   "fetch_from": "member.membership_status",
    "fieldname": "membership_status",
    "fieldtype": "Data",
    "label": "Membership Status"
@@ -65,7 +66,7 @@
    "label": "OTP"
   },
   {
-   "fetch_from": "member_number.mobile",
+   "fetch_from": "member.mobile",
    "fieldname": "mobile",
    "fieldtype": "Data",
    "label": "Mobile",
@@ -83,18 +84,28 @@
    "label": "Type"
   },
   {
-   "depends_on": "eval:doc.transaction_type != \"Return\" && doc.transaction_type != \"Renew\"",
-   "fieldname": "member_number",
-   "fieldtype": "Link",
-   "label": "Member Number",
-   "options": "Member",
-   "unique": 1
-  },
-  {
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
    "label": "Scan Barcode",
    "options": "Barcode"
+  },
+  {
+   "fieldname": "qr",
+   "fieldtype": "Data",
+   "label": "qr"
+  },
+  {
+   "depends_on": "eval:doc.transaction_type != \"Return\" && doc.transaction_type != \"Renew\"",
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "label": "Member",
+   "options": "Member",
+   "search_index": 1
+  },
+  {
+   "fieldname": "issued_book",
+   "fieldtype": "Data",
+   "label": "Issued Book"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -105,11 +116,10 @@
    "link_fieldname": "transaction_no"
   }
  ],
- "modified": "2024-06-05 15:05:23.880218",
+ "modified": "2024-06-07 10:20:50.020091",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",
- "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

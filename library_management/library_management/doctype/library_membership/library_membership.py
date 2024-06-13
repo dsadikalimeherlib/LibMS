@@ -18,7 +18,8 @@ class LibraryMembership(Document):
     @frappe.whitelist()
     def on_submit(self):
         # Add your logic for on_submit here
-        self.new_membership_create()
+        self.update_membership_details()
+        self.membership_details_update()
         frappe.msgprint("Membership submitted successfully. Additional actions can be performed here.")
 
     def update_member_details(self):
@@ -29,7 +30,7 @@ class LibraryMembership(Document):
             #frappe.set_value('Member', self.member, 'membership_status', self.membership_status)
             frappe.msgprint(f"Membership is {self.membership_status}. Member updated successfully.")
 
-    def new_membership_create(self):
+    def membership_details_update(self):
         try:
             
             # parent_doc = frappe.get_doc("Library Membership", self.member)
@@ -44,10 +45,24 @@ class LibraryMembership(Document):
                 child_table_entry.from_date = details.get('from_date')
                 child_table_entry.due_date = details.get('due_date')
                 child_table_entry.membership_status = details.get('service_status')
+                member_doc.membership_status = details.get('service_status')
                 member_doc.save()
         except Exception as e:
             frappe.msgprint(_("An error occurred while creating new membership: {0}").format(str(e)))
-
+    
+    # def duplicate_library_service(self):
+    #     try:
+    #         new_service = frappe.get_all('Library Membership Details',
+    #                                                     filters={'parent': self.name},
+    #                                                     fields=['*'])
+    #         existing_service = frappe.get_all('Membership Details',
+    #                                                     filters={'parent': self.member},
+    #                                                     fields=['*'])
+    #         for ns in new_service:
+    #             for es in existing_service:
+    #     except Exception as e:
+    #         frappe.msgprint(_("An error occurred while creating new membership: {0}").format(str(e)))
+        
     def auto_expired(self):
         try:
             expired_details = frappe.get_all("Library Membership", filters={"to_date": ("<", today())}, fields=["name", "to_date"])
@@ -55,6 +70,6 @@ class LibraryMembership(Document):
                 member_doc = frappe.get_doc("Library Membership", expire.name)
                 member_doc.membership_status = "Expired"
                 member_doc.save()
-                self.new_membership_create()
+                self.membership_details_update()
         except Exception as e:
             frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))

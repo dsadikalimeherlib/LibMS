@@ -5,6 +5,5 @@ import frappe
 from frappe.model.document import Document
 
 
-class BarcodeGenerator(Document):
+class BookReservation(Document):
 	pass
-
