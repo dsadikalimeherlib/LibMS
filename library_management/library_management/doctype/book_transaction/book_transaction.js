@@ -42,27 +42,11 @@ frappe.ui.form.on('Book Transaction', {
             d.show();
         });
     },
-    // scan_barcode: function(frm) {
-    //     frappe.call({
-    //         method: 'library_management.library_management.library_management.doctype.book_transaction.book_transaction.get_asset_by_barcode',
-    //         args: {
-    //             barcode: values.barcode
-    //         },
-    //         callback: function(r) {
-    //             if (r.message) {
-    //                 var asset = r.message;
-    //                 // Assuming you have a child table named "asset_table"
-    //                 var child = frm.add_child('book_transaction_detail');
-    //                 frappe.model.set_value(child.doctype, child.name, 'asset_name', asset.asset_name);
-    //                 // frappe.model.set_value(child.doctype, child.name, 'asset_type', asset.asset_type);
-    //                 // frappe.model.set_value(child.doctype, child.name, 'purchase_date', asset.purchase_date);
-    //                 frm.refresh_field('asset_table');
-    //             } else {
-    //                 frappe.msgprint(__('No asset found with this barcode'));
-    //             }
-    //         }
-    //     });
-    // },
+    scan_barcode() {
+		frappe.flags.dialog_set = false;
+		const barcode_scanner = new erpnext.utils.BarcodeScanner({ frm: this.frm });
+		barcode_scanner.process_scan();
+	},
     onload: function(frm) {
         frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function(doc, cdt, cdn) {
             // Get the value of the "transaction_type" field
@@ -118,6 +102,55 @@ frappe.ui.form.on('Book Transaction', {
                 "filters": filters
             };
         };
+    },
+    member: function(frm) {
+        if (frm.doc.member) {
+            // frappe.db.get_value("Library Setting", "number_of_book_allowed", "number_of_book_allowed").then(function(r){
+            //     if (r.message && r.message.number_of_book_allowed !== undefined) {
+            //         console.log(r.message.number_of_book_allowed);
+            //         frappe.msgprint(__('Allowed') + ': ' + r.message.number_of_book_allowed);
+            //     } else {
+            //         console.log("Field 'number_of_book_allowed' not found or not set.");
+            //         frappe.msgprint(__('Field "number_of_book_allowed" not found or not set.'));
+            //     }
+            // });
+            //frappe.msgprint(__('Allowed') + ': ' + nob);
+            // frappe.call({
+            //     method: "library_management.library_management.doctype.book_reservation.book_reservation.default_book",
+            //     args: {
+            //         member: frm.doc.member
+            //     },
+            //     callback: function(response) {
+            //         var issuedbook = response.message;
+                    
+            //         if (response.message) {
+            //             frappe.msgprint(__('Already Issued Book') + ': ' + issuedbook);
+            //             //frm.set_value('issued_book', response.message.count);
+            //         } else {
+            //             frappe.msgprint(__('Error fetching books count'));
+            //         }
+            //     }
+            // })
+            frappe.call({
+                method: "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued",
+                args: {
+                    member: frm.doc.member
+                },
+                
+                callback: function(response) {
+                    var issuedbook = response.message.count;
+                    
+                    if (response.message) {
+                        frappe.msgprint(__('Already Issued Book') + ': ' + issuedbook);
+                        frm.set_value('issued_book', response.message.count);
+                    } else {
+                        frappe.msgprint(__('Error fetching books count'));
+                    }
+                }
+            });
+        } else {
+            frm.set_value('issued_book', 0);
+        }
     }
 });
 
