@@ -242,15 +242,15 @@
  "is_calendar_and_gantt": 1,
  "links": [
   {
-   "link_doctype": "Customer",
-   "link_fieldname": "customer_name"
-  },
-  {
    "link_doctype": "Library Membership",
    "link_fieldname": "member"
+  },
+  {
+   "link_doctype": "Customer",
+   "link_fieldname": "customer"
   }
  ],
- "modified": "2024-06-06 12:33:55.174387",
+ "modified": "2024-06-07 19:22:42.341046",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",

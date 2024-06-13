@@ -12,6 +12,7 @@
   "membership_status",
   "amended_from",
   "column_break_vnzr",
+  "voucher_type",
   "transaction_type",
   "transaction_no",
   "transaction_date",
@@ -22,13 +23,6 @@
   "is_cancelled"
  ],
  "fields": [
-  {
-   "fieldname": "member",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Member",
-   "options": "Member"
-  },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
@@ -55,13 +49,6 @@
   {
    "fieldname": "column_break_vnzr",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "transaction_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Transaction Type",
-   "options": "DocType"
   },
   {
    "fieldname": "transaction_no",
@@ -103,12 +90,31 @@
    "fieldname": "is_cancelled",
    "fieldtype": "Check",
    "label": "Is cancelled"
+  },
+  {
+   "fieldname": "voucher_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Voucher Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "transaction_type",
+   "fieldtype": "Data",
+   "label": "Transaction Type"
+  },
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Member",
+   "options": "Member"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-10 20:23:55.056418",
+ "modified": "2024-06-06 20:59:21.632044",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Ledger",

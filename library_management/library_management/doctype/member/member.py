@@ -14,9 +14,9 @@ class Member(Document):
         if self.is_new():
             customer_doc = frappe.get_doc({
                 'doctype': 'Customer',
-                'customer_code': self.name,
+                'customer': self.name,
                 'customer_name': self.member_name
             })
             frappe.msgprint("Customer created successfully")
             customer_doc.insert()
-            self.customer_code = customer_doc.name
+            #self.customer_code = customer_doc.name

@@ -33,6 +33,6 @@ class Book(WebsiteGenerator):
                 'asset_category': category
             })
             item_doc.insert()
-            self.item_name = item_doc.name
+            #self.item_name = item_doc.name
             frappe.msgprint("Item created successfully")
 

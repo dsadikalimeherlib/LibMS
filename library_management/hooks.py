@@ -148,6 +148,11 @@ jinja = {
 # override_whitelisted_methods = {
 #	"frappe.desk.doctype.event.event.get_events": "library_management.event.get_events"
 # }
+
+override_whitelisted_methods = {
+    "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued": "library_management.custom_api.count_books_issued"
+}
+#"library_management.library_management.doctype.book_reservation.book_reservation.default_book": "library_management.custom_api.default_book"
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,

@@ -16,11 +16,11 @@
   "disabled",
   "books_details_section",
   "book_code",
-  "title",
   "book_title",
   "book_category",
   "subject",
   "language",
+  "language_name",
   "column_break_bvext",
   "book_tag",
   "year_of_publication",
@@ -57,12 +57,6 @@
   "volume"
  ],
  "fields": [
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Title"
-  },
   {
    "fieldname": "book_category",
    "fieldtype": "Link",
@@ -322,12 +316,19 @@
    "in_list_view": 1,
    "label": "Book Title",
    "reqd": 1
+  },
+  {
+   "fetch_from": "language.language_name",
+   "fieldname": "language_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Language Name"
   }
  ],
  "has_web_view": 1,
  "image_field": "image",
  "index_web_pages_for_search": 1,
- "is_published_field": "title",
+ "is_published_field": "book_title",
  "links": [
   {
    "link_doctype": "Item",
@@ -339,7 +340,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-06-05 20:49:35.226200",
+ "modified": "2024-06-07 20:19:58.545757",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
@@ -370,6 +371,7 @@
   }
  ],
  "route": "book",
+ "search_fields": "book_title,language_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
