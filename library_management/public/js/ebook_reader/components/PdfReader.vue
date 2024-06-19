@@ -107,10 +107,10 @@ export default {
             page: 1,
             totalPages: 0,
             toc: [],
+            showToc: ["Toc"],
             isTocVisible: false,
             manualPage: '',
             scale: 0.5,
-            showToc: ["Toc"],
         };
     },
     watch: {

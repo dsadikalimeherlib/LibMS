@@ -1,6 +1,6 @@
 <template>
   <v-toolbar density="compact">
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="$emit('toggle-toc')"></v-app-bar-nav-icon>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
