@@ -7,28 +7,27 @@ from frappe import _
 from frappe.model.document import Document
 
 class LibraryMembership(Document):
-    def validate(self):
-        try:
-            self.update_member_details()
-            #self.new_membership_create()
-            #self.auto_expired()
-        except Exception as e:
-            frappe.msgprint(_("An error occurred: {0}").format(str(e)))
+    pass
+    # def validate(self):
+    #     try:
+    #         self.update_member_details()
+    #     except Exception as e:
+    #         frappe.msgprint(_("An error occurred: {0}").format(str(e)))
 
     @frappe.whitelist()
     def on_submit(self):
         # Add your logic for on_submit here
-        self.update_membership_details()
+        #self.update_member_details()
         self.membership_details_update()
         frappe.msgprint("Membership submitted successfully. Additional actions can be performed here.")
 
-    def update_member_details(self):
-        if self.membership_status in ["Active", "Pending", "Expired"]:
-            member = frappe.get_doc('Member', self.member)
-            #frappe.set_value('Member', self.member, 'membership_expiry_date', self.to_date)
-            #frappe.set_value('Member', self.member, 'library_service', self.library_service)
-            #frappe.set_value('Member', self.member, 'membership_status', self.membership_status)
-            frappe.msgprint(f"Membership is {self.membership_status}. Member updated successfully.")
+    # def update_member_details(self):
+    #     if self.membership_status in ["Active", "Pending", "Expired"]:
+    #         member = frappe.get_doc('Member', self.member)
+    #         #frappe.set_value('Member', self.member, 'membership_expiry_date', self.to_date)
+    #         #frappe.set_value('Member', self.member, 'library_service', self.library_service)
+    #         #frappe.set_value('Member', self.member, 'membership_status', self.membership_status)
+    #         frappe.msgprint(f"Membership is {self.membership_status}. Member updated successfully.")
 
     def membership_details_update(self):
         try:
