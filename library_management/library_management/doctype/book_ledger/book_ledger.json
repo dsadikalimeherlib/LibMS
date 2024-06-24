@@ -20,7 +20,10 @@
   "section_break_oeiq",
   "access_no",
   "book_title",
-  "is_cancelled"
+  "is_cancelled",
+  "return_book_details_column",
+  "return_transaction_no",
+  "return_date"
  ],
  "fields": [
   {
@@ -48,7 +51,8 @@
   },
   {
    "fieldname": "column_break_vnzr",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "label": "Issue Book Details"
   },
   {
    "fieldname": "transaction_no",
@@ -109,12 +113,27 @@
    "in_list_view": 1,
    "label": "Member",
    "options": "Member"
+  },
+  {
+   "fieldname": "return_book_details_column",
+   "fieldtype": "Column Break",
+   "label": "Return Book Details"
+  },
+  {
+   "fieldname": "return_transaction_no",
+   "fieldtype": "Data",
+   "label": "Return Transaction No"
+  },
+  {
+   "fieldname": "return_date",
+   "fieldtype": "Date",
+   "label": "Return Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-06-06 20:59:21.632044",
+ "modified": "2024-06-20 20:31:06.642106",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Ledger",
@@ -122,6 +141,7 @@
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
