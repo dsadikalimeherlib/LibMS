@@ -64,7 +64,6 @@ frappe.ui.form.on('Book Transaction', {
         frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function (doc, cdt, cdn) {
             // Get the value of the "transaction_type" field
             var transactionType = frm.doc.transaction_type;
-
             // Set up the filter based on the value of "transaction_type"
             var filters = {};
 
@@ -77,7 +76,25 @@ frappe.ui.form.on('Book Transaction', {
                     "status": "Issue"
                 };
             }
+            return {
+                "filters": filters
+            };
+        },
+        frm.fields_dict['return_book_details'].grid.get_field('access_no').get_query = function(doc, cdt, cdn) {
+            // Get the value of the "transaction_type" field
+            var transactionType = frm.doc.transaction_type;
+            // Set up the filter based on the value of "transaction_type"
+            var filters = {};
 
+            if (transactionType === "Issue") {
+                filters = {
+                    "status": "Available"
+                };
+            } else {
+                filters = {
+                    "status": "Issue"
+                };
+            }
             return {
                 "filters": filters
             };
@@ -97,7 +114,6 @@ frappe.ui.form.on('Book Transaction', {
         frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function (doc, cdt, cdn) {
             // Get the value of the "transaction_type" field
             var transactionType = frm.doc.transaction_type;
-
             // Set up the filter based on the value of "transaction_type"
             var filters = {};
 
@@ -110,7 +126,6 @@ frappe.ui.form.on('Book Transaction', {
                     "status": "Issue"
                 };
             }
-
             return {
                 "filters": filters
             };
@@ -144,20 +159,53 @@ frappe.ui.form.on('Book Transaction', {
             //         }
             //     }
             // })
+            // Fetch the count of books already issued
             frappe.call({
                 method: "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued",
                 args: {
                     member: frm.doc.member
                 },
 
-                callback: function (response) {
-                    var issuedbook = response.message.count;
+                // callback: function (response) {
+                //     var issuedbook = response.message.count;
 
+                callback: function(response) {
                     if (response.message) {
-                        frappe.msgprint(__('Already Issued Book') + ': ' + issuedbook);
-                        frm.set_value('issued_book', response.message.count);
+                        let issuedBooks = response.message.count;
+                        frm.set_value('issued_book', issuedBooks);
+
+                        // Fetch the allowed number of books after getting issued books count
+                        frappe.call({
+                            method: "book_allowed_issue.allowed_book",
+                            args: {
+                                member: frm.doc.member
+                            },
+                            callback: function(data) {
+                                if (data.message) {
+                                    let allowedBooks = data.message;
+                                    // Check if the member has reached the allowed limit
+                                    if (issuedBooks >= allowedBooks) {
+                                        frappe.msgprint({
+                                            title: __('Not Allowed'),
+                                            message: __('You have already issued the maximum allowed number of books.'),
+                                            indicator: 'red'
+                                        });
+                                        frm.disable_save(); // Disable save if the limit is reached
+                                    } else {
+                                        frappe.msgprint({
+                                            title: __('Allowed'),
+                                            message: __('You can issue more books.'),
+                                            indicator: 'green'
+                                        });
+                                        frm.enable_save(); // Enable save if within the limit
+                                    }
+                                } else {
+                                    frappe.msgprint(__('Error fetching allowed books count'));
+                                }
+                            }
+                        });
                     } else {
-                        frappe.msgprint(__('Error fetching books count'));
+                        frappe.msgprint(__('Error fetching issued books count'));
                     }
                 }
             });
@@ -179,12 +227,13 @@ function verify_member(frm, enteredOTP) {
 function generateOTP() {
     var otp = '';
     var possibleDigits = '0123456789';
-
     for (var i = 0; i < 6; i++) {
         otp += possibleDigits.charAt(Math.floor(Math.random() * possibleDigits.length));
     }
     return otp;
 }
+
+// Issue Book Code
 frappe.ui.form.on("Book Transaction Detail", {
     access_no: function (frm, cdt, cdn) {
         var child_doc = locals[cdt][cdn];
@@ -196,6 +245,58 @@ frappe.ui.form.on("Book Transaction Detail", {
         var due = frappe.datetime.add_days(child_doc.transaction_date, 30);
         frappe.model.set_value(cdt, cdn, 'due_date', due);
     },
+});
+
+// Return Book code 
+frappe.ui.form.on("Return Book Details", {
+    access_no: function(frm, cdt, cdn) {
+        var child_doc = locals[cdt][cdn];
+        if (frm.doc.transaction_type === "Return") {
+            var child_rows = frm.doc.return_book_details || [];
+            if (child_rows.length > 0) {
+                var i = 0;
+                frm.doc.return_book_details.forEach(function(access){
+                    var first_access_no = child_rows[i].access_no;
+                    frappe.call({
+                        method: "fetch_member_details.fetch_member_issue_book_detail",
+                        args: {
+                            first_access_no
+                        },
+                        callback: function(details) {
+                                if (details.message){
+                                    if (frm.doc.member){
+                                        var member_id = details.message.member;
+                                        if (frm.doc.member == member_id){
+                                            frappe.model.set_value(cdt, cdn, 'transaction_no', details.message.name);
+                                            frappe.model.set_value(cdt, cdn, 'transaction_date', details.message.transaction_date);
+                                            frappe.model.set_value(cdt, cdn, 'due_date', details.message.due_date);
+                                            frm.set_value('member', details.message.member);
+                                            frappe.msgprint(__("Member ") + member_id);
+                                        }else {
+                                            frm.doc.return_book_details[i].transaction_no = '';
+                                            frm.doc.return_book_details[i].transaction_date = '';
+                                            frm.doc.return_book_details[i].due_date = '';
+                                            //frm.doc.return_book_details[i].member = '';
+                                            frappe.msgprint(__("Different Member - Clearing row"));
+                                        }
+                                    }
+                                    else {
+                                        frappe.model.set_value(cdt, cdn, 'transaction_no', details.message.name);
+                                        frappe.model.set_value(cdt, cdn, 'transaction_date', details.message.transaction_date);
+                                        frappe.model.set_value(cdt, cdn, 'due_date', details.message.due_date);
+                                        frm.set_value('member', details.message.member);
+                                    }
+                                }
+                        }
+                    });
+                    //frappe.msgprint(__("OTP generated successfully: ") + i);
+                    i++;
+                });
+            } else {
+                frappe.msgprint(__('No rows in book_transaction_detail'));
+            }
+        }
+    }
 });
 
 

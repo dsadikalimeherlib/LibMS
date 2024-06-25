@@ -73,7 +73,8 @@
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "First Name"
+   "label": "First Name",
+   "reqd": 1
   },
   {
    "fieldname": "middle_name",
@@ -94,7 +95,8 @@
    "fieldname": "gender",
    "fieldtype": "Link",
    "label": "Gender",
-   "options": "Gender"
+   "options": "Gender",
+   "reqd": 1
   },
   {
    "fieldname": "member_information_tab",
@@ -250,7 +252,7 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2024-06-07 19:22:42.341046",
+ "modified": "2024-06-24 12:52:28.514593",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",

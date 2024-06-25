@@ -30,7 +30,7 @@ frappe.ui.form.on('Book Reservation', {
         if (frm.doc.book) {
             // Fetch all assets related to the given item code
             frappe.db.get_list('Asset', {
-                filters: { item_code: frm.doc.book },
+                filters: { item_code: frm.doc.book , status:"Available"},
                 fields: ['name','asset_name','status']
             }).then(book => {
                 // Clear existing data in the child table
@@ -43,13 +43,22 @@ frappe.ui.form.on('Book Reservation', {
                     row.book_name = asset.asset_name;
                     row.status = asset.status;
                 });
-
                 // Refresh the child table
-                frm.refresh_field('barcode_generator_details');
+                frm.refresh_field('book_reservation_details');
 
                 // Optional: Show a message
                 frappe.msgprint(__('Fetched {0} assets', [book.length]));
             });
+        }
+    },
+    on_submit: function(frm) {
+        if (!frm.doc.book_reservation_details || frm.doc.book_reservation_details.length === 0) {
+            // frappe.msgprint(__('Please add items before submitting the Purchase Order.'));
+              // Prevent submission
+            return;
+        } else {
+            frappe.msgprint(__('No Reservation! This Book with Access Number {{}} Is available '));
+            frappe.validated = false;
         }
     }
 });

@@ -150,10 +150,13 @@ jinja = {
 # }
 
 override_whitelisted_methods = {
-    "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued": "library_management.custom_api.count_books_issued"
+    "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued": "library_management.custom_api.count_books_issued",
+    "book_allowed_issue.allowed_book": "library_management.custom_api.allowed_book",
+    "fetch_member_details.fetch_member_issue_book_detail":"library_management.custom_api.fetch_member_issue_book_detail"
+    #"library_management.library_management.doctype.book_reservation.book_reservation.allowed_book": "library_management.custom_api.allowed_book"
 }
-#"library_management.library_management.doctype.book_reservation.book_reservation.default_book": "library_management.custom_api.default_book"
-#
+
+# "book_allowed_issue.allowed_book": "library_management.custom_api.allowed_book"
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
