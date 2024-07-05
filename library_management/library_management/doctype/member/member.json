@@ -34,10 +34,7 @@
   "verify",
   "otp",
   "other_information_section",
-  "id_document",
-  "id_document_no",
-  "id_attachment",
-  "remark",
+  "member_documents",
   "connection_tab",
   "add_address"
  ],
@@ -144,27 +141,6 @@
    "label": "Other Information"
   },
   {
-   "fieldname": "id_document",
-   "fieldtype": "Select",
-   "label": "ID Document",
-   "options": "\nPassport\nPan Card\nVoter Id Card\nEmployee Id Card\nRation Card\nOther"
-  },
-  {
-   "fieldname": "id_document_no",
-   "fieldtype": "Data",
-   "label": "ID Document No"
-  },
-  {
-   "fieldname": "id_attachment",
-   "fieldtype": "Attach",
-   "label": "ID Attachment"
-  },
-  {
-   "fieldname": "remark",
-   "fieldtype": "Small Text",
-   "label": "Remark"
-  },
-  {
    "fieldname": "dashboard_tab",
    "fieldtype": "Tab Break",
    "label": "Dashboard"
@@ -178,7 +154,7 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "New\nActive\nCurrent\nExpired\nPending\nTerminate\nCancelled",
+   "options": "New\nActive\nExpired\nPending\nTerminate\nCancelled",
    "read_only": 1
   },
   {
@@ -237,6 +213,12 @@
    "fieldname": "disable",
    "fieldtype": "Check",
    "label": "Disable"
+  },
+  {
+   "fieldname": "member_documents",
+   "fieldtype": "Table",
+   "label": "Member Documents",
+   "options": "Member Documents"
   }
  ],
  "image_field": "image",
@@ -252,7 +234,7 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2024-06-24 12:52:28.514593",
+ "modified": "2024-07-05 16:58:25.299542",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
