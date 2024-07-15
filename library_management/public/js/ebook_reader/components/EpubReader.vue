@@ -115,7 +115,7 @@ export default {
           this.rendition.attachTo("epub-render-area");
           this.rendition.display();
 
-          this.updatePlaceholder();
+          this.getTotalPages();
           this.loadToc();
           this.show = true;
         } catch (error) {
@@ -124,17 +124,17 @@ export default {
       }
     },
     nextPage() {
-      if (this.book.type === 'epub' && this.rendition) {
-        // this.page++;
-        this.rendition.next();
-        this.updatePlaceholder();
+      if (this.rendition) {
+        this.rendition.next().then(() => {
+          this.updateCurrentPage();
+        });
       }
     },
     previousPage() {
-      if (this.book.type === 'epub' && this.rendition) {
-        // this.page--;
-        this.rendition.prev();
-        this.updatePlaceholder();
+      if (this.rendition) {
+        this.rendition.prev().then(() => {
+          this.updateCurrentPage();
+        });
       }
     },
     navigateToPage(pageNum) {
@@ -215,12 +215,14 @@ export default {
       if (this.fontSize < 22) {
         this.fontSize += 1;
         this.applyZoom();
+        this.getTotalPages();
       }
     },
     zoomOut() {
       if (this.fontSize > 16) {
         this.fontSize -= 1;
         this.applyZoom();
+        this.getTotalPages();
       }
     },
     applyZoom() {
@@ -234,6 +236,12 @@ export default {
         this.rendition.resize();
         // this.rendition.display(this.page);
       }
+    },
+    getTotalPages() {
+      this.bookInstance.locations.generate(1024).then(() => {
+        this.totalPages = this.bookInstance.locations.total;
+        this.updatePlaceholder();
+      });
     }
   },
   created() {
