@@ -11,7 +11,7 @@
                             </template>
                         </v-list-item>
                     </template>
-                    <v-list-item v-for="(item, index) in toc" :key="item.id" @click="navigateToPage(item.href, index)"
+                    <v-list-item v-for="(item, index) in toc" :key="item.id" @click="navigateToPage(item.href)"
                         link>
                         <v-list-item-title class="wrap-text">
                             <!-- {{ index + 1 }}. -->
@@ -45,8 +45,8 @@ export default {
         };
     },
     methods: {
-        navigateToPage(href, index) {
-            this.$emit('render-page', (href, index));
+        navigateToPage(href) {
+            this.$emit('render-page', (href));
         },
     },
 }
