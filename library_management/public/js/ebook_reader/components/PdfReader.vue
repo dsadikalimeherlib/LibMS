@@ -27,6 +27,11 @@
                             <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
                         </v-btn>
                     </v-col>
+
+                    <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="1000" rounded>
+                        {{ snackbarText }}
+                        <v-btn small color="white" text @click="showSnackbar=false">Close</v-btn>
+                    </v-snackbar>
                 </v-row>
             </v-main>
             <v-bottom-navigation class="bg-light">
@@ -91,6 +96,9 @@ export default {
             isTocVisible: false,
             manualPage: '',
             scale: 0.5,
+            showSnackbar: false,
+            snackbarText: '',
+            snackbarColor: '',
         };
     },
     watch: {
@@ -113,7 +121,10 @@ export default {
                 this.show = true;
 
             } catch (error) {
-                console.error('Error loading PDF:', error);
+                console.error('Error loading PDF Book:', error);
+                this.snackbarText = "Error loading the PDF book.";
+                this.snackbarColor = 'danger';
+                this.showSnackbar = true;
             }
         },
         async renderPage() {
@@ -194,6 +205,10 @@ export default {
                 this.page = pageNum;
                 this.renderPage();
                 this.updatePlaceholder();
+            } else {
+                this.snackbarText = "The page number is out of bounds.";
+                this.snackbarColor = 'info';
+                this.showSnackbar = true;
             }
         },
         updatePlaceholder() {
@@ -233,7 +248,6 @@ export default {
             pdfCanvas.style.width = `${pdfCanvas.offsetWidth / 1.1}px`;
             pdfCanvas.style.height = `${pdfCanvas.offsetHeight / 1.1}px`;
         }
-
     },
     created() {
         this.loadPdf();

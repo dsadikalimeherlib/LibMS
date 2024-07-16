@@ -32,6 +32,11 @@
               </v-btn>
             </v-hover>
           </v-col>
+
+          <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="1000" rounded>
+            {{ snackbarText }}
+            <v-btn small color="white" text @click="showSnackbar = false">Close</v-btn>
+          </v-snackbar>
         </v-row>
       </v-main>
       <v-bottom-navigation class="bg-light">
@@ -94,6 +99,9 @@ export default {
       isTocVisible: false,
       manualPage: '',
       fontSize: 16,
+      showSnackbar: false,
+      snackbarText: '',
+      snackbarColor: '',
     };
   },
   watch: {
@@ -123,7 +131,10 @@ export default {
           this.loadToc();
           this.show = true;
         } catch (error) {
-          console.error('Error loading book:', error);
+          console.error('Error loading Epub Book:', error);
+          this.snackbarText = "Error loading the Epub Book.";
+          this.snackbarColor = 'danger';
+          this.showSnackbar = true;
         }
       }
     },
@@ -160,7 +171,9 @@ export default {
       if (parsedPageNum && parsedPageNum >= 1 && parsedPageNum <= this.totalPages) {
         tryDisplayPage(parsedPageNum);
       } else {
-        return;
+        this.snackbarText = "The page number is out of bounds.";
+        this.snackbarColor = 'info';
+        this.showSnackbar = true;
       }
     },
     async navigateToHref(href) {
