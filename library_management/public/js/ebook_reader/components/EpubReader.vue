@@ -12,6 +12,7 @@
             <v-hover v-slot="{ isHovering, props }">
               <v-btn icon @click="previousPage" v-bind="props" :elevation="isHovering ? 24 : 8">
                 <v-icon>mdi-chevron-left</v-icon>
+                <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
               </v-btn>
             </v-hover>
           </v-col>
@@ -27,6 +28,7 @@
             <v-hover v-slot="{ isHovering, props }">
               <v-btn icon @click="nextPage" v-bind="props" :elevation="isHovering ? 24 : 8">
                 <v-icon>mdi-chevron-right</v-icon>
+                <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
               </v-btn>
             </v-hover>
           </v-col>
@@ -37,21 +39,25 @@
         <div class="d-flex justify-content-center align-items-center mx-24">
           <v-btn icon @click="previousPage" size="small">
             <v-icon>mdi-arrow-left</v-icon>
+            <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
           </v-btn>
           <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)" @mouseleave="updatePlaceholder"
             class="mx-24 mt-2 text-center" min="1" :max="totalPages" outlined align="center" style="width: 200px;">
           </v-text-field>
           <v-btn icon @click="nextPage" size="small">
             <v-icon>mdi-arrow-right</v-icon>
+            <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
           </v-btn>
         </div>
         <v-spacer></v-spacer>
         <div class="d-flex justify-end align-items-right">
           <v-btn icon size="small" @click="zoomOut" class="mb-2">
             <v-icon>mdi-minus</v-icon>
+            <v-tooltip activator="parent" location="top">zoomOut</v-tooltip>
           </v-btn>
           <v-btn icon size="small" @click="zoomIn" class="mb-2">
             <v-icon>mdi-plus</v-icon>
+            <v-tooltip activator="parent" location="top">zoomIn</v-tooltip>
           </v-btn>
         </div>
       </v-bottom-navigation>
