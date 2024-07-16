@@ -4,5 +4,5 @@
 *.swp
 tags
 library_management/docs/current
-library_management/public/*
+library_management/public/dist/*
 node_modules/

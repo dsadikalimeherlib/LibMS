@@ -6,29 +6,8 @@
             </v-app-bar>
             <v-main>
                 <v-row>
-                    <v-col cols="2" v-if="isTocVisible" hover class="d-flex justify-start align-items-left">
-                        <v-navigation-drawer permanent class="deep-purple lighten-1 white--text" width="300">
-                            <v-list v-model:opened="showToc" :lines="false" density="compact" dense nav>
-                                <v-list-group value="Toc">
-                                    <template v-slot:activator="{ props }">
-                                        <v-list-item v-bind="props" title="Table of Content">
-                                            <template v-slot:prepend>
-                                                <v-btn icon="mdi-table-of-contents" size="large" variant="text"></v-btn>
-                                                <v-tooltip activator="parent" location="bottom">Content</v-tooltip>
-                                            </template>
-                                        </v-list-item>
-                                    </template>
-                                    <v-list-item v-for="(item, index) in toc" :key="item.id"
-                                        @click="navigateToPage(item.pageNumber)" link>
-                                        <v-list-item-title class="wrap-text">
-                                            {{ index + 1 }}. {{ item.title }}
-                                            <!-- ------- {{ item.pageNumber }} -->
-                                        </v-list-item-title>
-                                    </v-list-item>
-                                </v-list-group>
-                            </v-list>
-                        </v-navigation-drawer>
-                    </v-col>
+                    <PdfToc :toc="toc" :isTocVisible="isTocVisible" @render-page="navigateToPage" />
+
                     <v-col class="d-flex justify-start align-items-center">
                         <v-btn icon @click="previousPage">
                             <v-icon>mdi-chevron-left</v-icon>
@@ -52,14 +31,14 @@
             </v-main>
             <v-bottom-navigation class="bg-light">
                 <v-spacer></v-spacer>
-                <div class="d-flex justify-center align-items-center">
+                <div class="d-flex justify-content-center align-items-center">
                     <v-btn icon @click="previousPage">
                         <v-icon>mdi-arrow-left</v-icon>
                         <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
                     </v-btn>
                     <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)"
                         @mouseleave="updatePlaceholder" class="mx-2 page-input-field" min="1" :max="totalPages" outlined
-                        dense small>
+                        style="width: 200px;">
                     </v-text-field>
                     <v-btn icon @click="nextPage">
                         <v-icon>mdi-arrow-right</v-icon>
@@ -85,11 +64,13 @@
 <script>
 
 import PdfTitlebar from './PdfTitlebar.vue';
+import PdfToc from './PdfToc.vue';
 
 export default {
     name: 'PdfReader',
     components: {
         PdfTitlebar,
+        PdfToc
     },
     props: {
         book: {
@@ -107,7 +88,6 @@ export default {
             page: 1,
             totalPages: 0,
             toc: [],
-            showToc: ["Toc"],
             isTocVisible: false,
             manualPage: '',
             scale: 0.5,
@@ -219,7 +199,6 @@ export default {
         updatePlaceholder() {
             this.manualPage = `${this.page}/${this.totalPages}`;
         },
-
         nextPage() {
             if (this.book.type === 'pdf' && this.page < this.totalPages) {
                 this.page++;
@@ -249,7 +228,6 @@ export default {
             pdfCanvas.style.width = `${pdfCanvas.offsetWidth * 1.1}px`;
             pdfCanvas.style.height = `${pdfCanvas.offsetHeight * 1.1}px`;
         },
-
         zoomOut() {
             const pdfCanvas = document.querySelector('#pdf-canvas');
             pdfCanvas.style.width = `${pdfCanvas.offsetWidth / 1.1}px`;

@@ -9,14 +9,15 @@
             <v-toolbar-title>{{ title }}</v-toolbar-title>
             <v-spacer></v-spacer>
 
-            <v-btn icon>
+            <!-- <v-btn icon>
                 <v-icon>mdi-crosshairs-gps</v-icon>
                 <v-tooltip activator="parent" location="bottom">Theme</v-tooltip>
             </v-btn>
 
             <v-btn icon>
                 <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
+                <v-tooltip activator="parent" location="bottom">Options</v-tooltip>
+            </v-btn> -->
 
             <v-btn icon @click="toggleFullscreen">
                 <v-icon>{{ isfullScreen ? 'mdi-window-minimize' : 'mdi-window-maximize' }}</v-icon>

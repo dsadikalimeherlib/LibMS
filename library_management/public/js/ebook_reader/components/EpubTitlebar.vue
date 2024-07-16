@@ -1,24 +1,32 @@
 <template>
   <v-toolbar density="compact">
-    <v-app-bar-nav-icon @click="$emit('toggle-toc')"></v-app-bar-nav-icon>
+    <template v-slot:prepend>
+      <v-app-bar-nav-icon @click="$emit('toggle-toc')"></v-app-bar-nav-icon>
+      <v-tooltip activator="parent" location="bottom">Table of Content</v-tooltip>
+    </template>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
 
-    <v-btn icon>
+    <!-- <v-btn icon>
       <v-icon>mdi-crosshairs-gps</v-icon>
+      <v-tooltip activator="parent" location="bottom">Theme</v-tooltip>
     </v-btn>
 
     <v-btn icon>
       <v-icon>mdi-dots-vertical</v-icon>
-    </v-btn>
+      <v-tooltip activator="parent" location="bottom">Options</v-tooltip>
+    </v-btn> -->
 
     <v-btn icon @click="toggleFullscreen">
       <v-icon>{{ isfullScreen ? 'mdi-window-minimize' : 'mdi-window-maximize' }}</v-icon>
+      <v-tooltip v-if="isfullScreen" activator="parent" location="bottom">Exit Full Screen</v-tooltip>
+      <v-tooltip v-else-if="!isfullScreen" activator="parent" location="bottom">Go Full Screen</v-tooltip>
     </v-btn>
     <v-btn icon small @click="CloseReader">
       <v-icon>mdi-close</v-icon>
+      <v-tooltip activator="parent" location="bottom">Close</v-tooltip>
     </v-btn>
   </v-toolbar>
 </template>
