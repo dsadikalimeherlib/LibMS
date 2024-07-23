@@ -2,26 +2,48 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Library Membership', {
-	// validate:function(frm){
-    //     var today = frappe.datetime.get_today();
-    //     if(today >= frm.doc.from_date && today <= frm.doc.to_date ){
-    //     //if(frm.doc.from_date <= today <= frm.doc.to_date ){
-    //         frm.set_value('membership_status',"Active")
-    //         frappe.msgprint(__('Membership Active.'));
-    //         //frappe.validated = false;
-    //     }
-    //     else if(today <= frm.doc.from_date && today <= frm.doc.to_date )
-    //     {
-    //         frm.set_value('membership_status',"Pending")
-    //         frappe.msgprint(__('Membership has Pending.'));
-    //     }
-    //     else
-    //     {
-    //         frm.set_value('membership_status',"Expired")
-    //         frappe.msgprint(__('Membership has expired.'));
-    //     }
-    // }
+	refresh(frm) {
+        // filter applied on 'New','Active','Current','Expired','Pending','Cancelled'
+        frm.set_query('member', function(doc) {
+            var status_list = ['New','Active','Expired','Pending','Cancelled'];
+            return {
+                filters: [
+                    ['membership_status', 'in', status_list]
+                ]
+            };
+        });
+    },
 });
+
+
+frappe.ui.form.on('Library Membership', {
+    before_save: function(frm) {
+        // Call the server-side method to check for duplicates
+        frappe.call({
+            method: "get_data.check_for_duplicates",
+            args: {
+                document_name: frm.doc.name  // Pass the document name as an argument
+            },
+            async: false,
+            callback: function(response) {
+                if (response.message.has_duplicate) {
+                    // Disable save/submit if a duplicate is found
+                    frm.disable_save();
+                    frappe.msgprint({
+                        title: __('Duplicate Found'),
+                        message: __('A duplicate active membership service found: {0}', [response.message.duplicate_service]),
+                        indicator: 'red'
+                    });
+                } else {
+                    // Enable save/submit if no duplicate is found
+                    frm.enable_save();
+                }
+            }
+        });
+    }
+});
+
+
 frappe.ui.form.on("Library Membership Details", {
     plan: function(frm, cdt, cdn) {
         var from_date = frappe.datetime.get_today();
