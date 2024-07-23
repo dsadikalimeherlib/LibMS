@@ -1,4 +1,4 @@
-# Copyright (c) 2023, ramjanali and contributors
+# Copyright (c) 2023, Ramjanali and contributors
 # For license information, please see license.txt
 
 import frappe
@@ -7,36 +7,27 @@ from frappe import _
 from frappe.model.document import Document
 
 class LibraryMembership(Document):
-    pass
-    # def validate(self):
-    #     try:
-    #         self.update_member_details()
-    #     except Exception as e:
-    #         frappe.msgprint(_("An error occurred: {0}").format(str(e)))
 
+    def validate(self):
+        """Ensure no active duplicate memberships exist before submission."""
+        #self.check_duplicate_membership()
+        
     @frappe.whitelist()
     def on_submit(self):
-        # Add your logic for on_submit here
-        #self.update_member_details()
+        """Handle actions to be performed when the document is submitted."""
+        # self.check_duplicate_membership()
         self.membership_details_update()
         frappe.msgprint("Membership submitted successfully. Additional actions can be performed here.")
 
-    # def update_member_details(self):
-    #     if self.membership_status in ["Active", "Pending", "Expired"]:
-    #         member = frappe.get_doc('Member', self.member)
-    #         #frappe.set_value('Member', self.member, 'membership_expiry_date', self.to_date)
-    #         #frappe.set_value('Member', self.member, 'library_service', self.library_service)
-    #         #frappe.set_value('Member', self.member, 'membership_status', self.membership_status)
-    #         frappe.msgprint(f"Membership is {self.membership_status}. Member updated successfully.")
-
     def membership_details_update(self):
+        """Update the membership details in the Member document."""
         try:
-            
-            # parent_doc = frappe.get_doc("Library Membership", self.member)
+            # Fetch Library Membership Details
             library_membership_details = frappe.get_all('Library Membership Details',
                                                         filters={'parent': self.name},
                                                         fields=['*'])
             for details in library_membership_details:
+                # Update the Member document
                 member_doc = frappe.get_doc("Member", self.member)
                 child_table_entry = member_doc.append("membership_details", {})
                 child_table_entry.library_membership = self.name
@@ -47,24 +38,39 @@ class LibraryMembership(Document):
                 member_doc.membership_status = details.get('service_status')
                 member_doc.save()
         except Exception as e:
-            frappe.msgprint(_("An error occurred while creating new membership: {0}").format(str(e)))
+            frappe.msgprint(_("An error occurred while updating membership details: {0}").format(str(e)))
     
-    # def duplicate_library_service(self):
-    #     try:
-    #         new_service = frappe.get_all('Library Membership Details',
-    #                                                     filters={'parent': self.name},
-    #                                                     fields=['*'])
-    #         existing_service = frappe.get_all('Membership Details',
-    #                                                     filters={'parent': self.member},
-    #                                                     fields=['*'])
-    #         for ns in new_service:
-    #             for es in existing_service:
-    #     except Exception as e:
-    #         frappe.msgprint(_("An error occurred while creating new membership: {0}").format(str(e)))
-        
-    def auto_expired(self):
+
+    def check_duplicate_membership(self):
+        """Check for duplicate memberships and ensure they are not active."""
         try:
-            expired_details = frappe.get_all("Library Membership", filters={"to_date": ("<", today())}, fields=["name", "to_date"])
+            # Fetch new service details
+            new_service = frappe.get_all('Library Membership Details',
+                                         filters={'parent': self.name},
+                                         fields=['*'])
+            # Fetch existing service details from the Member
+            existing_service = frappe.get_all('Membership Details',
+                                              filters={'parent': self.member},
+                                              fields=['*'])
+
+            # Check for duplicates with active status
+            for ns in new_service:
+                for es in existing_service:
+                    if ns['library_service'] == es['library_service'] and es['membership_status'] == 'Active':
+                        frappe.throw(_("Duplicate active membership service found: {0}").format(ns['library_service']))
+                        validated = 1
+                        return
+            # No duplicates found, proceed to add new service details
+            # self.membership_details_update()
+        except Exception as e:
+            frappe.msgprint(_("An error occurred while checking for duplicate membership: {0}").format(str(e)))
+
+    def auto_expired(self):
+        """Automatically expire memberships whose end date is past."""
+        try:
+            expired_details = frappe.get_all("Library Membership", 
+                                             filters={"to_date": ("<", today())}, 
+                                             fields=["name", "to_date"])
             for expire in expired_details:
                 member_doc = frappe.get_doc("Library Membership", expire.name)
                 member_doc.membership_status = "Expired"

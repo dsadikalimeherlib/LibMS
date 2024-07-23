@@ -2,6 +2,7 @@ import frappe
 from frappe.utils import today
 from frappe import _
 from frappe.model.document import Document
+from frappe.utils import nowdate, getdate
 
 
 class BookTransaction(Document):
@@ -15,6 +16,7 @@ class BookTransaction(Document):
     def on_submit(self):
         self.create_book_ledger()
         self.on_submit_asset_update()
+        self.membership_validate()
         # barcode = frappe.get_doc('Book Transaction', self.barcode)
         # self.find_asset_by_barcode(barcode)
 
@@ -68,6 +70,36 @@ class BookTransaction(Document):
     #         book_details.status = "Available"
     #         book_details.save()
     #         frappe.msgprint("Item updated successfully")
+
+    def membership_validate(self):
+        try:
+            # Fetch membership details
+            membership_service = frappe.get_all(
+                'Membership Details',
+                filters={'parent': self.member},
+                fields=['membership_status', 'due_date']
+            )
+            
+            # Check if there is any active membership
+            is_active = False
+            current_date = getdate(nowdate())
+
+            for ms in membership_service:
+                # Example condition: membership is active and not expired
+                frappe.msgprint("working")
+                if ms.get('membership_status') == 'Active' and (not ms.get('due_date') or ms.get('due_date') >= current_date):
+                    is_active = True
+                    frappe.msgprint("working1")
+                    break
+            
+            # If no active membership found, raise an exception
+            if not is_active:
+                frappe.throw(_('The member does not have an active membership.'))
+
+        except Exception as e:
+            # Handle exceptions
+            frappe.log_error(frappe.get_traceback(), _('Membership Validation Error'))
+            frappe.throw(_('An error occurred while validating membership: {0}').format(str(e)))
 
     def create_book_ledger(self):
         try:

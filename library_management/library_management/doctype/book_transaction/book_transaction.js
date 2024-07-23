@@ -133,42 +133,12 @@ frappe.ui.form.on('Book Transaction', {
     },
     member: function (frm) {
         if (frm.doc.member) {
-            // frappe.db.get_value("Library Setting", "number_of_book_allowed", "number_of_book_allowed").then(function(r){
-            //     if (r.message && r.message.number_of_book_allowed !== undefined) {
-            //         console.log(r.message.number_of_book_allowed);
-            //         frappe.msgprint(__('Allowed') + ': ' + r.message.number_of_book_allowed);
-            //     } else {
-            //         console.log("Field 'number_of_book_allowed' not found or not set.");
-            //         frappe.msgprint(__('Field "number_of_book_allowed" not found or not set.'));
-            //     }
-            // });
-            //frappe.msgprint(__('Allowed') + ': ' + nob);
-            // frappe.call({
-            //     method: "library_management.library_management.doctype.book_reservation.book_reservation.default_book",
-            //     args: {
-            //         member: frm.doc.member
-            //     },
-            //     callback: function(response) {
-            //         var issuedbook = response.message;
-
-            //         if (response.message) {
-            //             frappe.msgprint(__('Already Issued Book') + ': ' + issuedbook);
-            //             //frm.set_value('issued_book', response.message.count);
-            //         } else {
-            //             frappe.msgprint(__('Error fetching books count'));
-            //         }
-            //     }
-            // })
             // Fetch the count of books already issued
             frappe.call({
                 method: "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued",
                 args: {
                     member: frm.doc.member
                 },
-
-                // callback: function (response) {
-                //     var issuedbook = response.message.count;
-
                 callback: function(response) {
                     if (response.message) {
                         let issuedBooks = response.message.count;

@@ -29,7 +29,7 @@
    "fieldname": "transaction_type",
    "fieldtype": "Select",
    "label": "Transaction Type",
-   "options": "Issue\nReturn\nReserve\nRenew"
+   "options": "Issue\nReturn\nRenew"
   },
   {
    "fetch_from": "member.member_name",
@@ -43,6 +43,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.transaction_type != \"Return\" && doc.transaction_type != \"Renew\"",
    "fieldname": "section_break_8mgcp",
    "fieldtype": "Section Break",
    "label": "Book Information"
@@ -113,6 +114,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.transaction_type != \"Issue\"",
    "fieldname": "return_book_section",
    "fieldtype": "Section Break",
    "label": "Return Book"
@@ -132,7 +134,7 @@
    "link_fieldname": "transaction_no"
   }
  ],
- "modified": "2024-06-24 15:32:25.140792",
+ "modified": "2024-07-05 17:13:55.732182",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Transaction",

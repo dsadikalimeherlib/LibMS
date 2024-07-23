@@ -9,6 +9,7 @@
  "field_order": [
   "library_service",
   "amount",
+  "take_a_book_from_library",
   "razorpay_plan_id",
   "linked_item",
   "days",
@@ -55,10 +56,16 @@
    "fieldtype": "Link",
    "label": "Complimentary Service",
    "options": "Library Service"
+  },
+  {
+   "default": "0",
+   "fieldname": "take_a_book_from_library",
+   "fieldtype": "Check",
+   "label": "Take a book from Library"
   }
  ],
  "links": [],
- "modified": "2024-02-15 19:59:32.789344",
+ "modified": "2024-06-26 10:32:11.531627",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Service",
