@@ -215,14 +215,14 @@ export default {
             this.manualPage = `${this.page}/${this.totalPages}`;
         },
         nextPage() {
-            if (this.book.type === 'pdf' && this.page < this.totalPages) {
+            if (this.book.digital_file_type === 'pdf' && this.page < this.totalPages) {
                 this.page++;
                 this.renderPage();
                 this.updatePlaceholder();
             }
         },
         previousPage() {
-            if (this.book.type === 'pdf' && this.page > 1) {
+            if (this.book.digital_file_type === 'pdf' && this.page > 1) {
                 this.page--;
                 this.renderPage();
                 this.updatePlaceholder();

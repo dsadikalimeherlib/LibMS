@@ -9,7 +9,6 @@ def get_books():
 @frappe.whitelist()
 def search_books(book_title):
     books = fetch_books(title=book_title)
-    # frappe.throw(str(len(books)) + "  <br><br>" + str(books))
     return books
 
 
@@ -53,12 +52,10 @@ def fetch_books(
     year_of_publication=None,
 ):
     bk = frappe.qb.DocType("Book")
-    bi = frappe.qb.DocType("Book Images")
     book_query = (
         frappe.qb.from_(bk)
-        .inner_join(bi)
-        .on(bk.name == bi.parent)
         .select(
+            bk.name,
             bk.title,
             bk.isbn,
             bk.book_code,
@@ -71,10 +68,11 @@ def fetch_books(
             bk.subject,
             bk.no_of_pages,
             bk.book_url,
-            bk.type,
-            bi.image,
+            bk.digital_file_type,
         )
-        .where(bk.disabled == 0)
+        .where((bk.disabled == 0) & (bk.is_digital_book == "Yes"))
+        .orderby(bk.title)
+        .limit(300)
     )
 
     if title:
@@ -100,7 +98,11 @@ def fetch_books(
             bk.year_of_publication.like("%" + year_of_publication + "%")
         )
 
-    return book_query.run(as_dict=True)
+    books = book_query.run(as_dict=True)
+    for book in books:
+        book["image"] = get_book_image(book)
+
+    return books
 
 
 @frappe.whitelist()
@@ -114,3 +116,19 @@ def get_book_categories():
         .orderby(bc.name)
     )
     return category_query.run(as_dict=True)
+
+
+def get_book_image(book):
+    """Select Only the default image of the book"""
+
+    bi = frappe.qb.DocType("Book Images")
+    book_images = (
+        frappe.qb.from_(bi)
+        .select(bi.image)
+        .where((bi.parent == book.name) & (bi.default == 1))
+    ).run(as_dict=True)
+
+    if len(book_images) > 0:
+        return book_images[0].image
+
+    return None

@@ -56,9 +56,9 @@
                         </v-col>
                     </v-row>
                     <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
-                        <EpubReader v-if="selectedBook.type === 'epub'" :book="selectedBook" :show="isReaderOpen"
+                        <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook" :show="isReaderOpen"
                             @close-reader="isReaderOpen = false" />
-                        <PdfReader v-if="selectedBook.type === 'pdf'" :book="selectedBook" :show="isReaderOpen"
+                        <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook" :show="isReaderOpen"
                             @close-reader="isReaderOpen = false" />
                     </v-dialog>
                 </v-container>
