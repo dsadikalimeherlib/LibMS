@@ -20,7 +20,7 @@
             <v-hover v-slot="{ isHovering, props }">
               <v-card class="epub-card mx-auto  mt-4 border border-dark border-5 rounded-5" v-bind="props"
                 :elevation="isHovering ? 24 : 8">
-                <div v-if="book.type === 'epub'" id="epub-render-area"></div>
+                <div v-if="book.digital_file_type === 'epub'" id="epub-render-area"></div>
               </v-card>
             </v-hover>
           </v-col>
