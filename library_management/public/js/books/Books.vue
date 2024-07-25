@@ -10,7 +10,7 @@
                                 <v-divider></v-divider>
                                 <v-container class="overflow-y-auto" style="max-height: calc(100vh - 112px);">
                                     <v-row align="center" class="fill-height" justify="center">
-                                        <template v-for="item in bookstore.books" :key="item.title">
+                                        <template v-for="item in bookstore.books" :key="item.book_title">
                                             <v-col cols="12" sm="6" md="4" lg="3">
                                                 <v-hover v-slot="{ isHovering, props }">
                                                     <v-card :class="{ 'on-hover': isHovering }"
@@ -23,7 +23,7 @@
                                                         <v-card-subtitle
                                                             class="text-h6 text-center text-body-3 text-sm-left text-dark d-flex flex-column">
                                                             <p class="mt-1 text-center">
-                                                                {{ item.title }}
+                                                                {{ item.book_title }}
                                                             </p>
                                                         </v-card-subtitle>
                                                         <v-card-text class="pa-1">
@@ -56,10 +56,10 @@
                         </v-col>
                     </v-row>
                     <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
-                        <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook" :show="isReaderOpen"
-                            @close-reader="isReaderOpen = false" />
-                        <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook" :show="isReaderOpen"
-                            @close-reader="isReaderOpen = false" />
+                        <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook"
+                            :show="isReaderOpen" @close-reader="isReaderOpen = false" />
+                        <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook"
+                            :show="isReaderOpen" @close-reader="isReaderOpen = false" />
                     </v-dialog>
                 </v-container>
             </v-main>

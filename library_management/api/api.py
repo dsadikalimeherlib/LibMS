@@ -8,7 +8,7 @@ def get_books():
 
 @frappe.whitelist()
 def search_books(book_title):
-    books = fetch_books(title=book_title)
+    books = fetch_books(book_title=book_title)
     return books
 
 
@@ -43,7 +43,7 @@ def get_books_by_publication_year(year_of_publication):
 
 
 def fetch_books(
-    title=None,
+    book_title=None,
     category=None,
     author=None,
     subject=None,
@@ -56,7 +56,7 @@ def fetch_books(
         frappe.qb.from_(bk)
         .select(
             bk.name,
-            bk.title,
+            bk.book_title,
             bk.isbn,
             bk.book_code,
             bk.book_tag,
@@ -71,12 +71,12 @@ def fetch_books(
             bk.digital_file_type,
         )
         .where((bk.disabled == 0) & (bk.is_digital_book == "Yes"))
-        .orderby(bk.title)
+        .orderby(bk.book_title)
         .limit(300)
     )
 
-    if title:
-        book_query = book_query.where(bk.title.like("%" + title + "%"))
+    if book_title:
+        book_query = book_query.where(bk.book_title.like("%" + book_title + "%"))
 
     if category:
         book_query = book_query.where(bk.book_category == category)
