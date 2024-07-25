@@ -6,7 +6,7 @@
             </template>
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
-            <v-toolbar-title>{{ title }}</v-toolbar-title>
+            <v-toolbar-title>{{ book_title }}</v-toolbar-title>
             <v-spacer></v-spacer>
 
             <!-- <v-btn icon>
@@ -37,7 +37,7 @@
 export default {
     name: 'PdfTitlebar',
     props: {
-        title: {
+        book_title: {
             default: 'Libms',
             type: String,
         },

@@ -2,7 +2,7 @@
     <v-dialog v-model="show" fullscreen hide-overlay>
         <v-app>
             <v-app-bar dense elevatedwill>
-                <PdfTitlebar :title="book.title" @close-reader="closeReader" @toggle-toc="toggleToc" />
+                <PdfTitlebar :title="book.book_title" @close-reader="closeReader" @toggle-toc="toggleToc" />
             </v-app-bar>
             <v-main>
                 <v-row>
@@ -182,13 +182,13 @@ export default {
 
                         result.push({
                             id: item.dest,
-                            title: item.title.trim(),
+                            title: item.book_title.trim(),
                             pageNumber,
                         });
                     } catch (error) {
                         result.push({
                             id: item.dest,
-                            title: item.title.trim(),
+                            title: item.book_title.trim(),
                             pageNumber: null,
                         });
                     }

@@ -14,7 +14,7 @@
                     <v-list-item v-for="(item, index) in toc" :key="item.id" @click="navigateToPage(item.pageNumber)"
                         link>
                         <v-list-item-title class="wrap-text">
-                            {{ index + 1 }}. {{ item.title }}
+                            {{ index + 1 }}. {{ item.book_title }}
                             <!-- ------- {{ item.pageNumber }} -->
                         </v-list-item-title>
                     </v-list-item>
