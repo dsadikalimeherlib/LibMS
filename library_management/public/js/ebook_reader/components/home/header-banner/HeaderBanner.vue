@@ -14,19 +14,27 @@
       </div>
       <div class="banner">
         <div class="title">Explore Books, Magazines, Journal and more...</div>
+
         <div class="search-wrapper">
           <img class="icon" src="/files/search-icon.svg" />
           <input placeholder="Looking for specific book? Enter Book Title here.." />
         </div>
+
+
+
       </div>
     </div>
+    <div class="navigation">
+      <button @click="handleClick('about')">Book categories</button>
+      <button @click="handleClick('about')">Multimedia Categories</button>
+      <button @click="handleClick('about')">Apply Membership</button>
+      <button @click="handleClick('about')">Fees</button>
+      <button @click="handleClick('about')">News & Announcements</button>
+      <button @click="handleClick('about')">Holidays</button>
+      <button @click="handleClick('about')">Contact us</button>
+      <button @click="handleClick('about')">Feedback</button>
+    </div>
   </div>
-  <!-- <v-app> -->
-
-  <!-- <button @click="handleClick('about')">About</button>
-                This is homepage -->
-
-  <!-- </v-app> -->
 
 </template>
 

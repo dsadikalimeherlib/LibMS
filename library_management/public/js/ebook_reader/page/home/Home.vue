@@ -1,6 +1,7 @@
 <template>
   <div id="app-container" class="homepage">
     <HeaderBanner :onLinkClick="onLinkClick" />
+    <BannerSlider />
     <!-- <v-app> -->
 
     <!-- <button @click="handleClick('about')">About</button>
@@ -11,6 +12,7 @@
 </template>
 <script setup>
 import HeaderBanner from '../../components/home/header-banner/HeaderBanner.vue'
+import BannerSlider from '../../components/home/BannerSlider.vue'
 </script>
 <script>
 export default {
