@@ -6,42 +6,64 @@
       <div class="title-wrapper">
         <h2>New Books</h2>
         <div class="right">
-          <button class="link">See all<img src="/files/see-all-arrow.svg" /></button>
+          <button @click="handleClick('books')" class="link">See all<img src="/files/see-all-arrow.svg" /></button>
         </div>
       </div>
       <div class="book-list-wrapper">
-        <div class="item">
-          <div class="image-wrapper"><img src="/files/book.png"></div>
-          <div class="book-detail">
-            <div class="title">Muntakhab Mizanul Hikma</div>
-            <div class="meta-wrapper">
-              <div class="meta"><span class="label">Author:</span> Saiyed Hamid Husainu</div>
-              <div class="meta"><span class="label">Language:</span> Gujarati</div>
-              <div class="meta"><span class="label">Sect:</span> Shia</div>
-              <div class="meta"><span class="label">Book type:</span> E-book</div>
-              <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
+        <template v-for="item in bookstore.books" :key="item.book_title">
+          <div class="item">
+            <div class="image-wrapper"><v-img :src="item.image ? item.image
+              : 'https://placehold.co/150?text=Item'" height="300px" class="white--text align-end">
+              </v-img></div>
+            <div class="book-detail">
+              <div class="title">{{ item.book_title }}</div>
+              <div class="meta-wrapper">
+                <div class="meta"><span class="label">Author:</span> {{ item.author
+                  }}</div>
+                <div class="meta"><span class="label">Language:</span> Gujarati</div>
+                <div class="meta"><span class="label">Sect:</span> Shia</div>
+                <div class="meta"><span class="label">Book type:</span> E-book</div>
+                <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="image-wrapper"><img src="/files/book.png"></div>
-          <div class="book-detail">
-            <div class="title">Muntakhab Mizanul Hikma</div>
-            <div class="meta-wrapper">
-              <div class="meta"><span class="label">Author:</span> Saiyed Hamid Husainu</div>
-              <div class="meta"><span class="label">Language:</span> Gujarati</div>
-              <div class="meta"><span class="label">Sect:</span> Shia</div>
-              <div class="meta"><span class="label">Book type:</span> E-book</div>
-              <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
-            </div>
-          </div>
-        </div>
+        </template>
+
 
       </div>
     </div>
   </div>
 
 </template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../../books/store';
+const bookstore = useBooksStore();
+
+onMounted(() => {
+  bookstore.get_books({ length: 5 });
+});
+</script>
+
+<script>
+export default {
+  props: {
+    onLinkClick: {
+      type: Function,
+      required: true
+    }
+  },
+  methods: {
+    handleClick(pageName) {
+      // Call the function passed via prop
+      if (this.onLinkClick) {
+        this.onLinkClick(pageName);
+      }
+    }
+  }
+};
+</script>
 
 <style scoped>
 @import "./style.css";

@@ -5,7 +5,7 @@
 
       <BannerSlider />
       <BookCategories />
-      <NewBooks />
+      <NewBooks :onLinkClick="onLinkClick" />
 
     </div>
     <!-- <v-app> -->
