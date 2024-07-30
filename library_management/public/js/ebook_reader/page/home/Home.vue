@@ -1,7 +1,13 @@
 <template>
   <div id="app-container" class="homepage">
     <HeaderBanner :onLinkClick="onLinkClick" />
-    <BannerSlider />
+    <div class="main-content">
+
+      <BannerSlider />
+      <BookCategories />
+      <NewBooks />
+
+    </div>
     <!-- <v-app> -->
 
     <!-- <button @click="handleClick('about')">About</button>
@@ -12,7 +18,9 @@
 </template>
 <script setup>
 import HeaderBanner from '../../components/home/header-banner/HeaderBanner.vue'
-import BannerSlider from '../../components/home/BannerSlider.vue'
+import BannerSlider from '../../components/home/banner-slider/BannerSlider.vue'
+import BookCategories from '../../components/home/book-categories/BookCategories.vue'
+import NewBooks from '../../components/home/new-books/NewBooks.vue';
 </script>
 <script>
 export default {
