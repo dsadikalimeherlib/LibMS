@@ -11,13 +11,32 @@
       </div>
       <div class="book-list-wrapper">
         <div class="item">
-          <div class="icon-wrapper" style="background-image: url(/files/round.png);"><img src="/files/image.png"></div>
-          <div class="title">Tafseer</div>
+          <div class="image-wrapper"><img src="/files/book.png"></div>
+          <div class="book-detail">
+            <div class="title">Muntakhab Mizanul Hikma</div>
+            <div class="meta-wrapper">
+              <div class="meta"><span class="label">Author:</span> Saiyed Hamid Husainu</div>
+              <div class="meta"><span class="label">Language:</span> Gujarati</div>
+              <div class="meta"><span class="label">Sect:</span> Shia</div>
+              <div class="meta"><span class="label">Book type:</span> E-book</div>
+              <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
+            </div>
+          </div>
         </div>
         <div class="item">
-          <div class="icon-wrapper" style="background-image: url(/files/round.png);"><img src="/files/image.png"></div>
-          <div class="title">Tafseer</div>
+          <div class="image-wrapper"><img src="/files/book.png"></div>
+          <div class="book-detail">
+            <div class="title">Muntakhab Mizanul Hikma</div>
+            <div class="meta-wrapper">
+              <div class="meta"><span class="label">Author:</span> Saiyed Hamid Husainu</div>
+              <div class="meta"><span class="label">Language:</span> Gujarati</div>
+              <div class="meta"><span class="label">Sect:</span> Shia</div>
+              <div class="meta"><span class="label">Book type:</span> E-book</div>
+              <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
