@@ -1,5 +1,6 @@
 <template>
-    <div id="app-container">
+    <Layout />
+    <!-- <div id="app-container">
         <v-app>
             <v-main>
                 <Sidebar :drawer="drawer" :bookstore="bookstore" @toggle-drawer="toggleDrawer" />
@@ -50,21 +51,21 @@
                                                 </v-hover>
                                             </v-col>
                                         </template>
-                                    </v-row>
-                                </v-container>
-                            </v-card>
-                        </v-col>
-                    </v-row>
-                    <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
-                        <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook"
-                            :show="isReaderOpen" @close-reader="isReaderOpen = false" />
-                        <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook"
-                            :show="isReaderOpen" @close-reader="isReaderOpen = false" />
-                    </v-dialog>
-                </v-container>
-            </v-main>
-        </v-app>
-    </div>
+</v-row>
+</v-container>
+</v-card>
+</v-col>
+</v-row>
+<v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook" :show="isReaderOpen"
+        @close-reader="isReaderOpen = false" />
+    <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook" :show="isReaderOpen"
+        @close-reader="isReaderOpen = false" />
+</v-dialog>
+</v-container>
+</v-main>
+</v-app>
+</div> -->
 </template>
 
 <script setup>
@@ -73,6 +74,7 @@ import { useBooksStore } from '../../books/store';
 import Sidebar from '../components/Sidebar.vue';
 import EpubReader from '../components/EpubReader.vue';
 import PdfReader from '../components/PdfReader.vue';
+import Layout from '../layout/Layout.vue';
 
 
 const bookstore = useBooksStore();
