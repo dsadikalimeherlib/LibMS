@@ -90,8 +90,8 @@ const toggleDrawer = () => {
 };
 
 onMounted(() => {
-    bookstore.get_books();
-    bookstore.get_book_categories();
+    bookstore.get_books({ length: null });
+    bookstore.get_book_categories({ length: null });
 });
 </script>
 
