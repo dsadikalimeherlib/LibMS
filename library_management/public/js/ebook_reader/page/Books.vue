@@ -1,6 +1,6 @@
 <template>
-    <Layout />
-    <!-- <div id="app-container">
+
+    <div id="app-container">
         <v-app>
             <v-main>
                 <Sidebar :drawer="drawer" :bookstore="bookstore" @toggle-drawer="toggleDrawer" />
@@ -51,21 +51,21 @@
                                                 </v-hover>
                                             </v-col>
                                         </template>
-</v-row>
-</v-container>
-</v-card>
-</v-col>
-</v-row>
-<v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
-    <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook" :show="isReaderOpen"
-        @close-reader="isReaderOpen = false" />
-    <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook" :show="isReaderOpen"
-        @close-reader="isReaderOpen = false" />
-</v-dialog>
-</v-container>
-</v-main>
-</v-app>
-</div> -->
+                                    </v-row>
+                                </v-container>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                    <v-dialog v-model="isReaderOpen" fullscreen hide-overlay transition="dialog-bottom-transition">
+                        <EpubReader v-if="selectedBook.digital_file_type === 'epub'" :book="selectedBook"
+                            :show="isReaderOpen" @close-reader="isReaderOpen = false" />
+                        <PdfReader v-if="selectedBook.digital_file_type === 'pdf'" :book="selectedBook"
+                            :show="isReaderOpen" @close-reader="isReaderOpen = false" />
+                    </v-dialog>
+                </v-container>
+            </v-main>
+        </v-app>
+    </div>
 </template>
 
 <script setup>
@@ -95,6 +95,25 @@ onMounted(() => {
     bookstore.get_books({ length: null });
     bookstore.get_book_categories({ length: null });
 });
+</script>
+
+<script>
+export default {
+    props: {
+        onLinkClick: {
+            type: Function,
+            required: true
+        }
+    },
+    methods: {
+        handleClick(pageName) {
+            // Call the function passed via prop
+            if (this.onLinkClick) {
+                this.onLinkClick(pageName);
+            }
+        }
+    }
+};
 </script>
 
 

@@ -8,8 +8,8 @@
               <button @click="setCurrentComponent('books')">books</button>??
               <button @click="setCurrentComponent('contact')">contact</button> -->
 
-        <component :onLinkClick="setCurrentComponent" :is="currentComponent"></component>
-
+        <component v-if="page == 'home'" :onLinkClick="setCurrentComponent" :is="currentComponent"></component>
+        <Layout v-else :customComponent="currentComponent" :onLinkClick="setCurrentComponent" />
       </v-main>
     </v-app>
   </div>
@@ -20,6 +20,7 @@ import Home from '../ebook_reader/page/home/Home.vue'
 import About from '../ebook_reader/page/About.vue'
 import Books from '../ebook_reader/page/Books.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
+import Layout from '../ebook_reader/layout/Layout.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
