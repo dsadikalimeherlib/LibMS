@@ -6,8 +6,11 @@
       <BannerSlider />
       <BookCategories />
       <NewBooks :onLinkClick="onLinkClick" />
-
+      <MediaCategories />
+      <NewMedia />
+      <NewsAnnouncements />
     </div>
+    <Footer />
     <!-- <v-app> -->
 
     <!-- <button @click="handleClick('about')">About</button>
@@ -21,6 +24,10 @@ import HeaderBanner from '../../components/home/header-banner/HeaderBanner.vue'
 import BannerSlider from '../../components/home/banner-slider/BannerSlider.vue'
 import BookCategories from '../../components/home/book-categories/BookCategories.vue'
 import NewBooks from '../../components/home/new-books/NewBooks.vue';
+import MediaCategories from '../../components/home/media-categories/MediaCategories.vue';
+import NewMedia from '../../components/home/new-media/NewMedia.vue';
+import NewsAnnouncements from '../../components/home/news-announcements/NewsAnnouncements.vue';
+import Footer from '../../components/home/footer/Footer.vue';
 </script>
 <script>
 export default {

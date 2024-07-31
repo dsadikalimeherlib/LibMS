@@ -4,13 +4,13 @@
     <div class="new-book-section">
 
       <div class="title-wrapper">
-        <h2>New Books</h2>
+        <h2>New Multimedia</h2>
         <div class="right">
           <button @click="handleClick('books')" class="link">See all<img src="/files/see-all-arrow.svg" /></button>
         </div>
       </div>
       <div class="book-list-wrapper">
-        <template v-for="item in bookstore.books" :key="item.book_title">
+        <template v-for="item in mediastore.media" :key="item.book_title">
           <div class="item">
             <div class="image-wrapper"><v-img :src="item.image ? item.image
               : 'https://placehold.co/150?text=Item'">
@@ -39,10 +39,10 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useBooksStore } from '../../../../books/store';
-const bookstore = useBooksStore();
+const mediastore = useBooksStore();
 
 onMounted(() => {
-  bookstore.get_books({ length: 5 });
+  mediastore.get_media({ length: 3 });
 });
 </script>
 

@@ -40,6 +40,26 @@ export const useBooksStore = defineStore('books', {
             });
         },
 
+        get_media({ length = null }) {
+            frappe.call({
+                method: "library_management.api.api.get_books",
+                args: {},
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        if (length !== null) {
+                            this.media = r.message.slice(0, length);
+                        } else {
+                            this.media = r.message;
+                        }
+
+
+                    } else {
+                        this.media = [];
+                    }
+                }
+            });
+        },
+
         get_book_categories({ length = null }) {
             frappe.call({
                 method: "library_management.api.api.get_book_categories",
