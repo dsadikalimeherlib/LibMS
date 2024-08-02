@@ -155,13 +155,25 @@ class BookTransaction(Document):
 
     @frappe.whitelist()
     def get_asset_by_barcode(self):
-        barcode = frappe.parse_json(self).get("scan_barcode")
+        transaction_doc = frappe.parse_json(self)
+        barcode = transaction_doc.get("scan_barcode")
+        transaction_type = transaction_doc.transaction_type
+
+        
         if not barcode:
             frappe.msgprint(_("Please scan a barcode to fetch the asset details."))
             return
 
+        filters = {
+            "name": barcode,
+        }
+        if transaction_type == "Issue":
+            filters["status"] = "Available"
+        elif transaction_type == "Return":
+            filters["status"] = "Issue"
+        
         asset = frappe.db.get_value(
-            "Asset", barcode, ["name as asset_name", "item_code"], as_dict=True
+            "Asset", filters, ["name as asset_name", "item_code"], as_dict=True
         )
         if not asset:
             return
@@ -169,4 +181,13 @@ class BookTransaction(Document):
         isbn_no = frappe.db.get_value("Book", asset.get("item_code"), "isbn")
 
         asset.update({"isbn": isbn_no})
+
+        if transaction_type == "Return":
+            member_details = frappe.db.get_value("Book Ledger", 
+                {"access_no":barcode,"transaction_type":"Issue","docstatus":1}, 
+                ["member", "name", "transaction_date", "due_date"],
+                as_dict=True
+            )
+            asset.update({"member_details": member_details})
+        
         return asset
