@@ -5,7 +5,8 @@
       <div class="title-wrapper">
         <h2>Books Categories</h2>
         <div class="right">
-          <button class="link">See all<img src="/files/see-all-arrow.svg" /></button>
+          <button @click="handleClick('book-categories')" class="link">See all<img
+              src="/files/see-all-arrow.svg" /></button>
         </div>
       </div>
       <div class="category-list-wrapper">

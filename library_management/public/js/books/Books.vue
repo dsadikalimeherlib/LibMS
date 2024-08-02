@@ -21,6 +21,7 @@ import About from '../ebook_reader/page/About.vue'
 import Books from '../ebook_reader/page/Books.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
 import Layout from '../ebook_reader/layout/Layout.vue'
+import BookCategories from '../ebook_reader/page/BookCategories.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
@@ -54,6 +55,8 @@ export default {
           break;
         case 'books':
           this.currentComponent = Books
+        case 'book-categories':
+          this.currentComponent = BookCategories
           break;
         case 'contact':
           this.currentComponent = Contact
@@ -75,6 +78,8 @@ export default {
           return Books
         case 'contact':
           return Contact
+        case 'book-categories':
+          return BookCategories
         default:
           return Home
       }

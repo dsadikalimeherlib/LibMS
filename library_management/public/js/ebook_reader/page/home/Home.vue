@@ -4,7 +4,7 @@
     <div class="main-content">
 
       <BannerSlider />
-      <BookCategories />
+      <BookCategories :onLinkClick="onLinkClick" />
       <NewBooks :onLinkClick="onLinkClick" />
       <MediaCategories />
       <NewMedia />

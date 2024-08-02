@@ -18,7 +18,7 @@
                     </div>
                     <div class="text">Home</div>
                 </button>
-                <button>
+                <button @click="handleClick('books')">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                             <path
@@ -30,7 +30,7 @@
                     </div>
                     <div class="text">Books</div>
                 </button>
-                <button>
+                <button @click="handleClick('book-categories')">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                             <path

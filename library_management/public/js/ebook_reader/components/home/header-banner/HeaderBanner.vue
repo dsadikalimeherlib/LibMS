@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="navigation">
-      <button @click="handleClick('about')">Book categories</button>
+      <button @click="handleClick('book-categories')">Book categories</button>
       <button @click="handleClick('about')">Multimedia Categories</button>
       <button @click="handleClick('about')">Apply Membership</button>
       <button @click="handleClick('about')">Fees</button>
