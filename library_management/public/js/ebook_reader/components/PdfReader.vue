@@ -85,8 +85,8 @@ export default {
     },
     data() {
         return {
-            show: false,
             url: '',
+            show: false,
             bookInstance: null,
             rendition: null,
             pdfDoc: null,
@@ -110,8 +110,7 @@ export default {
     methods: {
         async loadPdf() {
             try {
-                this.url = frappe.urllib.get_full_url(this.book.book_url);
-
+                await this.getBook();
                 const loadingTask = pdfjsLib.getDocument(this.url);
                 this.pdfDoc = await loadingTask.promise;
                 this.totalPages = this.pdfDoc.numPages;
@@ -125,6 +124,27 @@ export default {
                 this.snackbarText = "Error loading the PDF book.";
                 this.snackbarColor = 'danger';
                 this.showSnackbar = true;
+            }
+        },
+        async getBook() {
+            try {
+            await frappe.call({
+                method: "library_management.api.api.get_external_book",
+                args: {
+                aws_key: this.book.aws_key,
+                },
+                freeze: true,
+                freeze_message: __("Fetching book details..."),
+                callback: (r) => {
+                    if (r.message) {
+                        this.url = r.message;
+                    }
+                },
+            });
+            } catch (error) {
+            this.snackbarText = "Error loading the book.";
+            this.snackbarColor = 'danger';
+            this.showSnackbar = true;
             }
         },
         async renderPage() {
