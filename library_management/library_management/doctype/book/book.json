@@ -39,9 +39,9 @@
   "book_condition",
   "book_cover",
   "is_digital_book",
-  "book_url",
   "digital_file_type",
   "image",
+  "aws_key",
   "donation_details_section",
   "donated_book",
   "donor_name",
@@ -218,12 +218,6 @@
    "label": "Search"
   },
   {
-   "depends_on": "eval:doc.is_digital_book == \"Yes\"",
-   "fieldname": "book_url",
-   "fieldtype": "Attach",
-   "label": "Book URL"
-  },
-  {
    "default": "0",
    "fieldname": "disabled",
    "fieldtype": "Check",
@@ -327,6 +321,11 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Language Name"
+  },
+  {
+   "fieldname": "aws_key",
+   "fieldtype": "Data",
+   "label": "AWS Key"
   }
  ],
  "has_web_view": 1,
@@ -344,7 +343,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-06-13 17:49:33.476588",
+ "modified": "2024-08-02 13:59:30.611128",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",

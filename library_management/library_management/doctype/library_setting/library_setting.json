@@ -11,7 +11,14 @@
   "default_asset_location",
   "customer_group",
   "default_asset_category",
-  "number_of_book_allowed"
+  "number_of_book_allowed",
+  "aws_settings_section",
+  "aws_user",
+  "aws_bucket_name",
+  "column_break_jkfp",
+  "aws_region_name",
+  "access_key",
+  "secret_key"
  ],
  "fields": [
   {
@@ -42,12 +49,46 @@
    "fieldname": "number_of_book_allowed",
    "fieldtype": "Int",
    "label": "Number of book allowed"
+  },
+  {
+   "fieldname": "aws_settings_section",
+   "fieldtype": "Section Break",
+   "label": "AWS Settings"
+  },
+  {
+   "fieldname": "aws_user",
+   "fieldtype": "Data",
+   "label": "AWS User"
+  },
+  {
+   "fieldname": "aws_bucket_name",
+   "fieldtype": "Data",
+   "label": "AWS Bucket Name"
+  },
+  {
+   "fieldname": "aws_region_name",
+   "fieldtype": "Data",
+   "label": "AWS Region Name"
+  },
+  {
+   "fieldname": "column_break_jkfp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "access_key",
+   "fieldtype": "Password",
+   "label": "Access Key"
+  },
+  {
+   "fieldname": "secret_key",
+   "fieldtype": "Password",
+   "label": "Secret Key"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-05-08 13:25:16.269293",
+ "modified": "2024-08-02 01:52:40.211967",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Setting",

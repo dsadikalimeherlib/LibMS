@@ -54,8 +54,8 @@ frappe.ui.form.on('Book', {
     },
     before_save: function(frm) {
         if (frm.doc.isbn && !frm.doc.image) {
-            fetchBookDetails(frm);
-            fetchNumberofcopi(frm);
+            // fetchBookDetails(frm);
+            // fetchNumberofcopi(frm);
         }
     
     // Retrieve book category from the document and call createBookCategory function
