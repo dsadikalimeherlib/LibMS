@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:language_code",
  "creation": "2014-08-22 16:12:17.249590",
@@ -51,7 +52,7 @@
  "icon": "fa fa-globe",
  "in_create": 1,
  "links": [],
- "modified": "2024-01-10 19:15:26.220385",
+ "modified": "2024-07-29 10:13:35.401741",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Language",

@@ -18,25 +18,24 @@ frappe.ui.form.on('Library Membership', {
 
 frappe.ui.form.on('Library Membership', {
     before_save: function(frm) {
-        // Call the server-side method to check for duplicates
+        frappe.msgprint(__('Before Save is Work'));
         frappe.call({
-            method: "get_data.check_for_duplicates",
+            method: "get_data.check_duplicate_membership",
             args: {
-                document_name: frm.doc.name  // Pass the document name as an argument
+                document_name: frm.doc.name,
+                member: frm.doc.member
             },
-            async: false,
             callback: function(response) {
+                console.log(document_name)
                 if (response.message.has_duplicate) {
-                    // Disable save/submit if a duplicate is found
-                    frm.disable_save();
+                    // Prevent saving by throwing an error
                     frappe.msgprint({
                         title: __('Duplicate Found'),
                         message: __('A duplicate active membership service found: {0}', [response.message.duplicate_service]),
                         indicator: 'red'
                     });
-                } else {
-                    // Enable save/submit if no duplicate is found
-                    frm.enable_save();
+                    // Cancel the save
+                    frm.prevent_default();
                 }
             }
         });

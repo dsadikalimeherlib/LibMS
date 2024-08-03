@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2024-02-14 11:23:24.741076",
@@ -32,7 +33,6 @@
   "translator",
   "editor",
   "book_details_section",
-  "no_of_copies",
   "no_of_pages",
   "description",
   "column_break_y5d8z",
@@ -48,8 +48,8 @@
   "donor_mobile",
   "donor_location",
   "donation_date",
-  "copies",
-  "remarks",
+  "donated_copies",
+  "donation_remarks",
   "section_break_faist",
   "book_images",
   "route",
@@ -133,12 +133,6 @@
    "fieldtype": "Link",
    "label": "Editor",
    "options": "Editor"
-  },
-  {
-   "depends_on": "eval:doc.is_digital_book == \"No\"",
-   "fieldname": "no_of_copies",
-   "fieldtype": "Int",
-   "label": "No of Copies"
   },
   {
    "fieldname": "no_of_pages",
@@ -252,18 +246,6 @@
    "fieldname": "donor_location",
    "fieldtype": "Data",
    "label": "Donor Location"
-  },
-  {
-   "depends_on": "eval:doc.donated_book == \"Yes\"",
-   "fieldname": "remarks",
-   "fieldtype": "Data",
-   "label": "Remarks"
-  },
-  {
-   "depends_on": "eval:doc.donated_book == \"Yes\"",
-   "fieldname": "copies",
-   "fieldtype": "Data",
-   "label": "No of Copies"
   },
   {
    "depends_on": "eval:doc.donated_book == \"Yes\"",
