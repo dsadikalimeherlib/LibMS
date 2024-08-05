@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:editor",
  "creation": "2023-04-04 18:46:51.214817",
@@ -20,7 +21,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-10 17:47:09.648229",
+ "modified": "2024-07-29 10:13:16.927528",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Editor",

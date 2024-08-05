@@ -106,15 +106,15 @@ jinja = {
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
-# 		# "on_update": "method",
-# 		# "on_cancel": "method",
-# 		# "on_trash": "method",
-#         "on_submit": "library_management.library_management.library_management.doctype.library_membership.library_membership.check_duplicate_membership"
-# 	},
-#     # "Book": {
-# 	# 	"after_insert": "library_management.library_management.doctype.book.events.after_insert",
-# 	# }
+# 	# "*": {
+# 	# 	# "on_update": "method",
+# 	# 	# "on_cancel": "method",
+# 	# 	# "on_trash": "method",
+#     #     "on_submit": "library_management.library_management.library_management.doctype.library_membership.library_membership.check_duplicate_membership"
+# 	# },
+#     "Library Membership": {
+# 		"before_save": "library_management.library_management.doctype.library_membership.library_membership.check_duplicate_membership"
+# 	}
 # }
 
 # Scheduled Tasks
@@ -154,7 +154,7 @@ override_whitelisted_methods = {
     "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued": "library_management.custom_api.count_books_issued",
     "book_allowed_issue.allowed_book": "library_management.custom_api.allowed_book",
     "fetch_member_details.fetch_member_issue_book_detail":"library_management.custom_api.fetch_member_issue_book_detail",
-    "get_data.check_for_duplicates":"library_management.custom_api.check_for_duplicates"
+    "get_data.check_duplicate_membership":"library_management.library_management.doctype.library_membership.library_membership.check_duplicate_membership"
 }
 
 # "book_allowed_issue.allowed_book": "library_management.custom_api.allowed_book"
