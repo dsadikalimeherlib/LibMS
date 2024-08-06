@@ -183,22 +183,27 @@ frappe.ui.form.on('Book Transaction', {
                 if (r.message) {
                     if (frm.doc.transaction_type == "Issue") {
                         let row = frappe.model.add_child(frm.doc, "Book Transaction Detail", "book_transaction_detail");
-                        row.access_no = r.message.asset_name;
+                        row.access_no = r.message.asset_id;
+                        row.book_title = r.message.asset_name;
+                        row.status = r.message.status;
                         row.isbn_no = r.message.isbn;
                         frm.refresh_field('book_transaction_detail');
 
                     } else if (frm.doc.transaction_type == "Return") {
                         let row = frappe.model.add_child(frm.doc, "Book Transaction Detail", "return_book_details");
-                        row.access_no = r.message.asset_name;
+                        row.access_no = r.message.asset_id;
 
                         const member_details = r.message.member_details;
-                        if (frm.doc.member  == member_details.member){
+                        if (!frm.doc.member || (frm.doc.member  == member_details.member)){
                             frappe.model.set_value(row.doctype, row.name, 'transaction_no', member_details.name);
                             frappe.model.set_value(row.doctype, row.name, 'transaction_date', member_details.transaction_date);
                             frappe.model.set_value(row.doctype, row.name, 'due_date', member_details.due_date);
+                            
+                            if(!frm.doc.member){
+                                frm.set_value('member', member_details.member);
+                            }
                         }
                         frm.refresh_field('return_book_details');
-
                     }
 
                 } else {

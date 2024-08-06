@@ -173,7 +173,7 @@ class BookTransaction(Document):
             filters["status"] = "Issue"
         
         asset = frappe.db.get_value(
-            "Asset", filters, ["name as asset_name", "item_code"], as_dict=True
+            "Asset", filters, ["name as asset_id", "item_code", "asset_name", "status"], as_dict=True
         )
         if not asset:
             return
@@ -184,7 +184,7 @@ class BookTransaction(Document):
 
         if transaction_type == "Return":
             member_details = frappe.db.get_value("Book Ledger", 
-                {"access_no":barcode,"transaction_type":"Issue","docstatus":1}, 
+                {"access_no": barcode, "transaction_type": "Issue", "docstatus": 1}, 
                 ["member", "name", "transaction_date", "due_date"],
                 as_dict=True
             )
