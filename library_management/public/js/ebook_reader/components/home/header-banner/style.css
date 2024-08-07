@@ -1,0 +1,119 @@
+.header-banner-wrapper {
+    position: relative;
+    height: 430px;
+    padding-top: 20px;
+
+    .background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .inner {
+        position: relative;
+        padding: 0 20px;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+
+        .right-buttons {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            button {
+                border-radius: 5px;
+                background: #FFF;
+                color: #00B0AB;
+                font-family: Inter;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                padding: 10px;
+            }
+        }
+    }
+
+
+    .banner {
+
+        padding-top: 90px;
+        position: relative;
+
+        .title {
+            color: #FFF;
+            font-family: Inter;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 41px;
+            text-align: center;
+        }
+
+        .search-wrapper {
+            border-radius: 5px;
+            background: #FFF;
+            position: relative;
+            max-width: 775px;
+            margin: 0 auto;
+
+            font-size: 14px;
+
+            input {
+                width: 100%;
+                padding: 24px 20px 24px 46px;
+            }
+
+            .icon {
+                position: absolute;
+                left: 18px;
+                top: 23px;
+            }
+        }
+    }
+
+    .navigation {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            color: #FFF;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            padding: 20px;
+            position: relative;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                height: 15px;
+                background-color: #fff;
+                width: 1px;
+
+            }
+
+            &:first-child::before {
+                visibility: hidden;
+            }
+        }
+    }
+}
