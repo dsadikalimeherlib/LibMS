@@ -1,0 +1,14 @@
+[
+	{
+		"doctype":"Custom Field",
+		"dt":"Customer",
+		"fieldname":"member",
+		"name":"member",
+        "module":"Library Management",
+		"fieldtype":"Data",
+		"insert_after":"customer_name",
+		"label":"Member",
+        "options": "Member",
+        "autoname": "member:"
+    	}
+]

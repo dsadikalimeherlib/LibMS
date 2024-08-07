@@ -16,7 +16,8 @@ class Member(Document):
                 'doctype': 'Customer',
                 'customer': self.name,
                 'customer_name': self.member_name
+                
             })
             frappe.msgprint("Customer created successfully")
             customer_doc.insert()
-            #self.customer_code = customer_doc.name
+

@@ -14,6 +14,7 @@
   "member_name",
   "middle_name",
   "last_name",
+  "column_break_sad1",
   "birth_date",
   "membership_expiry_date",
   "gender",
@@ -219,6 +220,10 @@
    "fieldtype": "Table",
    "label": "Member Documents",
    "options": "Member Documents"
+  },
+  {
+   "fieldname": "column_break_sad1",
+   "fieldtype": "Column Break"
   }
  ],
  "image_field": "image",
@@ -231,10 +236,10 @@
   },
   {
    "link_doctype": "Customer",
-   "link_fieldname": "customer"
+   "link_fieldname": "customer_name"
   }
  ],
- "modified": "2024-07-05 16:58:25.299542",
+ "modified": "2024-08-07 12:26:09.687099",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",
