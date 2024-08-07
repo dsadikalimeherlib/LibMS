@@ -12,6 +12,7 @@
   "customer_group",
   "default_asset_category",
   "number_of_book_allowed",
+  "asset_naming_series",
   "aws_settings_section",
   "aws_user",
   "aws_bucket_name",
@@ -83,12 +84,18 @@
    "fieldname": "secret_key",
    "fieldtype": "Password",
    "label": "Secret Key"
+  },
+  {
+   "fieldname": "asset_naming_series",
+   "fieldtype": "Select",
+   "label": "Asset Naming Series",
+   "options": "ACC-ASS-.YYYY.-"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-02 01:52:40.211967",
+ "modified": "2024-08-07 12:46:04.421680",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Setting",
