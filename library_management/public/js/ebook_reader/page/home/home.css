@@ -4,3 +4,9 @@
     padding-bottom: 60px;
 
 }
+
+.homepage.black {
+    .main-content {
+        background: #3A3A3A;
+    }
+}

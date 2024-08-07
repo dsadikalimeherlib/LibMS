@@ -1,6 +1,6 @@
 <template>
-  <div id="app-container" class="homepage">
-    <HeaderBanner :onLinkClick="onLinkClick" />
+  <div id="app-container" :class="homepageClass">
+    <HeaderBanner :onLinkClick="onLinkClick" :setWhiteTheme="setWhiteTheme" :whiteTheme="whiteTheme" />
     <div class="main-content">
 
       <BannerSlider />
@@ -35,7 +35,15 @@ export default {
     onLinkClick: {
       type: Function,
       required: true
-    }
+    },
+    setWhiteTheme: {
+      type: Function,
+      required: true
+    },
+    whiteTheme: {
+      type: Boolean,
+      required: true
+    },
   },
   methods: {
     handleClick(pageName) {
@@ -43,6 +51,17 @@ export default {
       if (this.onLinkClick) {
         this.onLinkClick(pageName);
       }
+    }
+  },
+  computed: {
+    homepageClass() {
+      return [
+        'homepage',  // Static class
+        {
+          white: this.whiteTheme,
+          black: !this.whiteTheme
+        }
+      ];
     }
   }
 };

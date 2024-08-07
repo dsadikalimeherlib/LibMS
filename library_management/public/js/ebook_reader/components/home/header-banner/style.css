@@ -38,6 +38,10 @@
                 line-height: normal;
                 padding: 10px;
             }
+
+            .nav-icon {
+                cursor: pointer;
+            }
         }
     }
 
@@ -115,5 +119,11 @@
                 visibility: hidden;
             }
         }
+    }
+}
+
+.homepage.black {
+    .search-wrapper {
+        background: #3A3A3A;
     }
 }
