@@ -20,6 +20,8 @@
     .header {
         display: flex;
         align-items: center;
+        position: relative;
+        z-index: 1;
 
         .right-buttons {
             margin-left: auto;
@@ -41,6 +43,7 @@
 
             .nav-icon {
                 cursor: pointer;
+                width: 35px;
             }
         }
     }
@@ -62,26 +65,7 @@
             text-align: center;
         }
 
-        .search-wrapper {
-            border-radius: 5px;
-            background: #FFF;
-            position: relative;
-            max-width: 775px;
-            margin: 0 auto;
 
-            font-size: 14px;
-
-            input {
-                width: 100%;
-                padding: 24px 20px 24px 46px;
-            }
-
-            .icon {
-                position: absolute;
-                left: 18px;
-                top: 23px;
-            }
-        }
     }
 
     .navigation {
@@ -117,6 +101,34 @@
 
             &:first-child::before {
                 visibility: hidden;
+            }
+        }
+
+    }
+
+    .profile-menu {
+        position: absolute;
+        right: -5px;
+        top: 45px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+
+        ul li {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #33363F;
+            border-radius: 10px;
+            transition: 0.3s all ease;
+
+            &:hover {
+                background-color: #eee;
+
+            }
+
+            &:last-child {
+                border-bottom: 0;
             }
         }
     }
