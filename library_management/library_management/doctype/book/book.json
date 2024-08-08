@@ -48,8 +48,6 @@
   "donor_mobile",
   "donor_location",
   "donation_date",
-  "donated_copies",
-  "donation_remarks",
   "section_break_faist",
   "book_images",
   "route",
@@ -279,6 +277,7 @@
    "options": "\nepub\npdf"
   },
   {
+   "default": "MLJS.-",
    "fieldname": "naming_series",
    "fieldtype": "Data",
    "label": "naming series"
@@ -325,7 +324,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-08-02 13:59:30.611128",
+ "modified": "2024-08-07 15:25:51.986538",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
