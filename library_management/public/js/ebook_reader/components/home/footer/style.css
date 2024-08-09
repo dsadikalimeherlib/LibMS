@@ -45,3 +45,19 @@
         line-height: normal;
     }
 }
+
+.homepage.black {
+    .footer-section {
+        background: #222222;
+
+        .content,
+        .copy,
+        button {
+            color: #fff;
+        }
+
+        svg * {
+            stroke: #fff;
+        }
+    }
+}

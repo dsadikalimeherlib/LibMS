@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2024-02-14 11:23:24.741076",
@@ -32,24 +33,21 @@
   "translator",
   "editor",
   "book_details_section",
-  "no_of_copies",
   "no_of_pages",
   "description",
   "column_break_y5d8z",
   "book_condition",
   "book_cover",
   "is_digital_book",
-  "book_url",
   "digital_file_type",
   "image",
+  "aws_key",
   "donation_details_section",
   "donated_book",
   "donor_name",
   "donor_mobile",
   "donor_location",
   "donation_date",
-  "copies",
-  "remarks",
   "section_break_faist",
   "book_images",
   "route",
@@ -135,12 +133,6 @@
    "options": "Editor"
   },
   {
-   "depends_on": "eval:doc.is_digital_book == \"No\"",
-   "fieldname": "no_of_copies",
-   "fieldtype": "Int",
-   "label": "No of Copies"
-  },
-  {
    "fieldname": "no_of_pages",
    "fieldtype": "Int",
    "label": "No of Pages"
@@ -218,12 +210,6 @@
    "label": "Search"
   },
   {
-   "depends_on": "eval:doc.is_digital_book == \"Yes\"",
-   "fieldname": "book_url",
-   "fieldtype": "Attach",
-   "label": "Book URL"
-  },
-  {
    "default": "0",
    "fieldname": "disabled",
    "fieldtype": "Check",
@@ -261,18 +247,6 @@
   },
   {
    "depends_on": "eval:doc.donated_book == \"Yes\"",
-   "fieldname": "remarks",
-   "fieldtype": "Data",
-   "label": "Remarks"
-  },
-  {
-   "depends_on": "eval:doc.donated_book == \"Yes\"",
-   "fieldname": "copies",
-   "fieldtype": "Data",
-   "label": "No of Copies"
-  },
-  {
-   "depends_on": "eval:doc.donated_book == \"Yes\"",
    "fieldname": "donation_date",
    "fieldtype": "Date",
    "label": "Donation Date"
@@ -303,6 +277,7 @@
    "options": "\nepub\npdf"
   },
   {
+   "default": "MLJS.-",
    "fieldname": "naming_series",
    "fieldtype": "Data",
    "label": "naming series"
@@ -327,6 +302,11 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Language Name"
+  },
+  {
+   "fieldname": "aws_key",
+   "fieldtype": "Data",
+   "label": "AWS Key"
   }
  ],
  "has_web_view": 1,
@@ -344,7 +324,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-06-13 17:49:33.476588",
+ "modified": "2024-08-07 15:25:51.986538",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",

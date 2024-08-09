@@ -2,6 +2,7 @@
     position: relative;
     height: 430px;
     padding-top: 20px;
+    z-index: 2;
 
     .background {
         position: absolute;
@@ -20,6 +21,8 @@
     .header {
         display: flex;
         align-items: center;
+        position: relative;
+        z-index: 1;
 
         .right-buttons {
             margin-left: auto;
@@ -37,6 +40,11 @@
                 font-weight: 700;
                 line-height: normal;
                 padding: 10px;
+            }
+
+            .nav-icon {
+                cursor: pointer;
+                width: 35px;
             }
         }
     }
@@ -58,61 +66,34 @@
             text-align: center;
         }
 
-        .search-wrapper {
-            border-radius: 5px;
-            background: #FFF;
-            position: relative;
-            max-width: 775px;
-            margin: 0 auto;
 
-            font-size: 14px;
-
-            input {
-                width: 100%;
-                padding: 24px 20px 24px 46px;
-            }
-
-            .icon {
-                position: absolute;
-                left: 18px;
-                top: 23px;
-            }
-        }
     }
 
-    .navigation {
+
+
+    .profile-menu {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1;
-        background: rgba(255, 255, 255, 0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        right: -5px;
+        top: 45px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
 
-        button {
-            color: #FFF;
-            font-family: Inter;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            padding: 20px;
-            position: relative;
+        ul li {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #33363F;
+            border-radius: 10px;
+            transition: 0.3s all ease;
 
-            &:before {
-                content: '';
-                position: absolute;
-                left: 0;
-                height: 15px;
-                background-color: #fff;
-                width: 1px;
+            &:hover {
+                background-color: #eee;
 
             }
 
-            &:first-child::before {
-                visibility: hidden;
+            &:last-child {
+                border-bottom: 0;
             }
         }
     }

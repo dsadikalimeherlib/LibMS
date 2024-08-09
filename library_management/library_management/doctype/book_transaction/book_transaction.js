@@ -43,22 +43,7 @@ frappe.ui.form.on('Book Transaction', {
         });
     },
     scan_barcode(frm) {
-        if (frm.doc.scan_barcode) {
-            frm.call('get_asset_by_barcode', {
-                self: frm.doc
-            }).then((r) => {
-                if (r.message) {
-                    frm.add_child('book_transaction_detail', {
-                        access_no: r.message.asset_name,
-                        isbn_no: r.message.isbn,
-                    });
-                    frm.refresh_field('book_transaction_detail');
-
-                } else {
-                    frappe.msgprint(__("No asset found for the provided barcode: " + frm.doc.scan_barcode));
-                }
-            })
-        }
+        frm.trigger('get_asset_details');
     },
     onload: function (frm) {
         frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function (doc, cdt, cdn) {
@@ -111,6 +96,8 @@ frappe.ui.form.on('Book Transaction', {
         frm.set_value('due_date', due);
     },
     transaction_type: function (frm) {
+        frm.trigger('get_asset_details');
+
         frm.fields_dict['book_transaction_detail'].grid.get_field('access_no').get_query = function (doc, cdt, cdn) {
             // Get the value of the "transaction_type" field
             var transactionType = frm.doc.transaction_type;
@@ -182,6 +169,50 @@ frappe.ui.form.on('Book Transaction', {
         } else {
             frm.set_value('issued_book', 0);
         }
+    },
+    get_asset_details: (frm) => {
+        if (frm.doc.scan_barcode) {
+            if (!frm.doc.transaction_type) {
+                frappe.msgprint(__("Please select Transaction Type"));
+                return;
+            }
+
+            frm.call('get_asset_by_barcode', {
+                self: frm.doc
+            }).then((r) => {
+                if (r.message) {
+                    if (frm.doc.transaction_type == "Issue") {
+                        let row = frappe.model.add_child(frm.doc, "Book Transaction Detail", "book_transaction_detail");
+                        row.access_no = r.message.asset_id;
+                        row.book_title = r.message.asset_name;
+                        row.status = r.message.status;
+                        row.isbn_no = r.message.isbn;
+                        frm.refresh_field('book_transaction_detail');
+
+                    } else if (frm.doc.transaction_type == "Return") {
+                        let row = frappe.model.add_child(frm.doc, "Book Transaction Detail", "return_book_details");
+                        row.access_no = r.message.asset_id;
+
+                        const member_details = r.message.member_details;
+                        if (!frm.doc.member || (frm.doc.member  == member_details.member)){
+                            frappe.model.set_value(row.doctype, row.name, 'transaction_no', member_details.name);
+                            frappe.model.set_value(row.doctype, row.name, 'transaction_date', member_details.transaction_date);
+                            frappe.model.set_value(row.doctype, row.name, 'due_date', member_details.due_date);
+                            
+                            if(!frm.doc.member){
+                                frm.set_value('member', member_details.member);
+                            }
+                        }
+                        frm.refresh_field('return_book_details');
+                    }
+
+                } else {
+                    frappe.msgprint(__(
+                        `<p>No asset found for the provided barcode: <b>${frm.doc.scan_barcode}</b> and Transaction Type: <b>${frm.doc.transaction_type}</b></p>`
+                    ));
+                }
+            })
+        }
     }
 });
 
@@ -221,6 +252,7 @@ frappe.ui.form.on("Book Transaction Detail", {
 frappe.ui.form.on("Return Book Details", {
     access_no: function(frm, cdt, cdn) {
         var child_doc = locals[cdt][cdn];
+        console.log(child_doc);
         if (frm.doc.transaction_type === "Return") {
             var child_rows = frm.doc.return_book_details || [];
             if (child_rows.length > 0) {

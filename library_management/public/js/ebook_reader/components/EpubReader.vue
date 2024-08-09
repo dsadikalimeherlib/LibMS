@@ -37,6 +37,11 @@
             {{ snackbarText }}
             <v-btn small color="white" text @click="showSnackbar = false">Close</v-btn>
           </v-snackbar>
+
+          <v-overlay v-model="isLoading" absolute>
+            <v-progress-circular indeterminate size="100" color="primary"></v-progress-circular>
+            <div class="loading-message">Loading...</div>
+          </v-overlay>
         </v-row>
       </v-main>
       <v-bottom-navigation class="bg-light">
@@ -89,8 +94,8 @@ export default {
   },
   data() {
     return {
-      show: false,
       url: '',
+      show: false,
       bookInstance: null,
       rendition: null,
       page: 1,
@@ -102,6 +107,7 @@ export default {
       showSnackbar: false,
       snackbarText: '',
       snackbarColor: '',
+      isLoading: false,
     };
   },
   watch: {
@@ -111,9 +117,10 @@ export default {
   },
   methods: {
     async loadEPUB() {
-      if (this.book && this.book.book_url) {
+      if (this.book) {
         try {
-          this.url = frappe.urllib.get_full_url(this.book.book_url);
+          this.isLoading = true;
+          await this.getBook();
           this.bookInstance = new Book(this.url);
           await this.bookInstance.ready;
 
@@ -136,7 +143,31 @@ export default {
           this.snackbarColor = 'danger';
           this.showSnackbar = true;
         }
+        finally {
+          this.isLoading = false;
+        }
       }
+    },
+    async getBook() {
+        try {
+          await frappe.call({
+            method: "library_management.api.api.get_external_book",
+            args: {
+              aws_key: this.book.aws_key,
+            },
+            freeze: true,
+            freeze_message: __("Fetching book details..."),
+            callback: (r) => {
+                if (r.message) {
+                    this.url = r.message;
+                }
+            },
+          });
+        } catch (error) {
+          this.snackbarText = "Error loading the book.";
+          this.snackbarColor = 'danger';
+          this.showSnackbar = true;
+        }
     },
     nextPage() {
       if (this.rendition) {
@@ -306,5 +337,14 @@ export default {
 #epub-render-area,
 #epub-render-area * {
   font-size: inherit !important;
+}
+
+.loading-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 18px;
 }
 </style>

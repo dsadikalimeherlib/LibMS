@@ -15,35 +15,6 @@ frappe.ui.form.on('Library Membership', {
     },
 });
 
-
-frappe.ui.form.on('Library Membership', {
-    before_save: function(frm) {
-        // Call the server-side method to check for duplicates
-        frappe.call({
-            method: "get_data.check_for_duplicates",
-            args: {
-                document_name: frm.doc.name  // Pass the document name as an argument
-            },
-            async: false,
-            callback: function(response) {
-                if (response.message.has_duplicate) {
-                    // Disable save/submit if a duplicate is found
-                    frm.disable_save();
-                    frappe.msgprint({
-                        title: __('Duplicate Found'),
-                        message: __('A duplicate active membership service found: {0}', [response.message.duplicate_service]),
-                        indicator: 'red'
-                    });
-                } else {
-                    // Enable save/submit if no duplicate is found
-                    frm.enable_save();
-                }
-            }
-        });
-    }
-});
-
-
 frappe.ui.form.on("Library Membership Details", {
     plan: function(frm, cdt, cdn) {
         var from_date = frappe.datetime.get_today();

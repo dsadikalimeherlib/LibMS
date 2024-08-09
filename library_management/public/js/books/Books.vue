@@ -8,7 +8,8 @@
               <button @click="setCurrentComponent('books')">books</button>??
               <button @click="setCurrentComponent('contact')">contact</button> -->
 
-        <component v-if="page == 'home'" :onLinkClick="setCurrentComponent" :is="currentComponent"></component>
+        <component v-if="page == 'home'" :onLinkClick="setCurrentComponent" :is="currentComponent"
+          :setWhiteTheme="setWhiteTheme" :whiteTheme="whiteTheme"></component>
         <Layout v-else :customComponent="currentComponent" :onLinkClick="setCurrentComponent" />
       </v-main>
     </v-app>
@@ -34,7 +35,8 @@ export default {
   data() {
     return {
       page: pageValue == null ? 'home' : pageValue,
-      currentComponent: Home
+      currentComponent: Home,
+      whiteTheme: true
     };
   },
   methods: {
@@ -65,6 +67,9 @@ export default {
           this.currentComponent = Home
           break;
       }
+    },
+    setWhiteTheme(flag) {
+      this.whiteTheme = flag
     }
   },
   computed: {
