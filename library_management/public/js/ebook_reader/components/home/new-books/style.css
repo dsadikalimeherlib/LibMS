@@ -122,3 +122,22 @@
     }
 
 }
+
+.homepage.black {
+    .new-book-section {
+        background: #333333;
+
+        .item {
+            background-color: #3A3A3A;
+        }
+    }
+
+    .book-detail {
+        background-color: #3A3A3A;
+
+        .title,
+        .meta {
+            color: #fff;
+        }
+    }
+}

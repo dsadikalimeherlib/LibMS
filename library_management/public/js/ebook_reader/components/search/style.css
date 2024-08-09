@@ -25,6 +25,7 @@
             position: absolute;
             right: 20px;
             top: 20px;
+            cursor: pointer;
         }
     }
 
@@ -53,6 +54,8 @@
                 gap: 5px;
                 cursor: pointer;
                 padding: 0 5px 8px;
+                border-bottom: 2px solid transparent;
+                margin-bottom: -2px;
 
                 &.active {
                     border-bottom: 2px solid #00B0AB;
@@ -87,6 +90,7 @@
                 padding: 10px;
                 cursor: pointer;
 
+
                 &:hover {
                     background-color: #f8f8f8;
                 }
@@ -120,4 +124,46 @@
             }
         }
     }
+}
+
+.homepage.black {
+
+    .search-wrapper .icon,
+    .close-btn svg {
+        * {
+            stroke: #fff;
+        }
+    }
+
+    .search-wrapper input {
+        color: #fff;
+    }
+
+    .search-wrapper,
+    .search-dropdown {
+        background: #3A3A3A;
+    }
+
+    .search-dropdown {
+        .tab-wrapper {
+            border-bottom-color: #464646;
+
+            li {
+                color: #fff;
+            }
+        }
+
+        .results li {
+            border-bottom-color: #494949;
+
+            &:hover {
+                background-color: #303030;
+            }
+
+            .result-title {
+                color: #fff;
+            }
+        }
+    }
+
 }

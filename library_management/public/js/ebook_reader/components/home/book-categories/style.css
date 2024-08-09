@@ -67,3 +67,13 @@
         }
     }
 }
+
+.homepage.black {
+    .category-list-wrapper .item {
+        background: #333333;
+
+        .title {
+            color: #fff;
+        }
+    }
+}

@@ -70,3 +70,20 @@
     }
 
 }
+
+.homepage.black {
+    .news-section {
+        background: #333333;
+
+        .item {
+            background: none;
+
+            .title,
+            .description,
+            .date {
+                color: #fff;
+            }
+        }
+
+    }
+}

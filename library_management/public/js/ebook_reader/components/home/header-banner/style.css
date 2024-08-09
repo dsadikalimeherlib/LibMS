@@ -2,6 +2,7 @@
     position: relative;
     height: 430px;
     padding-top: 20px;
+    z-index: 2;
 
     .background {
         position: absolute;
@@ -68,43 +69,7 @@
 
     }
 
-    .navigation {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1;
-        background: rgba(255, 255, 255, 0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
-        button {
-            color: #FFF;
-            font-family: Inter;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            padding: 20px;
-            position: relative;
-
-            &:before {
-                content: '';
-                position: absolute;
-                left: 0;
-                height: 15px;
-                background-color: #fff;
-                width: 1px;
-
-            }
-
-            &:first-child::before {
-                visibility: hidden;
-            }
-        }
-
-    }
 
     .profile-menu {
         position: absolute;
@@ -131,11 +96,5 @@
                 border-bottom: 0;
             }
         }
-    }
-}
-
-.homepage.black {
-    .search-wrapper {
-        background: #3A3A3A;
     }
 }

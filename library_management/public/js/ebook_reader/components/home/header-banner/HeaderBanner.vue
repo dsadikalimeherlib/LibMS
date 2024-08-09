@@ -47,27 +47,16 @@
       </div>
       <div class="banner">
         <div class="title">Explore Books, Magazines, Journal and more...</div>
-
         <Search />
-
-
-
       </div>
     </div>
-    <div class="navigation">
-      <button @click="handleClick('book-categories')">Book categories</button>
-      <button @click="handleClick('about')">Multimedia Categories</button>
-      <button @click="handleClick('about')">Apply Membership</button>
-      <button @click="handleClick('about')">Fees</button>
-      <button @click="handleClick('about')">News & Announcements</button>
-      <button @click="handleClick('about')">Holidays</button>
-      <button @click="handleClick('about')">Contact us</button>
-      <button @click="handleClick('about')">Feedback</button>
-    </div>
+    <Navigation />
   </div>
+  <Navigation :isSticky="true" />
 
 </template>
 <script setup>
+import Navigation from '../../navigation/Navigation.vue';
 import Search from '../../search/Search.vue';</script>
 <script>
 

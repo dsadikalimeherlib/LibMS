@@ -39,10 +39,34 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useBooksStore } from '../../../../books/store';
-const bookstore = useBooksStore();
-
+// const bookstore = useBooksStore();
+const bookstore = {
+  books: [
+    {
+      book_title: 'Book1',
+      author: 'Author'
+    },
+    {
+      book_title: 'Book2',
+      author: 'Author'
+    },
+    {
+      book_title: 'Book3',
+      author: 'Author'
+    },
+    {
+      book_title: 'Book4',
+      author: 'Author'
+    },
+    {
+      book_title: 'Book5',
+      author: 'Author'
+    }
+  ]
+}
 onMounted(() => {
-  bookstore.get_books({ length: 5 });
+
+  // bookstore.get_books({ length: 5 });
 });
 </script>
 
