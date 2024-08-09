@@ -36,12 +36,10 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script defer src="http://flexslider.woothemes.com/js/jquery.flexslider.js"></script>
 <script>
-console.log(1);
 $(function(){
   SyntaxHighlighter.all();
 });
 $(window).load(function(){
-    console.log(2);
   $('.flexslider').flexslider({
     animation: "slide",
     start: function(slider){
