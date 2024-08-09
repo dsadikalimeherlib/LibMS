@@ -26,7 +26,6 @@ import BookCategories from '../ebook_reader/page/BookCategories.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
-console.log('url', url);
 const params = new URLSearchParams(url.search);
 const pageValue = params.get('page');
 
@@ -42,7 +41,6 @@ export default {
   methods: {
     setCurrentComponent(pageName) {
       this.page = pageName
-      console.log('pageName', pageName);
       let url = `/app/books`
       if (pageName !== 'home') {
         url = `/app/books?page=${pageName}`
