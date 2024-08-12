@@ -9,11 +9,7 @@ class LibraryService(Document):
         self.create_from_library_service()
         
     def create_from_library_service(self):
-        if self.is_new():
-            frappe.msgprint("create_from_library_service")
-            # category = frappe.get_value('Library Setting', 'default_asset_category','default_asset_category')
-            # asset_naming = frappe.get_value('Library Setting', 'asset_naming_series','asset_naming_series')
-                
+        if self.is_new():                
             item_doc = frappe.get_doc({
                 'doctype': 'Item',
                 'item_code': self.library_service,
