@@ -278,6 +278,7 @@
    "options": "\nepub\npdf"
   },
   {
+   "default": "MLJS.-",
    "fieldname": "naming_series",
    "fieldtype": "Data",
    "label": "naming series"
