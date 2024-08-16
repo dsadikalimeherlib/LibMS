@@ -20,15 +20,20 @@ def count_books_issued(member):
     if not member:
         return {"count": 0}
     
-    count = frappe.db.count("Book Ledger", filters={"member": member,"transaction_type":"Issue","docstatus":1})
-    #book_allowed = frappe.get_value('Library Setting', 'number_of_book_allowed','number_of_book_allowed')
-    
-    #return {"count": count,"book_allowed": book_allowed}
+    count = frappe.db.count("Book Ledger", filters={
+        "member": member,
+        "transaction_type": "Issue",
+        "return_date": ["is", "null"],
+        "docstatus": 1
+    })
+
+    # frappe.msgprint(f"Total books issued to the member: {count}")
     return {"count": count}
 
 @frappe.whitelist()
 def allowed_book(member):
-    allowed = frappe.get_value('Library Setting', 'number_of_book_allowed','number_of_book_allowed')
+    member_type = frappe.get_value("Member",filters={"name": member},fieldname="member_type")
+    allowed = frappe.get_value("Member Type",filters={"name": member_type},fieldname="book_allowed")
     return(allowed)
 
 @frappe.whitelist()
