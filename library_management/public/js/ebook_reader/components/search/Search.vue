@@ -8,9 +8,9 @@
                 <path d="M16.9531 17.5L12.4955 12.8846" stroke="#818098" stroke-width="2.31353" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-            <input @click="setShowSearchSuggestions(true)"
+            <input v-model="message" @click="setShowSearchSuggestions(true)"
                 placeholder="Looking for specific book? Enter Book Title here.." />
-            <div @click="setShowSearchSuggestions(false)" class="close-btn">
+            <div v-if="message !== ''" @click="clearSearchInput()" class="close-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M18 6L6 18" stroke="#222222" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M6 6L18 18" stroke="#222222" stroke-linecap="round" stroke-linejoin="round" />
@@ -50,11 +50,16 @@ export default {
         },
         setShowSearchSuggestions(value) {
             this.showSearchSuggestions = value
+        },
+        clearSearchInput() {
+            this.message = ""
+            this.showSearchSuggestions = false
         }
     },
     data() {
         return {
-            showSearchSuggestions: false
+            showSearchSuggestions: false,
+            message: ''
         };
     },
 }
