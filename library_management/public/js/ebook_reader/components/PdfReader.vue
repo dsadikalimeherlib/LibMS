@@ -129,7 +129,7 @@ export default {
         async getBook() {
             try {
             await frappe.call({
-                method: "library_management.api.aws.get_book_from_aws",
+                method: "library_management.api.api.get_external_book",
                 args: {
                 aws_key: this.book.aws_key,
                 },

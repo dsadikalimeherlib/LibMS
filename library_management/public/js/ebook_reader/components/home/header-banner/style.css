@@ -71,30 +71,32 @@
 
 
 
-    .profile-menu {
-        position: absolute;
-        right: -5px;
-        top: 45px;
-        background-color: #fff;
+
+}
+
+.profile-menu {
+    position: absolute;
+    right: -5px;
+    top: 45px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+
+    ul li {
         padding: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #33363F;
         border-radius: 10px;
+        transition: 0.3s all ease;
 
-        ul li {
-            padding: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #33363F;
-            border-radius: 10px;
-            transition: 0.3s all ease;
+        &:hover {
+            background-color: #eee;
 
-            &:hover {
-                background-color: #eee;
+        }
 
-            }
-
-            &:last-child {
-                border-bottom: 0;
-            }
+        &:last-child {
+            border-bottom: 0;
         }
     }
 }
