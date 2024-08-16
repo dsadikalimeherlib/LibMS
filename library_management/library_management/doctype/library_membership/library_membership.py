@@ -1,6 +1,3 @@
-# Copyright (c) 2023, Ramjanali and contributors
-# For license information, please see license.txt
-
 import frappe
 from frappe.utils import today
 from frappe import _
@@ -8,16 +5,12 @@ from frappe.model.document import Document
 
 class LibraryMembership(Document):
 
-    def validate(self):
-        """Ensure no active duplicate memberships exist before submission."""
-        #self.check_duplicate_membership()
+    def before_submit(self):
+        duplicate_check_result = check_duplicate_membership(self.name, self.member)
+        if duplicate_check_result.get('has_duplicate'):
+            frappe.throw(_("Duplicate active membership service found: {0}").format(duplicate_check_result.get('duplicate_service')))
         
-    @frappe.whitelist()
-    def on_submit(self):
-        """Handle actions to be performed when the document is submitted."""
-        # self.check_duplicate_membership()
         self.membership_details_update()
-        frappe.msgprint("Membership submitted successfully. Additional actions can be performed here.")
 
     def membership_details_update(self):
         """Update the membership details in the Member document."""
@@ -54,29 +47,26 @@ class LibraryMembership(Document):
         except Exception as e:
             frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))
 
-    @frappe.whitelist()
-    def check_duplicate_membership(document_name,member):
-            """Check for duplicate memberships and ensure they are not active."""
-            frappe.msgprint(_("Before Save is work"))
-            try:
-                # Fetch new service details
-                new_service = frappe.get_all('Library Membership Details',
-                                            filters={'parent': document_name},
-                                            fields=['*'])
-                frappe.msgprint(_("services : {new_service}"))
-                # Fetch existing service details from the Member
-                existing_service = frappe.get_all('Membership Details',
-                                                filters={'parent': member},
-                                                fields=['*'])
+@frappe.whitelist()
+def check_duplicate_membership(document_name, member):
+    """Check for duplicate memberships and ensure they are not active."""
+    try:
+        new_service = frappe.get_all('Library Membership Details',
+                                     filters={'parent': document_name},
+                                     fields=['*'])
+        existing_service = frappe.get_all('Membership Details',
+                                          filters={'parent': member},
+                                          fields=['*'])
 
-                # Check for duplicates with active status
-                for ns in new_service:
-                    for es in existing_service:
-                        if ns['library_service'] == es['library_service'] and es['membership_status'] == 'Active':
-                            frappe.throw(_("Duplicate active membership service found: {0}").format(ns['library_service']))
-                            validated = 1
-                            return
-                # No duplicates found, proceed to add new service details
-                # self.membership_details_update()
-            except Exception as e:
-                frappe.msgprint(_("An error occurred while checking for duplicate membership: {0}").format(str(e)))
+        for ns in new_service:
+            for es in existing_service:
+                if ns['library_service'] == es['library_service'] and es['membership_status'] == 'Active':
+                    return {
+                        'has_duplicate': True,
+                        'duplicate_service': ns['library_service']
+                    }
+
+        return {'has_duplicate': False}
+    except Exception as e:
+        frappe.msgprint(f"An error occurred while checking for duplicate membership: {str(e)}")
+        return {'has_duplicate': False}
