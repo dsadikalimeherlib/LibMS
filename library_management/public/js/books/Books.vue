@@ -19,7 +19,7 @@
 <script setup>
 import Home from '../ebook_reader/page/home/Home.vue'
 import About from '../ebook_reader/page/About.vue'
-import Books from '../ebook_reader/page/Books.vue'
+import Books from '../ebook_reader/page/books/Books.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
 import Layout from '../ebook_reader/layout/Layout.vue'
 import BookCategories from '../ebook_reader/page/BookCategories.vue'
