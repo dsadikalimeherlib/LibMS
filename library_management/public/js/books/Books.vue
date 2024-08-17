@@ -4,9 +4,9 @@
       <v-main>
 
         <!-- <button @click="setCurrentComponent('home')">home</button> ???
-              <button @click="setCurrentComponent('about')">about</button>??
-              <button @click="setCurrentComponent('books')">books</button>??
-              <button @click="setCurrentComponent('contact')">contact</button> -->
+        <button @click="setCurrentComponent('about')">about</button>??
+        <button @click="setCurrentComponent('books')">books</button>??
+        <button @click="setCurrentComponent('contact')">contact</button> -->
 
         <component v-if="page == 'home'" :onLinkClick="setCurrentComponent" :is="currentComponent"
           :setWhiteTheme="setWhiteTheme" :whiteTheme="whiteTheme"></component>
@@ -23,12 +23,12 @@ import Books from '../ebook_reader/page/books/Books.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
 import Layout from '../ebook_reader/layout/Layout.vue'
 import BookCategories from '../ebook_reader/page/BookCategories.vue'
+import BookDetail from '../ebook_reader/page/book-detail/BookDetail.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const pageValue = params.get('page');
-
 export default {
 
   data() {
@@ -55,6 +55,10 @@ export default {
           break;
         case 'books':
           this.currentComponent = Books
+          break;
+        case 'book-detail':
+          this.currentComponent = BookDetail
+          break;
         case 'book-categories':
           this.currentComponent = BookCategories
           break;
@@ -79,6 +83,8 @@ export default {
           return About
         case 'books':
           return Books
+        case 'book-detail':
+          return BookDetail
         case 'contact':
           return Contact
         case 'book-categories':
