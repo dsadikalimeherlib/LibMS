@@ -1,7 +1,6 @@
 <template>
     <div class="book-grid-section">
         <div class="book-list-wrapper">
-            <div @click="handleClick('book-detail')">book detail</div>
             <template v-for="item in books" :key="item.book_title">
                 <Book :onLinkClick="onLinkClick" :book="item" />
             </template>
