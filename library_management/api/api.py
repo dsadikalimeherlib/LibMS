@@ -26,6 +26,8 @@ def get_banners():
     return banner_data
 
 
+
+
 @frappe.whitelist()
 def get_books():
     return fetch_books()
@@ -132,21 +134,24 @@ def fetch_books(
 
 @frappe.whitelist()
 def get_book_categories():
-    bc = frappe.qb.DocType("Book Category")
+    bc = DocType("Book Category")
     category_query = (
         frappe.qb.from_(bc)
         .select(
             bc.name.as_("category"),
+            bc.image
         )
+        .where(bc.disabled == 0)
         .orderby(bc.name)
     )
-    return category_query.run(as_dict=True)
+    categories = category_query.run(as_dict=True)
+    return categories
 
 
 def get_book_image(book):
     """Select Only the default image of the book"""
 
-    bi = frappe.qb.DocType("Book Images")
+    bi = DocType("Book Images")
     book_images = (
         frappe.qb.from_(bi)
         .select(bi.image)
