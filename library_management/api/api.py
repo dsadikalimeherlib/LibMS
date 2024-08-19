@@ -1,7 +1,8 @@
 import json
 import boto3
 import frappe
-from frappe.query_builder import DocType
+from frappe.query_builder import DocType, Order
+from frappe.query_builder.functions import Date
 
 
 @frappe.whitelist()
@@ -25,6 +26,50 @@ def get_banners():
 
     return banner_data
 
+
+def get_multimedia(start_date=None, end_date=None, size=None, page_number=None, category=None, title=None, sort=None):
+    mm = DocType("Multimedia")
+    multimedia_query = (
+        frappe.qb.from_(mm)
+        .select(
+            mm.image,
+            mm.duration,
+            mm.video_url,
+            mm.multimedia_title,
+            mm.digital_file_type,
+            mm.multimedia_category,
+            Date(mm.creation).as_("date"),
+        )
+        .where(
+            (mm.disabled == 0)
+        )
+        .orderby(
+            mm.multimedia_title,
+            mm.creation,
+            md.duration,
+            md.multimedia_category
+        )
+    )
+    if start_date:
+        multimedia_query = multimedia_query.where(mm.creation >= start_date)
+    if end_date:
+        multimedia_query = multimedia_query.where(mm.creation <= end_date)
+    # if size:
+    #     multimedia_query = multimedia_query.limit(size)
+    # if page_number:
+    #     multimedia_query = multimedia_query.offset(page_number)
+    if category:
+        multimedia_query = multimedia_query.where(mm.multimedia_category == category)
+    if title:
+        multimedia_query = multimedia_query.where(mm.multimedia_title.like("%" + title + "%"))
+    if sort:
+        if sort.lower() == "asc":
+            multimedia_query = multimedia_query.orderby(order=Order.asc)
+        else:
+            multimedia_query = multimedia_query.orderby(order=Order.desc)
+    
+    multimedia = multimedia_query.run(as_dict=True)
+    return multimedia
 
 
 
