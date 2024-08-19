@@ -1,5 +1,5 @@
 import frappe
-from frappe.utils import today
+from frappe.utils import today, getdate
 from frappe import _
 from frappe.model.document import Document
 
@@ -33,19 +33,19 @@ class LibraryMembership(Document):
         except Exception as e:
             frappe.msgprint(_("An error occurred while updating membership details: {0}").format(str(e)))
     
-    def auto_expired(self):
-        """Automatically expire memberships whose end date is past."""
-        try:
-            expired_details = frappe.get_all("Library Membership", 
-                                             filters={"to_date": ("<", today())}, 
-                                             fields=["name", "to_date"])
-            for expire in expired_details:
-                member_doc = frappe.get_doc("Library Membership", expire.name)
-                member_doc.membership_status = "Expired"
-                member_doc.save()
-                self.membership_details_update()
-        except Exception as e:
-            frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))
+    # def auto_expired(self):
+    #     """Automatically expire memberships whose end date is past."""
+    #     try:
+    #         expired_details = frappe.get_all("Library Membership", 
+    #                                          filters={"to_date": ("<", today())}, 
+    #                                          fields=["name", "to_date"])
+    #         for expire in expired_details:
+    #             member_doc = frappe.get_doc("Library Membership", expire.name)
+    #             member_doc.membership_status = "Expired"
+    #             member_doc.save()
+    #             self.membership_details_update()
+    #     except Exception as e:
+    #         frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))
 
 @frappe.whitelist()
 def check_duplicate_membership(document_name, member):
@@ -70,3 +70,39 @@ def check_duplicate_membership(document_name, member):
     except Exception as e:
         frappe.msgprint(f"An error occurred while checking for duplicate membership: {str(e)}")
         return {'has_duplicate': False}
+
+@frappe.whitelist()
+def auto_expire_memberships():
+    """Automatically expire memberships and update the status in the child table."""
+    try:
+        memberships = frappe.get_all(
+            "Library Membership", 
+            filters={}, 
+            fields=["name"]
+        )
+        current_date = getdate(today())  # Convert today's date to a date object
+
+        for membership in memberships:
+            membership_doc = frappe.get_doc("Library Membership", membership.name)
+
+            # Iterate over the child table and update status
+            for detail in membership_doc.library_membership_details:
+                # Skip if membership_status is already 'Expired'
+                if detail.service_status == "Expired":
+                    frappe.msgprint(_("Skipping already expired service: {0}").format(detail.library_service))
+                    continue
+
+                if detail.due_date:
+                    if getdate(detail.due_date) < current_date:
+                        frappe.msgprint(_("Expiring service: {0}, due date: {1}").format(detail.library_service, detail.due_date))
+                        detail.service_status = "Expired"
+                    else:
+                        frappe.msgprint(_("Service: {0} is still active, due date: {1}").format(detail.library_service, detail.due_date))
+                else:
+                    frappe.msgprint(_("Service: {0} has no due date set").format(detail.library_service))
+
+            membership_doc.save()
+
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), _("Auto-expire memberships error"))
+        frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))

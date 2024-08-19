@@ -120,6 +120,13 @@ jinja = {
 # Scheduled Tasks
 # ---------------
 
+scheduler_events = {
+	"daily": [
+		#"library_management.tasks.daily"
+        "library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships"
+	]
+}
+
 # scheduler_events = {
 #	"all": [
 #		"library_management.tasks.all"
@@ -137,7 +144,6 @@ jinja = {
 #		"library_management.tasks.monthly"
 #	],
 # }
-
 # Testing
 # -------
 
@@ -154,7 +160,8 @@ override_whitelisted_methods = {
     "library_management.library_management.doctype.book_reservation.book_reservation.count_books_issued": "library_management.custom_api.count_books_issued",
     "book_allowed_issue.allowed_book": "library_management.custom_api.allowed_book",
     "fetch_member_details.fetch_member_issue_book_detail": "library_management.custom_api.fetch_member_issue_book_detail",
-    "fetch_member_issue_book_detail": "library_management.library_management.doctype.book_transaction.book_transaction.fetch_member_issue_book_detail"
+    "fetch_member_issue_book_detail": "library_management.library_management.doctype.book_transaction.book_transaction.fetch_member_issue_book_detail",
+    "auto_expire_memberships":"library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships"
     #"get_data.check_duplicate_membership": "library_management.library_management.doctype.library_membership.library_membership.check_duplicate_membership"
 }
 
