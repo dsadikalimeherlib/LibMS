@@ -27,14 +27,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="icons-wrapper">
-                        Sort
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M5 7H19" stroke="#33363F" stroke-width="2" stroke-linecap="round" />
-                            <path d="M5 12H15" stroke="#33363F" stroke-width="2" stroke-linecap="round" />
-                            <path d="M5 17H11" stroke="#33363F" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                    </div>
+                    <BookSort />
                     <div class="icons-wrapper">
                         Filters
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -51,6 +44,7 @@
                     </div>
                 </div>
             </div>
+
             <BooksGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="bookstore.books" />
             <BooksList :onLinkClick="onLinkClick" v-else :books="bookstore.books" />
         </div>
@@ -59,6 +53,7 @@
 <script setup>
 import BooksGrid from '../../components/books/BooksGrid.vue';
 import BooksList from '../../components/books/BooksList.vue';
+import BookSort from '../../components/books/book-sort/BookSort.vue';
 
 // import { onMounted } from 'vue';
 // import { useBooksStore } from '../../../../books/store';
@@ -89,6 +84,13 @@ const bookstore = {
 }
 </script>
 <script>
+let showGridValue = localStorage.getItem('showGrid')
+console.log('showGridValue', showGridValue);
+if (showGridValue == null) {
+    showGridValue = true
+} else {
+    showGridValue = JSON.parse(showGridValue)
+}
 export default {
     props: {
         onLinkClick: {
@@ -99,11 +101,12 @@ export default {
     methods: {
         setShowGrid(value) {
             this.showGrid = value
+            localStorage.setItem('showGrid', value)
         },
     },
     data() {
         return {
-            showGrid: true
+            showGrid: showGridValue
         };
     },
     computed: {
