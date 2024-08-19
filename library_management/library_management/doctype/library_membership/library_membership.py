@@ -32,20 +32,6 @@ class LibraryMembership(Document):
                 member_doc.save()
         except Exception as e:
             frappe.msgprint(_("An error occurred while updating membership details: {0}").format(str(e)))
-    
-    # def auto_expired(self):
-    #     """Automatically expire memberships whose end date is past."""
-    #     try:
-    #         expired_details = frappe.get_all("Library Membership", 
-    #                                          filters={"to_date": ("<", today())}, 
-    #                                          fields=["name", "to_date"])
-    #         for expire in expired_details:
-    #             member_doc = frappe.get_doc("Library Membership", expire.name)
-    #             member_doc.membership_status = "Expired"
-    #             member_doc.save()
-    #             self.membership_details_update()
-    #     except Exception as e:
-    #         frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))
 
 @frappe.whitelist()
 def check_duplicate_membership(document_name, member):
@@ -78,13 +64,14 @@ def auto_expire_memberships():
         memberships = frappe.get_all(
             "Library Membership", 
             filters={}, 
-            fields=["name"]
+            fields=["name","member"]
         )
         current_date = getdate(today())  # Convert today's date to a date object
 
         for membership in memberships:
             membership_doc = frappe.get_doc("Library Membership", membership.name)
-
+            member_id = membership_doc.member  # Directly access the member ID
+            # frappe.msgprint(f"Member ID: {member_id}")
             # Iterate over the child table and update status
             for detail in membership_doc.library_membership_details:
                 # Skip if membership_status is already 'Expired'
@@ -96,6 +83,13 @@ def auto_expire_memberships():
                     if getdate(detail.due_date) < current_date:
                         frappe.msgprint(_("Expiring service: {0}, due date: {1}").format(detail.library_service, detail.due_date))
                         detail.service_status = "Expired"
+                        # member = frappe.get_all("Member",filters={'member':'member_id'},fields={'*'})
+                        member = frappe.get_doc("Member", member_id)
+                        # frappe.msgprint(f"Member Details: {member.as_dict()}")
+                        for lm in member.membership_details:
+                            if lm.library_membership == membership.name:
+                                lm.membership_status = "Expired"
+                        member.save()
                     else:
                         frappe.msgprint(_("Service: {0} is still active, due date: {1}").format(detail.library_service, detail.due_date))
                 else:

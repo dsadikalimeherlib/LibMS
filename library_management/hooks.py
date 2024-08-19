@@ -122,7 +122,6 @@ jinja = {
 
 scheduler_events = {
 	"daily": [
-		#"library_management.tasks.daily"
         "library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships"
 	]
 }
