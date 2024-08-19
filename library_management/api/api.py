@@ -1,8 +1,30 @@
 import json
 import boto3
 import frappe
-from frappe.utils.password import get_decrypted_password
-from botocore.exceptions import NoCredentialsError, ClientError
+from frappe.query_builder import DocType
+
+
+@frappe.whitelist()
+def get_banners():
+    b = DocType("Banner")
+    bii = DocType("Banner Image Item")
+    banner_data = (
+        frappe.qb.from_(b)
+        .inner_join(bii)
+        .on(bii.parent == b.name)
+        .select(
+            b.banner_name,
+            bii.image,
+            bii.heading,
+            bii.description,
+            bii.url
+        )
+        .where(b.disabled == 0)
+        .orderby(b.banner_name)
+    ).run(as_dict=True)
+
+    return banner_data
+
 
 @frappe.whitelist()
 def get_books():
@@ -54,7 +76,7 @@ def fetch_books(
     edition=None,
     year_of_publication=None,
 ):
-    bk = frappe.qb.DocType("Book")
+    bk = DocType("Book")
     book_query = (
         frappe.qb.from_(bk)
         .select(
