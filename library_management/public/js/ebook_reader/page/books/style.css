@@ -41,10 +41,16 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;
+                position: relative;
 
                 .icon-wrapper {
                     cursor: pointer;
                     border-radius: 5px;
+                    height: 24px;
+                    width: 31px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
                     &.active {
                         background-color: #fff;
@@ -52,6 +58,68 @@
 
                     svg {
                         display: block;
+                    }
+
+
+                }
+
+                .sort-filter-popup {
+                    position: absolute;
+                    right: -5px;
+                    top: 50px;
+                    border-radius: 10px;
+                    background: #FFF;
+                    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+                    padding: 15px;
+
+                    .title-wrapper {
+                        background: #EEEEF1;
+                        display: flex;
+                        padding: 10px 15px;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        align-self: stretch;
+                        margin-bottom: 15px;
+
+                        .title {
+                            color: #33363F;
+                            font-size: 20px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;
+                        }
+                    }
+
+                    .sort-filter-column-wrapper {
+                        display: flex;
+
+                        .column {
+                            gap: 10px;
+                            display: flex;
+                            flex-direction: column;
+
+                            &:first-child {
+                                border-right: 1px solid #EEEEF1;
+                                padding-right: 10px;
+                                margin-right: 10px;
+                            }
+                        }
+
+                        .item {
+                            display: flex;
+                            white-space: nowrap;
+                            gap: 10px;
+                            cursor: pointer;
+                            color: #000;
+                            font-size: 14px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: normal;
+                        }
+
+                        .sort-icon-wrapper {
+                            display: flex;
+                        }
                     }
                 }
             }
