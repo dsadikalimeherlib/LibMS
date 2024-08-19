@@ -22,12 +22,15 @@
   "year_of_publication",
   "edition",
   "publication",
+  "duration",
+  "disabled",
   "column_break_81u21",
   "author",
   "translator",
   "editor",
   "voice_over",
-  "disabled",
+  "audio_url",
+  "video_url",
   "multimedia_details_section1",
   "description",
   "column_break_y5d8z",
@@ -210,6 +213,21 @@
    "fieldname": "voice_over",
    "fieldtype": "Data",
    "label": "Voice Over"
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Duration",
+   "label": "Duration"
+  },
+  {
+   "fieldname": "audio_url",
+   "fieldtype": "Data",
+   "label": "Audio URL"
+  },
+  {
+   "fieldname": "video_url",
+   "fieldtype": "Data",
+   "label": "Video URL"
   }
  ],
  "has_web_view": 1,
@@ -226,7 +244,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-08-09 19:45:03.955788",
+ "modified": "2024-08-19 18:03:23.208228",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Multimedia",
