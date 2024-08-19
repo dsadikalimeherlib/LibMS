@@ -24,7 +24,7 @@
             margin-left: auto;
             display: flex;
             padding: 5px;
-            align-items: flex-start;
+            align-items: center;
             gap: 16px;
 
             .icons-wrapper {
@@ -80,10 +80,23 @@
                         align-items: flex-start;
                         align-self: stretch;
                         margin-bottom: 15px;
+                        align-items: center;
+
+                        .close-icon {
+                            cursor: pointer;
+                        }
 
                         .title {
                             color: #33363F;
                             font-size: 20px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;
+                        }
+
+                        .clear {
+                            color: #1476BD;
+                            font-size: 14px;
                             font-style: normal;
                             font-weight: 700;
                             line-height: normal;
@@ -117,10 +130,40 @@
                             line-height: normal;
                         }
 
+                        &.filter {
+                            .item {
+                                flex-direction: column;
+                                border-bottom: 1px solid #EEEEF1;
+                                padding: 5px 15px 10px 15px;
+
+                                &:last-child {
+                                    border-bottom: 0;
+                                }
+
+                                .field {
+                                    position: relative;
+                                    padding: 10px 30px 10px 10px;
+                                    background: #EEEEF1;
+                                    border-radius: 5px;
+
+                                    .dropdown-icon {
+                                        position: absolute;
+                                        right: 10px;
+                                        top: 15px;
+                                    }
+                                }
+
+                            }
+                        }
+
                         .sort-icon-wrapper {
                             display: flex;
                         }
                     }
+                }
+
+                &.sort {
+                    cursor: pointer;
                 }
             }
         }
