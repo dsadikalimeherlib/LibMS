@@ -144,8 +144,24 @@ def get_book_categories():
         .where(bc.disabled == 0)
         .orderby(bc.name)
     )
-    categories = category_query.run(as_dict=True)
-    return categories
+    book_categories = category_query.run(as_dict=True)
+    return book_categories
+
+
+@frappe.whitelist()
+def get_multimedia_categories():
+    mc = DocType("Multimedia Category")
+    category_query = (
+        frappe.qb.from_(mc)
+        .select(
+            mc.name.as_("category"),
+            mc.image
+        )
+        .where(mc.disabled == 0)
+        .orderby(mc.name)
+    )
+    multimedia_categories = category_query.run(as_dict=True)
+    return multimedia_categories
 
 
 def get_book_image(book):
