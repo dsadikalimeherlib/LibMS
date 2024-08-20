@@ -13,11 +13,22 @@ frappe.ui.form.on('Library Membership', {
             };
         });
     },
+    expired(frm) {
+        frappe.call({
+            method: "auto_expire_memberships",
+            args: {
+                member: frm.doc.member
+            },
+            callback: function(data) {
+                
+            }
+        });
+    }
 });
 
 frappe.ui.form.on("Library Membership Details", {
     plan: function(frm, cdt, cdn) {
-        var from_date = frappe.datetime.get_today();
+        // var from_date = frappe.datetime.get_today();
         var child_doc = locals[cdt][cdn];
         var plan = child_doc.plan;
         if(plan == "Daily"){
@@ -57,5 +68,20 @@ frappe.ui.form.on("Library Membership Details", {
             frappe.model.set_value(cdt, cdn, 'days', 365);
         }
     },
+    from_date: function (frm, cdt, cdn) {
+        var child_doc = locals[cdt][cdn];
+        var day = child_doc.days;
+        console.log('Days:', day);
+        var due = frappe.datetime.add_days(child_doc.from_date, day);
+        frappe.model.set_value(cdt, cdn, 'due_date', due);
+    }
 });
+
+// frappe.ui.form.on("Library Membership Details", {
+//     from_date: function (frm, cdt, cdn) {
+//         var child_doc = locals[cdt][cdn];
+//         var due = frappe.datetime.add_days(child_doc.from_date, 30);
+//         frappe.model.set_value(cdt, cdn, 'due_date', due);
+//     }
+// });
 

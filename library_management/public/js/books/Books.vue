@@ -4,9 +4,9 @@
       <v-main>
 
         <!-- <button @click="setCurrentComponent('home')">home</button> ???
-              <button @click="setCurrentComponent('about')">about</button>??
-              <button @click="setCurrentComponent('books')">books</button>??
-              <button @click="setCurrentComponent('contact')">contact</button> -->
+        <button @click="setCurrentComponent('about')">about</button>??
+        <button @click="setCurrentComponent('books')">books</button>??
+        <button @click="setCurrentComponent('contact')">contact</button> -->
 
         <component v-if="page == 'home'" :onLinkClick="setCurrentComponent" :is="currentComponent"
           :setWhiteTheme="setWhiteTheme" :whiteTheme="whiteTheme"></component>
@@ -19,17 +19,17 @@
 <script setup>
 import Home from '../ebook_reader/page/home/Home.vue'
 import About from '../ebook_reader/page/About.vue'
-import Books from '../ebook_reader/page/Books.vue'
+import Books from '../ebook_reader/page/books/Books.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
 import Layout from '../ebook_reader/layout/Layout.vue'
 import BookCategories from '../ebook_reader/page/BookCategories.vue'
+import BookDetail from '../ebook_reader/page/book-detail/BookDetail.vue'
+import BookReader from '../ebook_reader/page/book-reader/BookReader.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
-console.log('url', url);
 const params = new URLSearchParams(url.search);
 const pageValue = params.get('page');
-
 export default {
 
   data() {
@@ -42,7 +42,6 @@ export default {
   methods: {
     setCurrentComponent(pageName) {
       this.page = pageName
-      console.log('pageName', pageName);
       let url = `/app/books`
       if (pageName !== 'home') {
         url = `/app/books?page=${pageName}`
@@ -57,12 +56,20 @@ export default {
           break;
         case 'books':
           this.currentComponent = Books
+          break;
+        case 'book-detail':
+          this.currentComponent = BookDetail
+          break;
         case 'book-categories':
           this.currentComponent = BookCategories
           break;
         case 'contact':
           this.currentComponent = Contact
           break;
+        case 'book-reader':
+          this.currentComponent = BookReader
+          break;
+
         default:
           this.currentComponent = Home
           break;
@@ -81,6 +88,10 @@ export default {
           return About
         case 'books':
           return Books
+        case 'book-detail':
+          return BookDetail
+        case 'book-reader':
+          return BookReader
         case 'contact':
           return Contact
         case 'book-categories':
