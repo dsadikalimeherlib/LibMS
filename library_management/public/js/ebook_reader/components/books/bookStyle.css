@@ -1,8 +1,7 @@
 .bookItem {
     border-radius: 10px;
     background: #FFF;
-    max-width: 186px;
-    flex: 1;
+    width: calc(16.66% - 40px);
 
     .image-wrapper {
         border-radius: 10px 10px 0px 0px;

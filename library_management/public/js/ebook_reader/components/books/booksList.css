@@ -44,6 +44,17 @@
                 padding: 10px 15px;
             }
 
+            .sort-title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .sort-icon-wrapper {
+                    display: flex;
+                    cursor: pointer;
+                }
+            }
+
 
         }
 

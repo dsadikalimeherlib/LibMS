@@ -67,6 +67,26 @@ const bookstore = {
         {
             book_title: 'Book5',
             author: 'Author'
+        },
+        {
+            book_title: 'Book6',
+            author: 'Author'
+        },
+        {
+            book_title: 'Book7',
+            author: 'Author'
+        },
+        {
+            book_title: 'Book8',
+            author: 'Author'
+        },
+        {
+            book_title: 'Book9',
+            author: 'Author'
+        },
+        {
+            book_title: 'Book10',
+            author: 'Author'
         }
     ]
 }
