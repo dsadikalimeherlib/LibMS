@@ -2,47 +2,50 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:book_category",
- "creation": "2024-01-10 17:38:02.495886",
+ "autoname": "field:member_type",
+ "creation": "2024-08-13 10:22:45.461230",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "book_category",
-  "disabled",
-  "column_break_qqyx",
-  "image"
+  "member_type",
+  "issue_allowed_days",
+  "book_allowed",
+  "fine_per_day"
  ],
  "fields": [
   {
-   "fieldname": "book_category",
+   "fieldname": "member_type",
    "fieldtype": "Data",
-   "label": "Book Category",
+   "label": "Member Type",
    "unique": 1
   },
   {
-   "default": "0",
-   "fieldname": "disabled",
-   "fieldtype": "Check",
-   "label": "Disabled"
+   "fieldname": "issue_allowed_days",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Issue Allowed Days"
   },
   {
-   "fieldname": "column_break_qqyx",
-   "fieldtype": "Column Break"
+   "fieldname": "book_allowed",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Book Allowed"
   },
   {
-   "fieldname": "image",
-   "fieldtype": "Attach Image",
-   "label": "Image"
+   "fieldname": "fine_per_day",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Fine Per Day"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-19 15:50:08.609218",
+ "modified": "2024-08-13 11:51:37.363783",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Book Category",
+ "name": "Member Type",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [

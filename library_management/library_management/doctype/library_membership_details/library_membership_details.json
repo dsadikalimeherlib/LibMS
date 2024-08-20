@@ -54,6 +54,7 @@
    "options": "\nDaily\nWeekly\nMonthly\nQuarterly\nHalf yearly\nYearly"
   },
   {
+   "allow_on_submit": 1,
    "columns": 2,
    "fieldname": "service_status",
    "fieldtype": "Select",
@@ -65,7 +66,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-05 12:52:00.859887",
+ "modified": "2024-08-19 14:21:26.978468",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Membership Details",
