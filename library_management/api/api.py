@@ -19,33 +19,35 @@ def get_books_by_keyword(keyword):
     book_query = (
         frappe.qb.from_(bk)
         .select(
-            bk.name,
-            bk.book_title,
-            bk.book_category,
-            bk.digital_file_type
+            bk.name.as_("id"),
+            bk.book_title.as_("name"),
+            bk.book_category.as_("category"),
+            bk.digital_file_type.as_("type")
         )
         .where(
             (bk.disabled == 0) 
-            & (bk.is_digital_book == "Yes")
-            || (bk.book_title.like("%" + keyword + "%"))
-            || (bk.book_category.like("%" + keyword + "%"))
-            || (bk.author.like("%" + keyword + "%"))
-            || (bk.subject.like("%" + keyword + "%"))
-            || (bk.book_tag.like("%" + keyword + "%"))
-            || (bk.year_of_publication.like("%" + keyword + "%"))
-            || (bk.publication.like("%" + keyword + "%"))
-            || (bk.translator.like("%" + keyword + "%"))
-            || (bk.description.like("%" + keyword + "%"))
+            & (bk.is_digital_book == "Yes") 
+            | (
+                (bk.book_title.like("%" + keyword + "%"))
+                | (bk.book_category.like("%" + keyword + "%"))
+                | (bk.author.like("%" + keyword + "%"))
+                | (bk.subject.like("%" + keyword + "%"))
+                | (bk.book_tag.like("%" + keyword + "%"))
+                | (bk.year_of_publication.like("%" + keyword + "%"))
+                | (bk.publication.like("%" + keyword + "%"))
+                | (bk.translator.like("%" + keyword + "%"))
+                | (bk.description.like("%" + keyword + "%"))
+            )
         )
-        # .where(
-        #     || (bk.book_title.like("%" + keyword + "%"))
-        #     || (bk.book_category.like("%" + keyword + "%"))
-        # )
-        .orderby(bk.book_title, bt.book_category)
+        .orderby(
+            bk.book_title,
+            bt.book_category,
+            bk.digital_file_type,
+            bk.author
+        )
     )
     books = book_query.run(as_dict=True)
     return books
-
 
 def get_book_tags(tag):
     dl = DocType("Tag Link")
@@ -53,19 +55,25 @@ def get_book_tags(tag):
     tag_detials = (
         frappe.qb.from_(dl)
         .inner_join(bk)
-        .on(dl.document_name == bk.name)   
+        .on(dl.document_name == bk.name)
         .select(
             dl.tag,
-            bk.name,
-            bk.book_title,
-            bk.book_category,
-            bk.digital_file_type
+            bk.name.as_("id"),
+            bk.book_title.as_("name"),
+            bk.book_category.as_("category"),
+            bk.digital_file_type.as_("type")
         )
         .where(
             (dl.document_type == "Book")
-            && (dl.tag.like("%" + tag + "%"))
-            && (bk.disabled == 0)
-            && (bk.is_digital_book == "Yes")
+            & (dl.tag.like("%" + tag + "%"))
+            & (bk.disabled == 0)
+            & (bk.is_digital_book == "Yes")
+        )
+        .orderby(
+            bk.book_title,
+            bt.book_category,
+            bk.digital_file_type,
+            bk.author
         )
     ).run(as_dict=True)
     return tag_detials
@@ -75,19 +83,22 @@ def get_multimedia_by_keyword(keyword):
     multimedia_query = (
         frappe.qb.from_(mm)
         .select(
-            mm.name,
-            mm.multimedia_title,
-            mm.digital_file_type,
-            mm.multimedia_category,
+            mm.name.as_("id"),
+            mm.multimedia_title.as_("name"),
+            mm.media_type.as_("type"),
+            mm.multimedia_category.as_("category")
         )
         .where(
-            (mm.disabled == 0)
-            || (mm.multimedia_title.like("%" + keyword + "%"))
-            || (mm.multimedia_category.like("%" + keyword + "%"))
+            (mm.disabled == 0) | (
+                (mm.multimedia_title.like("%" + keyword + "%"))
+                | (mm.multimedia_category.like("%" + keyword + "%"))
+            )
         )
         .orderby(
             mm.multimedia_title,
-            md.multimedia_category
+            mm.multimedia_category,
+            mm.media_type,
+            mm.author
         )
     )
     multimedia = multimedia_query.run(as_dict=True)
@@ -101,16 +112,21 @@ def get_multimedia_tags(tag):
         .inner_join(mm)
         .on(dl.document_name == mm.name)
         .select(
-            dl.tag,
-            mm.name,
-            mm.multimedia_title,
-            mm.digital_file_type,
-            mm.multimedia_category
+            mm.name.as_("id"),
+            mm.multimedia_title.as_("name"),
+            mm.media_type.as_("type"),
+            mm.multimedia_category.as_("category"),
         )
         .where(
             (dl.document_type == "Multimedia")
-            && (dl.tag.like("%" + tag + "%"))
-            && (mm.disabled == 0)
+            & (dl.tag.like("%" + tag + "%"))
+            & (mm.disabled == 0)
+        )
+        .orderby(
+            mm.multimedia_title,
+            mm.multimedia_category,
+            mm.media_type,
+            mm.author
         )
     ).run(as_dict=True)
     return tag_detials
@@ -137,46 +153,45 @@ def get_banners():
     return banner_data
 
 
-def get_multimedia(start_date=None, end_date=None, size=None, page_number=None, category=None, title=None, sort=None):
+def get_multimedia(publication_year=None, size=None, page_offset=None, category=None, title=None, sort=None):
     mm = DocType("Multimedia")
     multimedia_query = (
         frappe.qb.from_(mm)
         .select(
-            mm.image,
             mm.duration,
-            mm.video_url,
-            mm.multimedia_title,
-            mm.digital_file_type,
-            mm.multimedia_category,
-            Date(mm.creation).as_("date"),
+            mm.media_url,
+            mm.media_type,
+            mm.name.as_("id"),
+            mm.image.as_("image_url"),
+            mm.multimedia_title.as_("title"),
+            mm.multimedia_category.as_("category"),
         )
         .where(
             (mm.disabled == 0)
         )
         .orderby(
             mm.multimedia_title,
-            mm.creation,
             md.duration,
             md.multimedia_category
         )
     )
-    if start_date:
-        multimedia_query = multimedia_query.where(mm.creation >= start_date)
-    if end_date:
-        multimedia_query = multimedia_query.where(mm.creation <= end_date)
-    # if size:
-    #     multimedia_query = multimedia_query.limit(size)
-    # if page_number:
-    #     multimedia_query = multimedia_query.offset(page_number)
+    if publication_year:
+        multimedia_query = multimedia_query.where(mm.year_of_publication == publication_year)
     if category:
         multimedia_query = multimedia_query.where(mm.multimedia_category == category)
     if title:
         multimedia_query = multimedia_query.where(mm.multimedia_title.like("%" + title + "%"))
+    if size:
+        multimedia_query = multimedia_query.limit(size)
     if sort:
         if sort.lower() == "asc":
             multimedia_query = multimedia_query.orderby(order=Order.asc)
         else:
             multimedia_query = multimedia_query.orderby(order=Order.desc)
+    
+
+    # if page_offset:
+    #     multimedia_query = multimedia_query.offset(page_number)
     
     multimedia = multimedia_query.run(as_dict=True)
     return multimedia
@@ -292,11 +307,12 @@ def get_book_categories():
     category_query = (
         frappe.qb.from_(bc)
         .select(
-            bc.name.as_("category"),
+            bc.name.as_("id"),
+            bc.book_category.as_("category"),
             bc.image
         )
         .where(bc.disabled == 0)
-        .orderby(bc.name)
+        .orderby(bc.book_category)
     )
     book_categories = category_query.run(as_dict=True)
     return book_categories
@@ -308,11 +324,12 @@ def get_multimedia_categories():
     category_query = (
         frappe.qb.from_(mc)
         .select(
-            mc.name.as_("category"),
+            mc.name.as_("id"),
+            mc.multimedia_category.as_("category"),
             mc.image
         )
         .where(mc.disabled == 0)
-        .orderby(mc.name)
+        .orderby(mc.multimedia_category)
     )
     multimedia_categories = category_query.run(as_dict=True)
     return multimedia_categories
