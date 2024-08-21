@@ -67,7 +67,7 @@ jinja = {
 # ------------
 
 # before_install = "library_management.install.before_install"
-# after_install = "library_management.install.after_install"
+after_install = "library_management.library_management.custom_api.create_uom"
 
 # Uninstallation
 # ------------

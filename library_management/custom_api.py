@@ -65,20 +65,14 @@ def check_for_duplicates(document_name):
         except Exception as e:
             frappe.msgprint(("An error occurred while checking for duplicate membership: {0}").format(str(e)))
 
-# @frappe.whitelist()
-# def check_for_duplicates(document_name):
-#         """Check for duplicate active memberships and return status."""
-#         try:
-#             new_service = frappe.get_all('Library Membership Details',
-#                                          filters={'parent': document_name},
-#                                          fields=['*'])
-#             existing_service = frappe.get_all('Membership Details',
-#                                               filters={'parent': document_name},
-#                                               fields=['*'])
-#             for ns in new_service:
-#                 for es in existing_service:
-#                     if ns['library_service'] == es['library_service'] and es['membership_status'] == 'Active':
-#                         return {'has_duplicate': True, 'duplicate_service': ns['library_service']}
-#             return {'has_duplicate': False}
-#         except Exception as e:
-#             frappe.throw(("An error occurred while checking for duplicate membership: {0}").format(str(e)))
+@frappe.whitelist()
+def create_uom():
+    uom_name = "Quarterly"  # Replace with your desired UOM name
+    if not frappe.db.exists("UOM", uom_name):
+        uom = frappe.get_doc({
+            "doctype": "UOM",
+            "uom_name": uom_name,
+            "enabled": 1
+        })
+        uom.insert(ignore_permissions=True)
+        frappe.db.commit()
