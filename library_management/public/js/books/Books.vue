@@ -22,7 +22,7 @@ import About from '../ebook_reader/page/About.vue'
 import Books from '../ebook_reader/page/books/Books.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
 import Layout from '../ebook_reader/layout/Layout.vue'
-import BookCategories from '../ebook_reader/page/BookCategories.vue'
+import BookCategories from '../ebook_reader/page/book-categories/BookCategories.vue'
 import BookDetail from '../ebook_reader/page/book-detail/BookDetail.vue'
 import BookReader from '../ebook_reader/page/book-reader/BookReader.vue'
 </script>

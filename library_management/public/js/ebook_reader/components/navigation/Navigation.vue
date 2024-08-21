@@ -15,11 +15,22 @@
 
 export default {
     props: {
-
+        onLinkClick: {
+            type: Function,
+            required: true
+        },
         isSticky: {
             type: Boolean,
             required: false
         },
+    },
+    methods: {
+        handleClick(pageName) {
+            // Call the function passed via prop
+            if (this.onLinkClick) {
+                this.onLinkClick(pageName);
+            }
+        }
     },
     computed: {
         navigationClass() {
