@@ -1,8 +1,19 @@
 import json
 import boto3
 import frappe
+from erpnext import get_default_company
 from frappe.query_builder import DocType, Order
 from frappe.query_builder.functions import Date
+
+
+@frappe.whitelist()
+def get_company_contact_details():
+    company = get_default_company()
+    if not company:
+        company = frappe.defaults.get_user_default("Company")
+    
+    contact_details = frappe.cached_value("Company", company, ["name", "website", "email", "phone_no"], as_dict=True)
+    return contact_details
 
 
 @frappe.whitelist()
@@ -230,8 +241,6 @@ def get_book_list(
             bk.book_category.as_("category"),
             bk.author,
             bk.subject,
-            bk.year_of_publication,
-            bk.publication,
             bk.language,
             bk.aws_key,
             bk.digital_file_type,
@@ -245,6 +254,8 @@ def get_book_list(
             bk.book_title,
             bk.book_category,
             bk.author,
+            bk.language,
+            bk.subject,
             bk.year_of_publication
         )
     )
@@ -273,6 +284,8 @@ def get_book_list(
             book_query = book_query.orderby(order=Order.desc)
     
     books = book_query.run(as_dict=True)
+    for book in books:
+        book["image_url"] = get_book_image(book)
     return books
 
 
