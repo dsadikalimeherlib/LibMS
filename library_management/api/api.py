@@ -329,6 +329,36 @@ def get_book_detail(book_id):
 
     return {}
 
+
+@frappe.whitelist()
+def get_multimedia_detail(media_id):
+    mm = DocType("Multimedia")
+    multimedia_details = (
+        frappe.qb.from_(mm)
+        .select(
+            mm.name.as_("id"),
+            mm.media_type,
+            mm.media_url,
+            mm.author,
+            mm.description,
+            mm.image.as_("image_url"),
+            mm.year_of_publication,
+            mm.multimedia_title.as_("title"),
+            mm.multimedia_category.as_("category"),
+        )
+        .where(
+            (mm.disabled == 0)
+            & (mm.name == media_id)
+        )
+    ).run(as_dict=True)
+
+    if len(multimedia_details) > 0:
+        return multimedia_details[0]
+    
+    return {}
+
+
+
 @frappe.whitelist()
 def get_terms_and_conditions():
     tc = DocType("Terms and Conditions")
