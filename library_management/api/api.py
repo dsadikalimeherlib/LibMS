@@ -1,6 +1,8 @@
 import json
 import boto3
 import frappe
+import calendar
+from collections import defaultdict
 from erpnext import get_default_company
 from frappe.query_builder import DocType, Order
 from frappe.query_builder.functions import Date
@@ -543,3 +545,39 @@ def get_tag_records(doctype, tag):
             dl.tag
         )
     ).run(as_dict=True)
+
+
+@frappe.whitelist()
+def get_holidays(from_date, to_date):
+    h = DocType("Holiday")
+    holidays = (
+        frappe.qb.from_(h)
+        .select(
+            h.holiday_date,
+            h.description.as_("holiday_name")
+        )
+        .where(
+            (h.holiday_date >= from_date)
+            & (h.holiday_date <= to_date)
+        )
+        .orderby(h.holiday_date)
+    ).run(as_dict=True)
+
+    holidays_by_month = defaultdict(list)
+    for holiday in holidays:
+        holiday_date = holiday['holiday_date']
+        month_name = calendar.month_name[holiday_date.month]
+        holidays_by_month[month_name].append({
+            'holiday_date': holiday_date,
+            'holiday_name': holiday['description']
+        })
+
+    holiday_list = [
+        {
+            'month': month,
+            'holidays': holidays
+        }
+        for month, holidays in holidays_by_month.items()
+    ]
+    
+    return holiday_list
