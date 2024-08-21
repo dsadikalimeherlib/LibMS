@@ -65,14 +65,34 @@ def check_for_duplicates(document_name):
         except Exception as e:
             frappe.msgprint(("An error occurred while checking for duplicate membership: {0}").format(str(e)))
 
+# @frappe.whitelist()
+# def create_uom():
+#     uom_name = "Quarterly"  # Replace with your desired UOM name
+#     frappe.msgprint(f"UOM :{uom_name}")
+#     if not frappe.db.exists("UOM", uom_name):
+#         uom = frappe.get_doc({
+#             "doctype": "UOM",
+#             "uom_name": uom_name,
+#             "enabled": 1
+#         })
+#         uom.insert(ignore_permissions=True)
+#         frappe.msgprint(f"UOM :{uom_name}")
+#         frappe.db.commit()
+
 @frappe.whitelist()
-def create_uom():
-    uom_name = "Quarterly"  # Replace with your desired UOM name
-    if not frappe.db.exists("UOM", uom_name):
-        uom = frappe.get_doc({
-            "doctype": "UOM",
-            "uom_name": uom_name,
-            "enabled": 1
-        })
-        uom.insert(ignore_permissions=True)
-        frappe.db.commit()
+def create_uoms():
+    uom_names = ["Day", "Weekly", "Monthly", "Quarterly", "Half-yearly", "Yearly"]
+    
+    for uom_name in uom_names:
+        # Check if UOM already exists
+        if not frappe.db.exists("UOM", uom_name):
+            uom_doc = frappe.get_doc({
+                "doctype": "UOM",
+                "uom_name": uom_name
+            })
+            uom_doc.insert()
+            frappe.msgprint(f"UOM '{uom_name}' created successfully!")
+        else:
+            frappe.msgprint(f"UOM '{uom_name}' already exists.")
+
+

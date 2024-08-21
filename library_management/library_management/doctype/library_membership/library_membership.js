@@ -31,7 +31,7 @@ frappe.ui.form.on("Library Membership Details", {
         // var from_date = frappe.datetime.get_today();
         var child_doc = locals[cdt][cdn];
         var plan = child_doc.plan;
-        if(plan == "Daily"){
+        if(plan == "Day"){
             frappe.msgprint(__('Daily.'));
             var due = frappe.datetime.add_days(frm.doc.from_date, 1);
             frappe.model.set_value(cdt, cdn, 'due_date', due);
@@ -55,7 +55,7 @@ frappe.ui.form.on("Library Membership Details", {
             frappe.model.set_value(cdt, cdn, 'due_date', due);
             frappe.model.set_value(cdt, cdn, 'days', 90);
         }
-        else if(plan == "Half yearly"){
+        else if(plan == "Half-yearly"){
             frappe.msgprint(__('Half yearly.'));
             var due = frappe.datetime.add_days(frm.doc.from_date, 180);
             frappe.model.set_value(cdt, cdn, 'due_date', due);
