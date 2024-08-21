@@ -11,6 +11,7 @@ class LibraryMembership(Document):
             frappe.throw(_("Duplicate active membership service found: {0}").format(duplicate_check_result.get('duplicate_service')))
         
         self.membership_details_update()
+        self.sales_invoice_created()
 
     def membership_details_update(self):
         """Update the membership details in the Member document."""
@@ -30,8 +31,58 @@ class LibraryMembership(Document):
                 child_table_entry.membership_status = details.get('service_status')
                 member_doc.membership_status = details.get('service_status')
                 member_doc.save()
+
         except Exception as e:
             frappe.msgprint(_("An error occurred while updating membership details: {0}").format(str(e)))
+
+        
+    def sales_invoice_created(self):
+        customer = frappe.get_all('Customer', filters={'customer_name': self.member_name}, fields=["name"])
+        
+        try:
+            if not customer:
+                frappe.msgprint("Customer not found.")
+                return
+
+            if self.paid:  # Check if the membership is marked as paid
+                invoice_doc = frappe.get_doc({
+                    'doctype': 'Sales Invoice',
+                    'customer': customer[0]['name'],
+                    'items': []
+                })
+
+                # Fetch the library services from the Library Membership Details child table
+                for detail in self.library_membership_details:
+                    if not detail.library_service:
+                        frappe.msgprint(f"Missing library service in detail: {detail}")
+                        continue
+
+                    if detail.amount is None:
+                        frappe.msgprint(f"Missing amount in detail: {detail}")
+                        continue
+
+                    invoice_doc.append('items', {                   
+                        'item_code': detail.library_service,
+                        'item_name': detail.library_service,
+                        'description': f"Service for {self.name}",
+                        'qty': 1,
+                        'rate': detail.amount
+                    })
+
+                if not invoice_doc.items:
+                    frappe.msgprint("No items were added to the Sales Invoice.")
+                    return
+
+                invoice_doc.insert()
+                # Uncomment the following line to automatically submit the invoice
+                # invoice_doc.submit()
+                self.invoice = invoice_doc.name
+                frappe.msgprint(_("Sales Invoice created and submitted successfully: {0}").format(invoice_doc.name))
+
+        except Exception as e:
+            frappe.log_error(frappe.get_traceback(), _("Error during Sales Invoice creation"))
+            frappe.msgprint(_("An error occurred while creating the sales invoice: {0}").format(str(e)))
+
 
 @frappe.whitelist()
 def check_duplicate_membership(document_name, member):
