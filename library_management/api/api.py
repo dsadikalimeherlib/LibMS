@@ -290,6 +290,23 @@ def get_book_list(
 
 
 @frappe.whitelist()
+def get_terms_and_conditions():
+    tc = DocType("Terms and Conditions")
+    terms_and_conditions = (
+        frappe.qb.from_(tc)
+        .select(
+            tc.title,
+            tc.terms.as_("description")
+        )
+        .where(tc.disabled == 0)
+    ).run(as_dict=True)
+
+    if len(terms_and_conditions) > 0:
+        return terms_and_conditions[0]
+    return {}
+
+
+@frappe.whitelist()
 def get_books():
     return fetch_books()
 
