@@ -152,8 +152,8 @@ def get_banners():
 
     return banner_data
 
-
-def get_multimedia(publication_year=None, size=None, page_offset=None, category=None, title=None, sort=None):
+@frappe.whitelist()
+def get_multimedia(title=None, category=None, publication_year=None, size=None, page_offset=None, sort=None):
     mm = DocType("Multimedia")
     multimedia_query = (
         frappe.qb.from_(mm)
@@ -183,15 +183,13 @@ def get_multimedia(publication_year=None, size=None, page_offset=None, category=
         multimedia_query = multimedia_query.where(mm.multimedia_title.like("%" + title + "%"))
     if size:
         multimedia_query = multimedia_query.limit(size)
+    if page_offset:
+        multimedia_query = multimedia_query.offset(page_number)
     if sort:
         if sort.lower() == "asc":
             multimedia_query = multimedia_query.orderby(order=Order.asc)
         else:
             multimedia_query = multimedia_query.orderby(order=Order.desc)
-    
-
-    # if page_offset:
-    #     multimedia_query = multimedia_query.offset(page_number)
     
     multimedia = multimedia_query.run(as_dict=True)
     return multimedia
