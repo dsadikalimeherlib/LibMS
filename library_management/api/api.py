@@ -290,6 +290,46 @@ def get_book_list(
 
 
 @frappe.whitelist()
+def get_book_detail(book_id):
+    bk = DocType("Book")
+    book_details = (
+        frappe.qb.from_(bk)
+        .select(
+            bk.name.as_("id"),
+            bk.book_title.as_("title"),
+            bk.book_code,
+            bk.subject,
+            bk.author,
+            bk,isbn,
+            bk.language,
+            bk.translator,
+            bk.aws_key,
+            bk.book_tag,
+            bk.volume,
+            bk.publication,
+            bk.book_category,
+            bk.publication,
+            bk.edition,
+            bk.no_of_pages,
+            bk.description,
+            bk.year_of_publication,
+            bk.digital_file_type.as_("type"),
+        )
+        .where(
+            (bk.disabled == 0)
+            & (bk.name == book_id)
+            & (bk.is_digital_book == "Yes")
+        )
+    ).run(as_dict=True)
+
+    if len(book_details) > 0:
+        book = book[0]
+        book["image_url"] = get_book_image(book)
+        return book
+
+    return {}
+
+@frappe.whitelist()
 def get_terms_and_conditions():
     tc = DocType("Terms and Conditions")
     terms_and_conditions = (
