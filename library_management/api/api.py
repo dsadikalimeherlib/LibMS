@@ -14,6 +14,7 @@ def search(keyword):
     search_details += get_multimedia_tags(keyword)
     return search_details
 
+
 def get_books_by_keyword(keyword):
     bk = DocType("Book")
     book_query = (
@@ -49,6 +50,7 @@ def get_books_by_keyword(keyword):
     books = book_query.run(as_dict=True)
     return books
 
+
 def get_book_tags(tag):
     dl = DocType("Tag Link")
     bk = DocType("Book")
@@ -78,6 +80,7 @@ def get_book_tags(tag):
     ).run(as_dict=True)
     return tag_detials
 
+
 def get_multimedia_by_keyword(keyword):
     mm = DocType("Multimedia")
     multimedia_query = (
@@ -103,6 +106,7 @@ def get_multimedia_by_keyword(keyword):
     )
     multimedia = multimedia_query.run(as_dict=True)
     return multimedia
+
 
 def get_multimedia_tags(tag):
     dl = DocType("Tag Link")
@@ -131,6 +135,7 @@ def get_multimedia_tags(tag):
     ).run(as_dict=True)
     return tag_detials
 
+
 @frappe.whitelist()
 def get_banners():
     b = DocType("Banner")
@@ -153,7 +158,15 @@ def get_banners():
     return banner_data
 
 
-def get_multimedia(publication_year=None, size=None, page_offset=None, category=None, title=None, sort=None):
+@frappe.whitelist()
+def get_multimedia_list(
+    title=None,
+    category=None,
+    publication_year=None,
+    size=None,
+    page_offset=None,
+    sort=None
+):
     mm = DocType("Multimedia")
     multimedia_query = (
         frappe.qb.from_(mm)
@@ -183,18 +196,84 @@ def get_multimedia(publication_year=None, size=None, page_offset=None, category=
         multimedia_query = multimedia_query.where(mm.multimedia_title.like("%" + title + "%"))
     if size:
         multimedia_query = multimedia_query.limit(size)
+    if page_offset:
+        multimedia_query = multimedia_query.offset(page_number)
     if sort:
         if sort.lower() == "asc":
             multimedia_query = multimedia_query.orderby(order=Order.asc)
         else:
             multimedia_query = multimedia_query.orderby(order=Order.desc)
     
-
-    # if page_offset:
-    #     multimedia_query = multimedia_query.offset(page_number)
-    
     multimedia = multimedia_query.run(as_dict=True)
     return multimedia
+
+
+@frappe.whitelist()
+def get_book_list(
+    book_title=None,
+    category=None,
+    author=None,
+    subject=None,
+    publication_year=None,
+    publication=None,
+    language=None,
+    size=None,
+    page_offset=None,
+    sort=None
+):    
+    bk = DocType("Book")
+    book_query = (
+        frappe.qb.from_(bk)
+        .select(
+            bk.name.as_("id"),
+            bk.book_title.as_("title"),
+            bk.book_category.as_("category"),
+            bk.author,
+            bk.subject,
+            bk.year_of_publication,
+            bk.publication,
+            bk.language,
+            bk.aws_key,
+            bk.digital_file_type,
+            bk.book_tag,
+        )
+        .where(
+            (bk.disabled == 0)
+            & (bk.is_digital_book == "Yes")
+        )
+        .orderby(
+            bk.book_title,
+            bk.book_category,
+            bk.author,
+            bk.year_of_publication
+        )
+    )
+    if book_title:
+        book_query = book_query.where(bk.book_title.like("%" + book_title + "%"))
+    if category:
+        book_query = book_query.where(bk.book_category == category)
+    if author:
+        book_query = book_query.where(bk.author.like("%" + author + "%"))
+    if subject:
+        book_query = book_query.where(bk.subject.like("%" + subject + "%"))
+    if publication_year:
+        book_query = book_query.where(bk.year_of_publication == publication_year)
+    if publication:
+        book_query = book_query.where(bk.publication.like("%" + publication + "%"))
+    if language:
+        book_query = book_query.where(bk.language == language)
+    if size:
+        book_query = book_query.limit(size)
+    if page_offset:
+        book_query = book_query.offset(page_offset)
+    if sort:
+        if sort.lower() == "asc":
+            book_query = book_query.orderby(order=Order.asc)
+        else:
+            book_query = book_query.orderby(order=Order.desc)
+    
+    books = book_query.run(as_dict=True)
+    return books
 
 
 @frappe.whitelist()
