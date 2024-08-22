@@ -1,8 +1,21 @@
 import json
 import boto3
 import frappe
+import calendar
+from collections import defaultdict
+from erpnext import get_default_company
 from frappe.query_builder import DocType, Order
 from frappe.query_builder.functions import Date
+
+
+@frappe.whitelist()
+def get_company_contact_details():
+    company = get_default_company()
+    if not company:
+        company = frappe.defaults.get_user_default("Company")
+    
+    contact_details = frappe.cached_value("Company", company, ["name", "website", "email", "phone_no"], as_dict=True)
+    return contact_details
 
 
 @frappe.whitelist()
@@ -14,34 +27,38 @@ def search(keyword):
     search_details += get_multimedia_tags(keyword)
     return search_details
 
+
 def get_books_by_keyword(keyword):
     bk = DocType("Book")
     book_query = (
         frappe.qb.from_(bk)
         .select(
-            bk.name,
-            bk.book_title,
-            bk.book_category,
-            bk.digital_file_type
+            bk.name.as_("id"),
+            bk.book_title.as_("name"),
+            bk.book_category.as_("category"),
+            bk.digital_file_type.as_("type")
         )
         .where(
             (bk.disabled == 0) 
-            & (bk.is_digital_book == "Yes")
-            || (bk.book_title.like("%" + keyword + "%"))
-            || (bk.book_category.like("%" + keyword + "%"))
-            || (bk.author.like("%" + keyword + "%"))
-            || (bk.subject.like("%" + keyword + "%"))
-            || (bk.book_tag.like("%" + keyword + "%"))
-            || (bk.year_of_publication.like("%" + keyword + "%"))
-            || (bk.publication.like("%" + keyword + "%"))
-            || (bk.translator.like("%" + keyword + "%"))
-            || (bk.description.like("%" + keyword + "%"))
+            & (bk.is_digital_book == "Yes") 
+            | (
+                (bk.book_title.like("%" + keyword + "%"))
+                | (bk.book_category.like("%" + keyword + "%"))
+                | (bk.author.like("%" + keyword + "%"))
+                | (bk.subject.like("%" + keyword + "%"))
+                | (bk.book_tag.like("%" + keyword + "%"))
+                | (bk.year_of_publication.like("%" + keyword + "%"))
+                | (bk.publication.like("%" + keyword + "%"))
+                | (bk.translator.like("%" + keyword + "%"))
+                | (bk.description.like("%" + keyword + "%"))
+            )
         )
-        # .where(
-        #     || (bk.book_title.like("%" + keyword + "%"))
-        #     || (bk.book_category.like("%" + keyword + "%"))
-        # )
-        .orderby(bk.book_title, bt.book_category)
+        .orderby(
+            bk.book_title,
+            bt.book_category,
+            bk.digital_file_type,
+            bk.author
+        )
     )
     books = book_query.run(as_dict=True)
     return books
@@ -53,45 +70,56 @@ def get_book_tags(tag):
     tag_detials = (
         frappe.qb.from_(dl)
         .inner_join(bk)
-        .on(dl.document_name == bk.name)   
+        .on(dl.document_name == bk.name)
         .select(
             dl.tag,
-            bk.name,
-            bk.book_title,
-            bk.book_category,
-            bk.digital_file_type
+            bk.name.as_("id"),
+            bk.book_title.as_("name"),
+            bk.book_category.as_("category"),
+            bk.digital_file_type.as_("type")
         )
         .where(
             (dl.document_type == "Book")
-            && (dl.tag.like("%" + tag + "%"))
-            && (bk.disabled == 0)
-            && (bk.is_digital_book == "Yes")
+            & (dl.tag.like("%" + tag + "%"))
+            & (bk.disabled == 0)
+            & (bk.is_digital_book == "Yes")
+        )
+        .orderby(
+            bk.book_title,
+            bt.book_category,
+            bk.digital_file_type,
+            bk.author
         )
     ).run(as_dict=True)
     return tag_detials
+
 
 def get_multimedia_by_keyword(keyword):
     mm = DocType("Multimedia")
     multimedia_query = (
         frappe.qb.from_(mm)
         .select(
-            mm.name,
-            mm.multimedia_title,
-            mm.digital_file_type,
-            mm.multimedia_category,
+            mm.name.as_("id"),
+            mm.multimedia_title.as_("name"),
+            mm.media_type.as_("type"),
+            mm.multimedia_category.as_("category")
         )
         .where(
-            (mm.disabled == 0)
-            || (mm.multimedia_title.like("%" + keyword + "%"))
-            || (mm.multimedia_category.like("%" + keyword + "%"))
+            (mm.disabled == 0) | (
+                (mm.multimedia_title.like("%" + keyword + "%"))
+                | (mm.multimedia_category.like("%" + keyword + "%"))
+            )
         )
         .orderby(
             mm.multimedia_title,
-            md.multimedia_category
+            mm.multimedia_category,
+            mm.media_type,
+            mm.author
         )
     )
     multimedia = multimedia_query.run(as_dict=True)
     return multimedia
+
 
 def get_multimedia_tags(tag):
     dl = DocType("Tag Link")
@@ -101,19 +129,25 @@ def get_multimedia_tags(tag):
         .inner_join(mm)
         .on(dl.document_name == mm.name)
         .select(
-            dl.tag,
-            mm.name,
-            mm.multimedia_title,
-            mm.digital_file_type,
-            mm.multimedia_category
+            mm.name.as_("id"),
+            mm.multimedia_title.as_("name"),
+            mm.media_type.as_("type"),
+            mm.multimedia_category.as_("category"),
         )
         .where(
             (dl.document_type == "Multimedia")
-            && (dl.tag.like("%" + tag + "%"))
-            && (mm.disabled == 0)
+            & (dl.tag.like("%" + tag + "%"))
+            & (mm.disabled == 0)
+        )
+        .orderby(
+            mm.multimedia_title,
+            mm.multimedia_category,
+            mm.media_type,
+            mm.author
         )
     ).run(as_dict=True)
     return tag_detials
+
 
 @frappe.whitelist()
 def get_banners():
@@ -137,41 +171,46 @@ def get_banners():
     return banner_data
 
 
-def get_multimedia(start_date=None, end_date=None, size=None, page_number=None, category=None, title=None, sort=None):
+@frappe.whitelist()
+def get_multimedia_list(
+    title=None,
+    category=None,
+    publication_year=None,
+    size=None,
+    page_offset=None,
+    sort=None
+):
     mm = DocType("Multimedia")
     multimedia_query = (
         frappe.qb.from_(mm)
         .select(
-            mm.image,
             mm.duration,
-            mm.video_url,
-            mm.multimedia_title,
-            mm.digital_file_type,
-            mm.multimedia_category,
-            Date(mm.creation).as_("date"),
+            mm.media_url,
+            mm.media_type,
+            mm.name.as_("id"),
+            mm.image.as_("image_url"),
+            mm.multimedia_title.as_("title"),
+            mm.multimedia_category.as_("category"),
         )
         .where(
             (mm.disabled == 0)
         )
         .orderby(
             mm.multimedia_title,
-            mm.creation,
             md.duration,
             md.multimedia_category
         )
     )
-    if start_date:
-        multimedia_query = multimedia_query.where(mm.creation >= start_date)
-    if end_date:
-        multimedia_query = multimedia_query.where(mm.creation <= end_date)
-    # if size:
-    #     multimedia_query = multimedia_query.limit(size)
-    # if page_number:
-    #     multimedia_query = multimedia_query.offset(page_number)
+    if publication_year:
+        multimedia_query = multimedia_query.where(mm.year_of_publication == publication_year)
     if category:
         multimedia_query = multimedia_query.where(mm.multimedia_category == category)
     if title:
         multimedia_query = multimedia_query.where(mm.multimedia_title.like("%" + title + "%"))
+    if size:
+        multimedia_query = multimedia_query.limit(size)
+    if page_offset:
+        multimedia_query = multimedia_query.offset(page_number)
     if sort:
         if sort.lower() == "asc":
             multimedia_query = multimedia_query.orderby(order=Order.asc)
@@ -180,6 +219,163 @@ def get_multimedia(start_date=None, end_date=None, size=None, page_number=None, 
     
     multimedia = multimedia_query.run(as_dict=True)
     return multimedia
+
+
+@frappe.whitelist()
+def get_book_list(
+    book_title=None,
+    category=None,
+    author=None,
+    subject=None,
+    publication_year=None,
+    publication=None,
+    language=None,
+    size=None,
+    page_offset=None,
+    sort=None
+):    
+    bk = DocType("Book")
+    book_query = (
+        frappe.qb.from_(bk)
+        .select(
+            bk.name.as_("id"),
+            bk.book_title.as_("title"),
+            bk.book_category.as_("category"),
+            bk.author,
+            bk.subject,
+            bk.language,
+            bk.aws_key,
+            bk.digital_file_type,
+            bk.book_tag,
+        )
+        .where(
+            (bk.disabled == 0)
+            & (bk.is_digital_book == "Yes")
+        )
+        .orderby(
+            bk.book_title,
+            bk.book_category,
+            bk.author,
+            bk.language,
+            bk.subject,
+            bk.year_of_publication
+        )
+    )
+    if book_title:
+        book_query = book_query.where(bk.book_title.like("%" + book_title + "%"))
+    if category:
+        book_query = book_query.where(bk.book_category == category)
+    if author:
+        book_query = book_query.where(bk.author.like("%" + author + "%"))
+    if subject:
+        book_query = book_query.where(bk.subject.like("%" + subject + "%"))
+    if publication_year:
+        book_query = book_query.where(bk.year_of_publication == publication_year)
+    if publication:
+        book_query = book_query.where(bk.publication.like("%" + publication + "%"))
+    if language:
+        book_query = book_query.where(bk.language == language)
+    if size:
+        book_query = book_query.limit(size)
+    if page_offset:
+        book_query = book_query.offset(page_offset)
+    if sort:
+        if sort.lower() == "asc":
+            book_query = book_query.orderby(order=Order.asc)
+        else:
+            book_query = book_query.orderby(order=Order.desc)
+    
+    books = book_query.run(as_dict=True)
+    for book in books:
+        book["image_url"] = get_book_image(book)
+    return books
+
+
+@frappe.whitelist()
+def get_book_detail(book_id):
+    bk = DocType("Book")
+    book_details = (
+        frappe.qb.from_(bk)
+        .select(
+            bk.name.as_("id"),
+            bk.book_title.as_("title"),
+            bk.book_code,
+            bk.subject,
+            bk.author,
+            bk,isbn,
+            bk.language,
+            bk.translator,
+            bk.aws_key,
+            bk.book_tag,
+            bk.volume,
+            bk.publication,
+            bk.book_category,
+            bk.publication,
+            bk.edition,
+            bk.no_of_pages,
+            bk.description,
+            bk.year_of_publication,
+            bk.digital_file_type.as_("type"),
+        )
+        .where(
+            (bk.disabled == 0)
+            & (bk.name == book_id)
+            & (bk.is_digital_book == "Yes")
+        )
+    ).run(as_dict=True)
+
+    if len(book_details) > 0:
+        book = book[0]
+        book["image_url"] = get_book_image(book)
+        return book
+
+    return {}
+
+
+@frappe.whitelist()
+def get_multimedia_detail(media_id):
+    mm = DocType("Multimedia")
+    multimedia_details = (
+        frappe.qb.from_(mm)
+        .select(
+            mm.name.as_("id"),
+            mm.media_type,
+            mm.media_url,
+            mm.author,
+            mm.description,
+            mm.image.as_("image_url"),
+            mm.year_of_publication,
+            mm.multimedia_title.as_("title"),
+            mm.multimedia_category.as_("category"),
+        )
+        .where(
+            (mm.disabled == 0)
+            & (mm.name == media_id)
+        )
+    ).run(as_dict=True)
+
+    if len(multimedia_details) > 0:
+        return multimedia_details[0]
+    
+    return {}
+
+
+
+@frappe.whitelist()
+def get_terms_and_conditions():
+    tc = DocType("Terms and Conditions")
+    terms_and_conditions = (
+        frappe.qb.from_(tc)
+        .select(
+            tc.title,
+            tc.terms.as_("description")
+        )
+        .where(tc.disabled == 0)
+    ).run(as_dict=True)
+
+    if len(terms_and_conditions) > 0:
+        return terms_and_conditions[0]
+    return {}
 
 
 @frappe.whitelist()
@@ -292,11 +488,12 @@ def get_book_categories():
     category_query = (
         frappe.qb.from_(bc)
         .select(
-            bc.name.as_("category"),
+            bc.name.as_("id"),
+            bc.book_category.as_("category"),
             bc.image
         )
         .where(bc.disabled == 0)
-        .orderby(bc.name)
+        .orderby(bc.book_category)
     )
     book_categories = category_query.run(as_dict=True)
     return book_categories
@@ -308,11 +505,12 @@ def get_multimedia_categories():
     category_query = (
         frappe.qb.from_(mc)
         .select(
-            mc.name.as_("category"),
+            mc.name.as_("id"),
+            mc.multimedia_category.as_("category"),
             mc.image
         )
         .where(mc.disabled == 0)
-        .orderby(mc.name)
+        .orderby(mc.multimedia_category)
     )
     multimedia_categories = category_query.run(as_dict=True)
     return multimedia_categories
@@ -347,3 +545,39 @@ def get_tag_records(doctype, tag):
             dl.tag
         )
     ).run(as_dict=True)
+
+
+@frappe.whitelist()
+def get_holidays(from_date, to_date):
+    h = DocType("Holiday")
+    holidays = (
+        frappe.qb.from_(h)
+        .select(
+            h.holiday_date,
+            h.description.as_("holiday_name")
+        )
+        .where(
+            (h.holiday_date >= from_date)
+            & (h.holiday_date <= to_date)
+        )
+        .orderby(h.holiday_date)
+    ).run(as_dict=True)
+
+    holidays_by_month = defaultdict(list)
+    for holiday in holidays:
+        holiday_date = holiday['holiday_date']
+        month_name = calendar.month_name[holiday_date.month]
+        holidays_by_month[month_name].append({
+            'holiday_date': holiday_date,
+            'holiday_name': holiday['description']
+        })
+
+    holiday_list = [
+        {
+            'month': month,
+            'holidays': holidays
+        }
+        for month, holidays in holidays_by_month.items()
+    ]
+    
+    return holiday_list
