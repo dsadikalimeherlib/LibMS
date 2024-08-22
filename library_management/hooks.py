@@ -67,7 +67,7 @@ jinja = {
 # ------------
 
 # before_install = "library_management.install.before_install"
-# after_install = "library_management.install.after_install"
+after_install = "library_management.custom_api.create_uom"
 
 # Uninstallation
 # ------------
@@ -160,7 +160,8 @@ override_whitelisted_methods = {
     "book_allowed_issue.allowed_book": "library_management.custom_api.allowed_book",
     "fetch_member_details.fetch_member_issue_book_detail": "library_management.custom_api.fetch_member_issue_book_detail",
     "fetch_member_issue_book_detail": "library_management.library_management.doctype.book_transaction.book_transaction.fetch_member_issue_book_detail",
-    "auto_expire_memberships":"library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships"
+    "auto_expire_memberships":"library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships",
+    "library_management.custom_api.create_uom":"library_management.custom_api.create_uom"
     #"get_data.check_duplicate_membership": "library_management.library_management.doctype.library_membership.library_membership.check_duplicate_membership"
 }
 
