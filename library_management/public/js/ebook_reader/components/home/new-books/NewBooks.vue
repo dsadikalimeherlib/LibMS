@@ -4,7 +4,7 @@
     <div class="new-book-section">
 
       <div class="title-wrapper">
-        <h2>New Books</h2>
+        <h2>New Books111333333</h2>
         <div class="right">
           <button @click="handleClick('books')" class="link">See all<img src="/files/see-all-arrow.svg" /></button>
         </div>

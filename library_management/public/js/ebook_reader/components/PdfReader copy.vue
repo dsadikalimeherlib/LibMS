@@ -1,67 +1,69 @@
 <template>
-    <v-app>
-        <v-app-bar>
-            <PdfTitlebar :title="book.book_title" @close-reader="closeReader" @toggle-toc="toggleToc" />
-        </v-app-bar>
-        <v-main>
-            <v-row>
-                <PdfToc :toc="toc" :isTocVisible="isTocVisible" @render-page="navigateToPage" />
+    <v-dialog v-model="show" fullscreen hide-overlay>
+        <v-app>
+            <v-app-bar dense elevatedwill>
+                <PdfTitlebar :title="book.book_title" @close-reader="closeReader" @toggle-toc="toggleToc" />
+            </v-app-bar>
+            <v-main>
+                <v-row>
+                    <PdfToc :toc="toc" :isTocVisible="isTocVisible" @render-page="navigateToPage" />
 
-                <v-col class="d-flex justify-start align-items-center">
+                    <v-col class="d-flex justify-start align-items-center">
+                        <v-btn icon @click="previousPage">
+                            <v-icon>mdi-chevron-left</v-icon>
+                            <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
+                        </v-btn>
+                    </v-col>
+                    <v-col class="justify-center align-items-center">
+                        <div class="pdf-container">
+                            <v-card class="mt-0" hover>
+                                <canvas id="pdf-canvas"> </canvas>
+                            </v-card>
+                        </div>
+                    </v-col>
+                    <v-col class="d-flex justify-end align-items-center">
+                        <v-btn icon @click="nextPage">
+                            <v-icon>mdi-chevron-right</v-icon>
+                            <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
+                        </v-btn>
+                    </v-col>
+
+                    <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="1000" rounded>
+                        {{ snackbarText }}
+                        <v-btn small color="white" text @click="showSnackbar = false">Close</v-btn>
+                    </v-snackbar>
+                </v-row>
+            </v-main>
+            <v-bottom-navigation class="bg-light">
+                <v-spacer></v-spacer>
+                <div class="d-flex justify-content-center align-items-center">
                     <v-btn icon @click="previousPage">
-                        <v-icon>mdi-chevron-left</v-icon>
+                        <v-icon>mdi-arrow-left</v-icon>
                         <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
                     </v-btn>
-                </v-col>
-                <v-col class="justify-center align-items-center">
-                    <div class="pdf-container">
-                        <v-card class="mt-0" hover>
-                            <canvas id="pdf-canvas"> </canvas>
-                        </v-card>
-                    </div>
-                </v-col>
-                <v-col class="d-flex justify-end align-items-center">
+                    <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)"
+                        @mouseleave="updatePlaceholder" class="mx-2 page-input-field" min="1" :max="totalPages" outlined
+                        style="width: 200px;">
+                    </v-text-field>
                     <v-btn icon @click="nextPage">
-                        <v-icon>mdi-chevron-right</v-icon>
+                        <v-icon>mdi-arrow-right</v-icon>
                         <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
                     </v-btn>
-                </v-col>
-
-                <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="1000" rounded>
-                    {{ snackbarText }}
-                    <v-btn small color="white" text @click="showSnackbar = false">Close</v-btn>
-                </v-snackbar>
-            </v-row>
-        </v-main>
-        <v-bottom-navigation class="bg-light">
-            <v-spacer></v-spacer>
-            <div class="d-flex justify-content-center align-items-center">
-                <v-btn icon @click="previousPage">
-                    <v-icon>mdi-arrow-left</v-icon>
-                    <v-tooltip activator="parent" location="top">Previous Page</v-tooltip>
-                </v-btn>
-                <v-text-field v-model="manualPage" @keyup.enter="navigateToPage(manualPage)"
-                    @mouseleave="updatePlaceholder" class="mx-2 page-input-field" min="1" :max="totalPages" outlined
-                    style="width: 200px;">
-                </v-text-field>
-                <v-btn icon @click="nextPage">
-                    <v-icon>mdi-arrow-right</v-icon>
-                    <v-tooltip activator="parent" location="top">Next Page</v-tooltip>
-                </v-btn>
-            </div>
-            <v-spacer></v-spacer>
-            <div class="d-flex justify-end align-items-right">
-                <v-btn icon size="small" @click="zoomOut" class="mb-2">
-                    <v-icon>mdi-minus</v-icon>
-                    <v-tooltip activator="parent" location="top">zoomOut</v-tooltip>
-                </v-btn>
-                <v-btn icon size="small" @click="zoomIn" class="mb-2">
-                    <v-icon>mdi-plus</v-icon>
-                    <v-tooltip activator="parent" location="top">zoomIn</v-tooltip>
-                </v-btn>
-            </div>
-        </v-bottom-navigation>
-    </v-app>
+                </div>
+                <v-spacer></v-spacer>
+                <div class="d-flex justify-end align-items-right">
+                    <v-btn icon size="small" @click="zoomOut" class="mb-2">
+                        <v-icon>mdi-minus</v-icon>
+                        <v-tooltip activator="parent" location="top">zoomOut</v-tooltip>
+                    </v-btn>
+                    <v-btn icon size="small" @click="zoomIn" class="mb-2">
+                        <v-icon>mdi-plus</v-icon>
+                        <v-tooltip activator="parent" location="top">zoomIn</v-tooltip>
+                    </v-btn>
+                </div>
+            </v-bottom-navigation>
+        </v-app>
+    </v-dialog>
 </template>
 
 <script>
@@ -83,7 +85,7 @@ export default {
     },
     data() {
         return {
-            url: 'https://pdfobject.com/pdf/sample.pdf',
+            url: '',
             show: false,
             bookInstance: null,
             rendition: null,
@@ -107,7 +109,6 @@ export default {
     },
     methods: {
         async loadPdf() {
-
             try {
                 await this.getBook();
                 const loadingTask = pdfjsLib.getDocument(this.url);
@@ -147,7 +148,6 @@ export default {
             }
         },
         async renderPage() {
-            console.log('1111');
             try {
                 const page = await this.pdfDoc.getPage(this.page);
                 const canvas = document.getElementById('pdf-canvas');
