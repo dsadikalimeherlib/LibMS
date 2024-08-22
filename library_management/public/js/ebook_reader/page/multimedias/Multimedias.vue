@@ -1,9 +1,8 @@
 <template>
-    11112222333
-    <!-- <div class="books-wrapper">
+    <div class="books-wrapper">
         <div class="inner-container">
             <div class="page-header">
-                <h1>Books</h1>
+                <h1>Multimedia</h1>
                 <div class="right">
                     <div class="icons-wrapper">
                         <div :class="gridActiveClass" @click="setShowGrid(true)">
@@ -35,7 +34,7 @@
             <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="bookstore.books" />
             <MultimediaList :onLinkClick="onLinkClick" v-else :books="bookstore.books" />
         </div>
-    </div> -->
+    </div>
 </template>
 <script setup>
 import MultimediaGrid from '../../components/multimedias/MultimediaGrid.vue';

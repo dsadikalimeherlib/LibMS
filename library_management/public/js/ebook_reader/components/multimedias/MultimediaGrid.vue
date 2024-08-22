@@ -2,7 +2,7 @@
     <div class="book-grid-section">
         <div class="book-list-wrapper">
             <template v-for="item in books" :key="item.book_title">
-                <Book :onLinkClick="onLinkClick" :book="item" />
+                <Multimedia :onLinkClick="onLinkClick" :book="item" />
             </template>
 
 
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import Book from './Book.vue';
+import Multimedia from './Multimedia.vue';
 </script>
 
 <script>
