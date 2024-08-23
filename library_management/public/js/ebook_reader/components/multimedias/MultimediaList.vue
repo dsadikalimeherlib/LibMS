@@ -1,5 +1,5 @@
 <template>
-    <div class="book-table-wrapper">
+    <div class="media-table-wrapper">
         <table>
             <thead>
                 <tr class="t-header-row">
@@ -26,7 +26,7 @@
                     </th>
                     <th>
                         <div class="sort-title">
-                            Author<div class="sort-icon-wrapper">
+                            Date<div class="sort-icon-wrapper">
                                 <div class="asc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="13"
                                         viewBox="0 0 10 13" fill="none">
                                         <path
@@ -46,7 +46,7 @@
                     </th>
                     <th>
                         <div class="sort-title">
-                            Language<div class="sort-icon-wrapper">
+                            Duration<div class="sort-icon-wrapper">
                                 <div class="asc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="13"
                                         viewBox="0 0 10 13" fill="none">
                                         <path
@@ -66,7 +66,7 @@
                     </th>
                     <th>
                         <div class="sort-title">
-                            Book type<div class="sort-icon-wrapper">
+                            Type<div class="sort-icon-wrapper">
                                 <div class="asc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="13"
                                         viewBox="0 0 10 13" fill="none">
                                         <path
@@ -86,7 +86,7 @@
                     </th>
                     <th>
                         <div class="sort-title">
-                            Sec<div class="sort-icon-wrapper">
+                            Category<div class="sort-icon-wrapper">
                                 <div class="asc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="13"
                                         viewBox="0 0 10 13" fill="none">
                                         <path
@@ -104,24 +104,34 @@
                             </div>
                         </div>
                     </th>
-                    <th>Available</th>
                 </tr>
             </thead>
             <tbody>
-                <template v-for="item in books" :key="item.book_title">
+                <template v-for="item in medias" :key="item.title">
                     <tr>
-                        <td class="image-wrapper"><img :src="item.image ? item.image
-                            : 'https://placehold.co/150?text=Item'" />
+                        <td>
+                            <div class="image-wrapper">
+                                <img :src="item.image ? item.image
+                                    : '/files/default-media.png'" />
+                                <div class="player-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+                                        fill="none">
+                                        <circle cx="15" cy="15" r="15" fill="#00B0AB" />
+                                        <path
+                                            d="M23.2111 14.1055L10.07 7.53495C9.27211 7.13601 8.33333 7.71621 8.33333 8.60827V21.3917C8.33333 22.2837 9.27211 22.8639 10.07 22.465L23.2111 15.8944C23.9482 15.5259 23.9482 14.4741 23.2111 14.1055Z"
+                                            fill="white" />
+                                    </svg>
+                                </div>
+                            </div>
                         </td>
                         <td>
-                            <h2>{{ item.book_title }}</h2>
+                            <h2>{{ item.title }}</h2>
                         </td>
-                        <td>{{ item.author
+                        <td>{{ item.date
                             }}</td>
-                        <td>Gujarati</td>
-                        <td>E-Book</td>
-                        <td>Shia</td>
-                        <td><span class="availability yes">Yes</span></td>
+                        <td>{{ item.duration }}</td>
+                        <td>{{ item.media_type }}</td>
+                        <td>{{ item.category }}</td>
                     </tr>
                 </template>
             </tbody>
@@ -132,7 +142,7 @@
 <script>
 export default {
     props: {
-        books: {
+        medias: {
             type: Array,
             required: true
         },

@@ -109,7 +109,7 @@
             </thead>
             <tbody>
                 <template v-for="item in books" :key="item.book_title">
-                    <tr>
+                    <tr @click="handleClick('book-detail')">
                         <td class="image-wrapper"><img :src="item.image ? item.image
                             : 'https://placehold.co/150?text=Item'" />
                         </td>
@@ -136,7 +136,20 @@ export default {
             type: Array,
             required: true
         },
+        onLinkClick: {
+            type: Function,
+            required: true
+        },
     },
+    methods: {
+        handleClick(pageName) {
+
+            // Call the function passed via prop
+            if (this.onLinkClick) {
+                this.onLinkClick(pageName);
+            }
+        }
+    }
 }
 </script>
 <style scoped>
