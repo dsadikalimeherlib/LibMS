@@ -7,8 +7,8 @@
       <BookCategories :onLinkClick="onLinkClick" />
       <NewBooks :onLinkClick="onLinkClick" />
       <MediaCategories />
-      <NewMedia />
-      <NewsAnnouncements />
+      <NewMedia :onLinkClick="onLinkClick" />
+      <NewsAnnouncements :onLinkClick="onLinkClick" />
     </div>
     <Footer />
     <!-- <v-app> -->

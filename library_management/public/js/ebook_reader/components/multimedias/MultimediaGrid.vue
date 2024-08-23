@@ -1,8 +1,8 @@
 <template>
-    <div class="book-grid-section">
-        <div class="book-list-wrapper">
-            <template v-for="item in books" :key="item.book_title">
-                <Multimedia :onLinkClick="onLinkClick" :book="item" />
+    <div class="media-grid-section">
+        <div class="media-list-wrapper">
+            <template v-for="item in medias" :key="item.title">
+                <Multimedia :onLinkClick="onLinkClick" :media="item" />
             </template>
 
 
@@ -19,7 +19,7 @@ import Multimedia from './Multimedia.vue';
 
 export default {
     props: {
-        books: {
+        medias: {
             type: Array,
             required: true
         },

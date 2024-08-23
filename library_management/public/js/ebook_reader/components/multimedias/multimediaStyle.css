@@ -1,16 +1,18 @@
-.bookItem {
+.media-item {
     border-radius: 10px;
     background: #FFF;
-    width: calc(16.66% - 40px);
+    width: calc(20% - 40px);
 
     .image-wrapper {
         border-radius: 10px 10px 0px 0px;
         background: #DAEFFF;
-        padding: 10px;
-        height: 230px;
+        padding: 0;
+        height: 190px;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        overflow: hidden;
 
         .v-responsive__sizer {
             display: none;
@@ -21,15 +23,21 @@
         }
 
         img {
-            width: 133px;
-            height: 187px;
+            width: 100%;
+            height: 190px;
             object-fit: cover;
             display: block;
             margin: 0 auto;
             position: static;
-            box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
+            box-shadow: none;
         }
 
+        .player-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
 
     }
 

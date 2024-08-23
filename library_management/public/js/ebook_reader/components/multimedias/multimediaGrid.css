@@ -1,11 +1,11 @@
-.book-list-wrapper {
+.media-list-wrapper {
     gap: 40px;
     display: flex;
     flex-wrap: wrap;
 
 }
 
-.book-grid-section {
+.media-grid-section {
     border-radius: 10px;
     background: #FFF;
     padding: 20px;

@@ -1,5 +1,5 @@
 <template>
-    <div class="books-wrapper">
+    <div class="medias-wrapper">
         <div class="inner-container">
             <div class="page-header">
                 <h1>Multimedia</h1>
@@ -31,8 +31,8 @@
                 </div>
             </div>
 
-            <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="bookstore.books" />
-            <MultimediaList :onLinkClick="onLinkClick" v-else :books="bookstore.books" />
+            <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :medias="mediastore.medias" />
+            <MultimediaList :onLinkClick="onLinkClick" v-else :medias="mediastore.medias" />
         </div>
     </div>
 </template>
@@ -42,50 +42,53 @@ import MultimediaList from '../../components/multimedias/MultimediaList.vue';
 import MultimediaSort from '../../components/multimedias/multimedia-sort/MultimediaSort.vue';
 import MultimediaFilter from '../../components/multimedias/multimedia-filter/MultimediaFilter.vue';
 
-// import { onMounted } from 'vue';
-// import { useBooksStore } from '../../../../books/store';
-// const bookstore = useBooksStore();
-const bookstore = {
-    books: [
+// const mediastore = useBooksStore();
+const mediastore = {
+    medias: [
         {
-            book_title: 'Book1',
-            author: 'Author'
+            title: 'Media 1',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book2',
-            author: 'Author'
+            title: 'Media 2',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book3',
-            author: 'Author'
+            title: 'Media 3',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book4',
-            author: 'Author'
+            title: 'Media 4',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book5',
-            author: 'Author'
+            title: 'Media 5',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book6',
-            author: 'Author'
+            title: 'Media 6',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book7',
-            author: 'Author'
+            title: 'Media 7',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book8',
-            author: 'Author'
+            title: 'Media 8',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         },
         {
-            book_title: 'Book9',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book10',
-            author: 'Author'
+            title: 'Media 9',
+            date: '19-Sep-2022 4:07 PM',
+            category: 'કરબલાના બહાદુરો'
         }
     ]
 }
