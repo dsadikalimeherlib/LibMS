@@ -24,6 +24,7 @@ import Multimedias from '../ebook_reader/page/multimedias/Multimedias.vue'
 import Contact from '../ebook_reader/page/Contact.vue'
 import Layout from '../ebook_reader/layout/Layout.vue'
 import BookCategories from '../ebook_reader/page/book-categories/BookCategories.vue'
+import MediaCategories from '../ebook_reader/page/media-categories/MediaCategories.vue'
 import BookDetail from '../ebook_reader/page/book-detail/BookDetail.vue'
 import BookReader from '../ebook_reader/page/book-reader/BookReader.vue'
 </script>
@@ -68,6 +69,10 @@ export default {
         case 'book-categories':
           this.currentComponent = BookCategories
           break;
+        case 'media-categories':
+          this.currentComponent = MediaCategories
+          break;
+
         case 'contact':
           this.currentComponent = Contact
           break;
@@ -103,6 +108,9 @@ export default {
           return Contact
         case 'book-categories':
           return BookCategories
+        case 'media-categories':
+          return MediaCategories
+
         default:
           return Home
       }
