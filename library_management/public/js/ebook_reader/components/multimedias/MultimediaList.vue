@@ -108,7 +108,7 @@
             </thead>
             <tbody>
                 <template v-for="item in medias" :key="item.title">
-                    <tr>
+                    <tr @click="handleClick('media-detail')">
                         <td>
                             <div class="image-wrapper">
                                 <img :src="item.image ? item.image
@@ -146,7 +146,20 @@ export default {
             type: Array,
             required: true
         },
+        onLinkClick: {
+            type: Function,
+            required: true
+        },
     },
+    methods: {
+        handleClick(pageName) {
+
+            // Call the function passed via prop
+            if (this.onLinkClick) {
+                this.onLinkClick(pageName);
+            }
+        }
+    }
 }
 </script>
 <style scoped>

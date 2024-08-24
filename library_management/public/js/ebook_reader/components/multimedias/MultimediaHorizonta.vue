@@ -21,8 +21,6 @@
                     }}</div>
                 <div class="meta"><span class="label">Category:</span> {{ media.category
                     }}</div>
-                <div class="meta"><span class="label">Type:</span> {{ media.media_type
-                    }}</div>
             </div>
         </div>
     </div>
