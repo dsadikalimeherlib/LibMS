@@ -42,7 +42,7 @@
   "digital_file_type",
   "image",
   "aws_key",
-  "upload_book_to_aws",
+  "upload_file",
   "donation_details_section",
   "donated_book",
   "donor_name",
@@ -310,9 +310,9 @@
    "label": "AWS Key"
   },
   {
-   "fieldname": "upload_book_to_aws",
+   "fieldname": "upload_file",
    "fieldtype": "Button",
-   "label": "Upload Book to AWS"
+   "label": "Upload File"
   }
  ],
  "has_web_view": 1,
@@ -330,7 +330,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-08-06 18:56:14.540953",
+ "modified": "2024-08-27 13:51:47.877506",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book",
