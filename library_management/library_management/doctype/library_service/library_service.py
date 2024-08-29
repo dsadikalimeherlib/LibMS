@@ -18,8 +18,9 @@ class LibraryService(Document):
                 'item_group': "Services",
                 'is_stock_item': 0,
                 'stock_uom': uom,
-                'include_item_in_manufacturing': 0,
+                'include_item_in_manufacturing': 0
             })
             item_doc.insert()
+            self.linked_item = item_doc.name
             self.item_name = item_doc.name
             frappe.msgprint("Item created successfully")
