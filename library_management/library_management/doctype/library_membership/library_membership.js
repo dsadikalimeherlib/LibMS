@@ -35,7 +35,7 @@ frappe.ui.form.on('Library Membership', {
     },
     expired(frm) {
         frappe.call({
-            method: "auto_expire_memberships",
+            method: "library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships",
             args: {
                 member: frm.doc.member
             },
@@ -49,11 +49,7 @@ frappe.ui.form.on('Library Membership', {
 frappe.ui.form.on('Library Membership Details', {
     library_service_plan: function(frm, cdt, cdn) {
         var child = locals[cdt][cdn];
-
         if (child.library_service_plan && child.library_service) {
-            console.log('Selected Library Service Plan:', child.library_service_plan);
-            console.log('Selected Library Service:', child.library_service);
-
             // Call the server-side method to get days and amount
             frappe.call({
                 method: "library_management.library_management.doctype.library_membership.library_membership.get_service_plan_details",
@@ -63,17 +59,22 @@ frappe.ui.form.on('Library Membership Details', {
                 },
                 callback: function(r) {
                     if (r.message) {
-                        console.log('Fetched Days:', r.message.days);
-                        console.log('Fetched Amount:', r.message.amount);
-
                         // Set the fetched values to fields in the child table
                         frappe.model.set_value(cdt, cdn, 'days', r.message.days);
-                        frappe.model.set_value(cdt, cdn, 'amount', r.message.amount);  // Replace 'amount' with your actual field name
+                        frappe.model.set_value(cdt, cdn, 'amount', r.message.amount);
+                        var due = frappe.datetime.add_days(frm.doc.from_date, r.message.days);
+                        frappe.model.set_value(cdt, cdn, 'due_date', due);
                     } else {
                         console.warn('No details found for the selected Library Service Plan and Library Service.');
                     }
                 }
             });
         }
+    },
+    from_date: function (frm, cdt, cdn) {
+        var child_doc = locals[cdt][cdn];
+        var day = child_doc.days;
+        var due = frappe.datetime.add_days(child_doc.from_date, day);
+        frappe.model.set_value(cdt, cdn, 'due_date', due);
     }
 });
