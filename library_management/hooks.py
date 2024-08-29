@@ -122,7 +122,8 @@ after_install = "library_management.custom_api.create_uom"
 
 scheduler_events = {
 	"daily": [
-        "library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships"
+        "library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships",
+        "library_management.library_management.doctype.member.member.update_all_members_status"
 	]
 }
 
