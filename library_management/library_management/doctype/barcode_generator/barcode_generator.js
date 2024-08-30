@@ -2,9 +2,19 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Barcode Generator', {
+    refresh: function(frm) {
+        frm.set_query('item_code', function() {
+            return {
+                filters: {
+                    is_fixed_asset: 1
+                }
+            };
+        });
+    },
     item_code: function(frm) {
         if (frm.doc.item_code) {
             // Fetch all assets related to the given item code
+
             frappe.db.get_list('Asset', {
                 filters: { item_code: frm.doc.item_code },
                 fields: ['name','asset_name','status']
@@ -19,12 +29,8 @@ frappe.ui.form.on('Barcode Generator', {
                     row.asset_name = asset.asset_name;
                     row.status = asset.status;
                 });
-
                 // Refresh the child table
                 frm.refresh_field('barcode_generator_details');
-
-                // Optional: Show a message
-                frappe.msgprint(__('Fetched {0} assets', [assets.length]));
             });
         }
     }

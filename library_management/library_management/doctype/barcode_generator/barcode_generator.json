@@ -1,6 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
+ "autoname": "autoincrement",
  "creation": "2024-05-31 17:25:28.220532",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -13,7 +13,8 @@
    "fieldname": "item_code",
    "fieldtype": "Link",
    "label": "Item Code",
-   "options": "Item"
+   "options": "Item",
+   "unique": 1
   },
   {
    "fieldname": "barcode_generator_details",
@@ -24,10 +25,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 17:26:28.958245",
+ "modified": "2024-08-30 09:36:40.618485",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Barcode Generator",
+ "naming_rule": "Autoincrement",
  "owner": "Administrator",
  "permissions": [
   {
