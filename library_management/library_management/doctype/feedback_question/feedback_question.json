@@ -1,35 +1,25 @@
 {
  "actions": [],
- "autoname": "autoincrement",
- "creation": "2024-05-31 17:25:28.220532",
+ "allow_rename": 1,
+ "creation": "2024-08-29 16:02:59.403623",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "item_code",
-  "barcode_generator_details"
+  "feedback_question"
  ],
  "fields": [
   {
-   "fieldname": "item_code",
-   "fieldtype": "Link",
-   "label": "Item Code",
-   "options": "Item",
-   "unique": 1
-  },
-  {
-   "fieldname": "barcode_generator_details",
-   "fieldtype": "Table",
-   "label": "Barcode Generator Details",
-   "options": "Barcode Generator Details"
+   "fieldname": "feedback_question",
+   "fieldtype": "Text",
+   "label": "Feedback Question"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-30 09:36:40.618485",
+ "modified": "2024-08-29 16:03:19.223864",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Barcode Generator",
- "naming_rule": "Autoincrement",
+ "name": "Feedback Question",
  "owner": "Administrator",
  "permissions": [
   {

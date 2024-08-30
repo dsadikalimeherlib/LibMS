@@ -1,35 +1,28 @@
 {
  "actions": [],
- "autoname": "autoincrement",
- "creation": "2024-05-31 17:25:28.220532",
+ "allow_rename": 1,
+ "autoname": "field:library_service_plan",
+ "creation": "2024-08-23 16:36:12.970668",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "item_code",
-  "barcode_generator_details"
+  "library_service_plan"
  ],
  "fields": [
   {
-   "fieldname": "item_code",
-   "fieldtype": "Link",
-   "label": "Item Code",
-   "options": "Item",
+   "fieldname": "library_service_plan",
+   "fieldtype": "Data",
+   "label": "Library Service Plan",
    "unique": 1
-  },
-  {
-   "fieldname": "barcode_generator_details",
-   "fieldtype": "Table",
-   "label": "Barcode Generator Details",
-   "options": "Barcode Generator Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-30 09:36:40.618485",
+ "modified": "2024-08-23 16:39:44.221259",
  "modified_by": "Administrator",
  "module": "Library Management",
- "name": "Barcode Generator",
- "naming_rule": "Autoincrement",
+ "name": "Library Service Plan",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

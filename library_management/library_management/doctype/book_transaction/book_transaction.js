@@ -53,10 +53,18 @@ frappe.ui.form.on('Book Transaction', {
             var filters = {};
 
             if (transactionType === "Issue") {
+                
                 filters = {
                     "status": "Available"
                 };
-            } else {
+            } else if (transactionType === "Return"){
+                frm.clear_table('book_transaction_detail');
+                frm.refresh_field('book_transaction_detail');
+                filters = {
+                    "status": "Issue"
+                };
+            }
+            else {
                 filters = {
                     "status": "Issue"
                 };
@@ -308,3 +316,15 @@ frappe.ui.form.on("Return Book Details", {
 });
 
 
+
+
+frappe.ui.form.on('Book Transaction', {
+    transaction_type: function(frm) {
+        // Clear the Return Book Details child table
+            frm.clear_table('return_book_details');
+            frm.refresh_field('return_book_details');
+            frm.clear_table('book_transaction_detail');
+            frm.refresh_field('book_transaction_detail');
+            frm.set_value('member', '');
+    }
+});
