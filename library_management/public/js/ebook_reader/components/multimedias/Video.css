@@ -1,0 +1,111 @@
+.iframe-wrapper {
+    margin-bottom: 20px;
+    padding-bottom: 54%;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+
+    iframe {
+        top: -50%;
+        height: 200%;
+        border-radius: 10px;
+        width: 100%;
+        position: absolute;
+        left: 0;
+
+    }
+
+
+    .youtube-custom-player {
+        width: 640px;
+        margin: auto;
+    }
+
+
+
+
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.32);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 20px;
+
+        .icon-wrapper {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .range-slider,
+        .volume-range-slider {
+            width: 100%;
+
+
+            -webkit-appearance: none;
+            /* Removes default slider styling for WebKit browsers */
+            appearance: none;
+            /* Removes default slider styling for other browsers */
+            /* Width of the slider */
+            height: 8px;
+            /* Height of the slider */
+            /* background: #ddd; */
+            /* Background color of the slider track */
+            outline: none;
+            /* Removes outline */
+            /* border-radius: 5px; */
+            /* Rounded corners */
+            cursor: pointer;
+            /* Cursor changes to pointer when hovering */
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.31);
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                /* Removes default thumb styling */
+                appearance: none;
+                /* Removes default thumb styling */
+                width: 16px;
+                /* Width of the thumb */
+                height: 16px;
+                /* Height of the thumb */
+                background: #fff;
+                /* Color of the thumb */
+                border-radius: 50%;
+                /* Makes the thumb circular */
+                cursor: pointer;
+                /* Cursor changes to pointer when hovering */
+                box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+                /* Adds a shadow to the thumb */
+            }
+
+            &:active::-webkit-slider-thumb {
+                background: #fff;
+            }
+
+        }
+
+        .volume-control {
+
+            display: flex;
+            align-items: center;
+
+
+        }
+    }
+
+    button {
+        padding: 5px 10px;
+    }
+
+    input[type='range'] {
+        width: 100px;
+    }
+}

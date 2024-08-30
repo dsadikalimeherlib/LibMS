@@ -2,7 +2,7 @@
     <div class="video-player-wrapper">
         <div class="left-column">
             <div class="iframe-wrapper">
-                <iframe :src="media.media_url"></iframe>
+                <Video />
             </div>
             <div class="video-detail">
                 <div class="title">{{ media.title }}</div>
@@ -34,6 +34,7 @@
 <script setup>
 import BookField from '../../components/book-field/BookField.vue';
 import MultimediaHorizonta from '../../components/multimedias/MultimediaHorizonta.vue';
+import Video from '../../components/multimedias/Video.vue';
 
 
 

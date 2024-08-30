@@ -26,9 +26,9 @@
                 <div class="description-wrapper">
                     <div class="description">{{ media.description }} </div>
                     <div class="button-wrapper">
-                        <div v-if="media_type" class="primary-button" @click="handleClick('video-player')"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20"
-                                fill="none">
+                        <div v-if="media.media_type == 'Video'" class="primary-button"
+                            @click="handleClick('video-player')"><svg xmlns="http://www.w3.org/2000/svg" width="19"
+                                height="20" viewBox="0 0 19 20" fill="none">
                                 <path
                                     d="M18.2111 9.10557L1.73666 0.868328C0.938776 0.469388 0 1.04958 0 1.94164V18.0584C0 18.9504 0.938776 19.5306 1.73666 19.1317L18.2111 10.8944C18.9482 10.5259 18.9482 9.4741 18.2111 9.10557Z"
                                     fill="white" />
@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <div class="audio-player">
+                <div v-if="media.media_type == 'Audio'" class="audio-player">
                     <audio ref="audio" @timeupdate="updateProgress" @ended="resetPlayer">
                         <source :src="audioSrc" type="audio/mpeg" />
                         Your browser does not support the audio element.
@@ -191,8 +191,11 @@ export default {
         };
     },
     mounted() {
-        this.$refs.audio.addEventListener('loadedmetadata', this.setDuration);
-        this.$refs.audio.volume = this.volume;  // Set initial volume
+
+        if (this.$refs.audio) {
+            this.$refs.audio.addEventListener('loadedmetadata', this.setDuration);
+            this.$refs.audio.volume = this.volume;  // Set initial volume
+        }
     },
 }
 </script>

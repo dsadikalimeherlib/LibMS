@@ -6,20 +6,7 @@
     box-shadow: inset 10px 0px 15px rgba(0, 0, 0, 0.09);
 
     .left-column {
-        .iframe-wrapper {
-            margin-bottom: 20px;
-            padding-bottom: 54%;
-            position: relative;
 
-            iframe {
-                height: 100%;
-                border-radius: 10px;
-                width: 100%;
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-        }
 
         .video-detail {
             display: flex;
