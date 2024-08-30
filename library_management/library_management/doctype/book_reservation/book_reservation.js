@@ -1,12 +1,16 @@
 // Copyright (c) 2024, ramjanali and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Book Reservation", {
-// 	refresh(frm) {
-
-// 	},
-// });
 frappe.ui.form.on('Book Reservation', {
+    refresh(frm) {
+        frm.set_query('member', function (doc) {
+            return {
+                filters: {
+                    'membership_status': 'Active'
+                }
+            }
+        });
+    },
     member: function(frm) {
         if (frm.doc.member) {
             frappe.call({
@@ -30,7 +34,7 @@ frappe.ui.form.on('Book Reservation', {
         if (frm.doc.book) {
             // Fetch all assets related to the given item code
             frappe.db.get_list('Asset', {
-                filters: { item_code: frm.doc.book , status:"Available"},
+                filters: { item_code: frm.doc.book},
                 fields: ['name','asset_name','status']
             }).then(book => {
                 // Clear existing data in the child table
@@ -41,24 +45,30 @@ frappe.ui.form.on('Book Reservation', {
                     let row = frappe.model.add_child(frm.doc, 'Book Reservation Details', 'book_reservation_details');
                     row.access_no = asset.name;
                     row.book_name = asset.asset_name;
-                    row.status = asset.status;
+                    row.book_status = asset.status;
                 });
                 // Refresh the child table
                 frm.refresh_field('book_reservation_details');
 
                 // Optional: Show a message
-                frappe.msgprint(__('Fetched {0} assets', [book.length]));
+                //frappe.msgprint(__('Fetched {0} assets', [book.length]));
             });
         }
     },
-    on_submit: function(frm) {
-        if (!frm.doc.book_reservation_details || frm.doc.book_reservation_details.length === 0) {
-            // frappe.msgprint(__('Please add items before submitting the Purchase Order.'));
-              // Prevent submission
-            return;
-        } else {
-            frappe.msgprint(__('No Reservation! This Book with Access Number {{}} Is available '));
-            frappe.validated = false;
+    before_submit: function(frm) {
+        let has_available_book = false;
+
+        // Check if any book has the status 'Available'
+        frm.doc.book_reservation_details.forEach(function(row) {
+            if (row.book_status === 'Available') {
+                has_available_book = true;
+            }
+        });
+
+        // If there is any book with status 'Available', prevent submission
+        if (has_available_book) {
+            frappe.msgprint(__('You cannot submit this reservation because one or more books are available.'));
+            frappe.validated = false; // Prevent submission
         }
     }
 });
