@@ -141,7 +141,7 @@
                     </div>
                     <div class="text">Feedback</div>
                 </button>
-                <button>
+                <button @click="handleClick('terms-condition')">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                             <rect x="5.5" y="4.5" width="14" height="17" rx="2" stroke="#33363F" stroke-width="2" />

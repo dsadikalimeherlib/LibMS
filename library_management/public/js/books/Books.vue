@@ -29,6 +29,7 @@ import BookDetail from '../ebook_reader/page/book-detail/BookDetail.vue'
 import MediaDetail from '../ebook_reader/page/media-detail/MediaDetail.vue'
 import BookReader from '../ebook_reader/page/book-reader/BookReader.vue'
 import VideoPlayer from '../ebook_reader/page/video-player/VideoPlayer.vue'
+import TermsCondition from '../ebook_reader/page/terms-condition/TermsCondition.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
@@ -84,7 +85,8 @@ export default {
         case 'book-reader':
           this.currentComponent = BookReader
           break;
-
+        case 'terms-condition':
+          this.currentComponent = TermsCondition
         default:
           this.currentComponent = Home
           break;
@@ -119,7 +121,8 @@ export default {
           return BookCategories
         case 'media-categories':
           return MediaCategories
-
+        case 'terms-condition':
+          return TermsCondition
         default:
           return Home
       }

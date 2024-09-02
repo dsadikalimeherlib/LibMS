@@ -2,7 +2,19 @@
     <div class="youtube-custom-player">
         <!-- YouTube Player Container -->
         <div id="youtube-player"></div>
-
+        <div v-if="showBanner" class="video-banner">
+            <v-img :src="media.image_url !== '' ? media.image_url
+                : '/files/default-media.png'">
+            </v-img>
+            <div @click="togglePlay" class="player-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70" fill="none">
+                    <ellipse cx="35.2552" cy="35.2557" rx="34.4193" ry="34.5229" fill="#00B0AB" />
+                    <path
+                        d="M56.4188 34.3617L21.6955 16.9478C20.8975 16.5476 19.9575 17.1278 19.9575 18.0205V52.4908C19.9575 53.3834 20.8975 53.9636 21.6955 53.5634L56.4188 36.1495C57.1544 35.7806 57.1544 34.7306 56.4188 34.3617Z"
+                        fill="white" />
+                </svg>
+            </div>
+        </div>
         <!-- Custom Controls -->
         <div class="controls">
             <button @click="togglePlay">
@@ -43,14 +55,22 @@
 
 <script>
 export default {
+    props: {
+        media: {
+            type: Object,
+            required: true
+        },
+    },
     data() {
         return {
             player: null,
             isPlaying: false,
             progress: 0,
             volume: 100,
+            showBanner: true
         };
     },
+
     mounted() {
         // Load the YouTube IFrame API
         const tag = document.createElement('script');
@@ -67,7 +87,7 @@ export default {
             this.player = new YT.Player('youtube-player', {
                 height: '390',
                 width: '640',
-                videoId: '2u5jJT9xFd4', // Replace with your video ID
+                videoId: this.media.media_url, // Replace with your video ID
                 playerVars: {
                     autoplay: 0,
                     controls: 0, // Disable default controls
@@ -95,6 +115,7 @@ export default {
             }
         },
         togglePlay() {
+            this.showBanner = false
             if (this.isPlaying) {
                 this.player.pauseVideo();
             } else {

@@ -6,7 +6,32 @@
     box-shadow: inset 10px 0px 15px rgba(0, 0, 0, 0.09);
 
     .left-column {
+        .iframe-wrapper {
+            .video-banner {
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
 
+                img {
+                    object-fit: cover !important;
+                }
+
+                .player-icon {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    cursor: pointer;
+                }
+            }
+
+            .controls {
+                z-index: 1;
+            }
+        }
 
         .video-detail {
             display: flex;

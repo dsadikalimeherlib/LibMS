@@ -10,7 +10,7 @@
       <NewMedia :onLinkClick="onLinkClick" />
       <NewsAnnouncements :onLinkClick="onLinkClick" />
     </div>
-    <Footer />
+    <Footer :onLinkClick="onLinkClick" />
     <!-- <v-app> -->
 
     <!-- <button @click="handleClick('about')">About</button>

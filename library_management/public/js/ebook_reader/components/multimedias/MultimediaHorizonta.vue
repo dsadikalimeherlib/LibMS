@@ -1,5 +1,5 @@
 <template>
-    <div @click="handleClick('media-detail')" class="media-item">
+    <div @click="handleClick('video-player')" class="media-item">
         <div class="image-wrapper">
             <v-img :src="media.image ? media.image
                 : '/files/default-media.png'">

@@ -2,7 +2,7 @@
     <div class="video-player-wrapper">
         <div class="left-column">
             <div class="iframe-wrapper">
-                <Video />
+                <Video :media="media" />
             </div>
             <div class="video-detail">
                 <div class="title">{{ media.title }}</div>
@@ -56,7 +56,7 @@ const mediastore = {
         duration: '00:20:00',
         media_type: 'Video',
         image_url: '',
-        media_url: 'https://www.youtube.com/embed/yzqpoVdvdFM?autoplay=0&controls=0&disablekb=1&playsinline=1&cc_load_policy=0&cc_lang_pref=auto&widget_referrer=https%3A%2F%2Fevents.meherlibrary.org%2Fwatch%2F%3Fid%3D66b85622e91ed00a1ddca9f9&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&customControls=true&noCookie=false&enablejsapi=1&origin=https%3A%2F%2Fevents.meherlibrary.org&widgetid=1',
+        media_url: '2u5jJT9xFd4',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint  occaecat cupidatat non proident, sunt in culpa qui officia deserunt  mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo.'
 
     },
@@ -145,7 +145,8 @@ export default {
             if (this.onLinkClick) {
                 this.onLinkClick(pageName);
             }
-        }
+        },
+
     }
 }
 </script>
