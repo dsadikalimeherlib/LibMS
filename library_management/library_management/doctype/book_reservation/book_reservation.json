@@ -9,13 +9,12 @@
   "member_information_column",
   "member",
   "member_name",
-  "amended_from",
   "issued_book",
+  "amended_from",
   "book_information_column",
   "book",
   "book_title",
   "author",
-  "edition",
   "language",
   "reservation_information_section",
   "reservation_date",
@@ -105,12 +104,6 @@
    "label": "Author"
   },
   {
-   "fetch_from": "book.edition",
-   "fieldname": "edition",
-   "fieldtype": "Data",
-   "label": "Edition"
-  },
-  {
    "fieldname": "issued_book",
    "fieldtype": "Data",
    "label": "Issued Book",
@@ -132,13 +125,14 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-06-07 18:17:32.459895",
+ "modified": "2024-08-30 20:14:39.949862",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Book Reservation",
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,

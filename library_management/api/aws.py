@@ -57,10 +57,13 @@ class s3Client:
             frappe.throw(msg=str(e), title="Error")
     
     def upload_file(self, file, filename):
-        try:
-            if self.folder_name:
-                filename = f"{self.folder_name}/{filename}"
+        file_name = filename
+        if self.folder_name:
+            filename = f"{self.folder_name}/{filename}"
+        
+        self.check_file_exists(file_name, filename)
 
+        try:
             self.s3_client.upload_fileobj(
                 Fileobj=file,
                 Bucket=self.bucket_name,
@@ -75,6 +78,27 @@ class s3Client:
         except Exception as e:
             frappe.throw(msg=str(e), title="Error")
     
+    def check_file_exists(self, file_name, filename):
+        try:
+            self.s3_client.head_object(Bucket=self.bucket_name, Key=filename)
+
+            # If no exception, file exists
+            frappe.throw(f"File '<b>{file_name}</b>' already exists. Please rename the file and try again.", title="DuplicationError")
+        
+        except NoCredentialsError:
+            frappe.throw("AWS credentials not available, Please set it on Library Setting", title="NoCredentialsError")
+        
+        except frappe.ValidationError as e:
+            frappe.throw(msg=str(e), title="ClientError")
+        
+        except Exception as e:
+            error_code = int(e.response['Error']['Code'])
+            if error_code == 404:
+                return False
+            else:
+                frappe.throw(msg=f"An error occurred: <br>{str(e)}", title="Error")
+        
+
 
 @frappe.whitelist()
 def get_book_from_aws(aws_key):

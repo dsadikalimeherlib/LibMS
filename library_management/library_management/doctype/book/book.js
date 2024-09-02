@@ -64,8 +64,15 @@ frappe.ui.form.on('Book', {
         createBookCategory(frm, bookCategory);
     }
     },
-    upload_book_to_aws: (frm) => {
-        let $file_input = $('<input type="file" accept="*/*">');
+    upload_file: (frm) => {
+        let accept;
+        if (frm.doc.digital_file_type) {
+            accept = `.${frm.doc.digital_file_type}`;
+        } else {
+            accept = '.pdf,.epub';
+        }
+
+        let $file_input = $(`<input type="file" accept="${accept}">`);
         $file_input.on('change', function(event) {
             let file = event.target.files[0];
             if (file) {

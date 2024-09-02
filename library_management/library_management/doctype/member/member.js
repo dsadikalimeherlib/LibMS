@@ -90,7 +90,33 @@ frappe.ui.form.on('Member', {
     },
     verify: function(frm) {
         generateAndVerifyOTP(frm);
-    }
+    },
+    // status_check: function(frm) {
+    //     frappe.call({
+    //         method: "status_update_from_table",
+    //         args: {
+    //             member: frm.doc.name
+    //         },
+    //         callback: function(data) {
+    //             // console.log(data);
+    //         }
+    //     });
+    // },
+    // status_check: function(frm) {
+    //     frappe.call({
+    //         method: "status_update_from_table",
+    //         args: {
+    //             member: frm.doc.name
+    //         },
+    //         callback: function(response) {
+    //             if (response.message) {
+    //                 frappe.msgprint(response.message); // Show message returned from the server
+    //             }
+    //         }
+    //     });
+    // }
+    
+
 });
 
 

@@ -151,3 +151,42 @@ def auto_expire_memberships():
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), _("Auto-expire memberships error"))
         frappe.msgprint(_("An error occurred during auto-expiration: {0}").format(str(e)))
+
+@frappe.whitelist()
+def get_service_plans(doctype, txt, searchfield, start, page_len, filters):
+    # Retrieve the selected library service from the filters
+    library_service = filters.get('library_service')    
+    if not library_service:
+        return []
+
+    # Query the Library Service Plan doctype to retrieve the plans linked to the selected library service
+    service_plans = frappe.get_all(
+        'Library Service Plan Details',
+        filters={'parent': library_service},
+        fields=['library_service_plan'],
+        order_by='name',
+        as_list=1
+    )
+    return service_plans
+
+@frappe.whitelist()
+def get_service_plan_details(library_service_plan, library_service):
+    if not library_service_plan or not library_service:
+        return None
+
+    # SQL query to fetch both days and amount
+    query = """
+        SELECT lspd.days, lspd.amount
+        FROM `tabLibrary Service Plan Details` lspd
+        JOIN `tabLibrary Service` ls ON lspd.parent = ls.name
+        WHERE lspd.library_service_plan = %s AND ls.library_service = %s
+    """
+
+    # Execute the query with the provided parameters
+    result = frappe.db.sql(query, (library_service_plan, library_service), as_dict=True)
+
+    # Check if the result is not empty and return the first record
+    if result and len(result) > 0:
+        return result[0]  # Returns a dictionary with keys 'days' and 'amount'
+    else:
+        return None
