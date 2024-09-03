@@ -80,7 +80,7 @@
                     </div>
                     <div class="text">Apply Membership</div>
                 </button>
-                <button>
+                <button @click="handleClick('fees')">
                     <div class="icon">₹
                     </div>
                     <div class="text">Fees</div>

@@ -32,6 +32,7 @@ import VideoPlayer from '../ebook_reader/page/video-player/VideoPlayer.vue'
 import TermsCondition from '../ebook_reader/page/terms-condition/TermsCondition.vue'
 import Holidays from '../ebook_reader/page/holidays/Holidays.vue'
 import NewsAnnouncements from '../ebook_reader/page/news-announcements/NewsAnnouncements.vue'
+import Fees from '../ebook_reader/page/fees/Fees.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
@@ -93,6 +94,8 @@ export default {
           this.currentComponent = Holidays
         case 'news-announcement':
           this.currentComponent = NewsAnnouncements
+        case 'fees':
+          this.currentComponent = Fees
         default:
           this.currentComponent = Home
           break;
@@ -133,6 +136,8 @@ export default {
           return Holidays
         case 'news-announcement':
           return NewsAnnouncements
+        case 'fees':
+          return Fees
         default:
           return Home
       }
