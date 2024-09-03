@@ -1,0 +1,112 @@
+.holiday-page {
+    padding-top: 70px;
+
+    .holiday-container {
+        max-width: 894px;
+        margin: 0 auto;
+    }
+
+    .title-wrapper {
+        position: relative;
+        margin-bottom: 57px;
+
+        h1 {
+            color: #33363F;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-align: center;
+        }
+
+        .year-dropdown {
+            position: absolute;
+            right: 0;
+            top: 15px;
+            border-radius: 10px;
+            background: #D5DAE4;
+            display: inline-flex;
+            padding: 5px 10px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    .holiday-list-wrapper {
+        border-radius: 10px;
+        background: #FFF;
+        padding: 10px 30px;
+        flex-wrap: wrap;
+        display: flex;
+        align-items: flex-start;
+        gap: 28px;
+
+        .month-title {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            align-self: stretch;
+            text-transform: capitalize;
+            color: #4B556A;
+            border-bottom: 1px solid #EFF0F2;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+
+            span {
+                border-bottom: 1px solid #00B0AB;
+                padding: 10px 0px;
+                margin-bottom: -1px;
+            }
+        }
+
+        .month-box {
+            width: calc(33.33% - 20px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            align-self: stretch;
+
+            .holiday-list {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .holiday-item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+
+                .date-day {
+                    text-align: center;
+                }
+
+                .date {
+                    color: #33363F;
+
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+
+                .day {
+                    color: #83839B;
+
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+            }
+        }
+
+    }
+}

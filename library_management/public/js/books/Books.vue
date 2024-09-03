@@ -30,6 +30,8 @@ import MediaDetail from '../ebook_reader/page/media-detail/MediaDetail.vue'
 import BookReader from '../ebook_reader/page/book-reader/BookReader.vue'
 import VideoPlayer from '../ebook_reader/page/video-player/VideoPlayer.vue'
 import TermsCondition from '../ebook_reader/page/terms-condition/TermsCondition.vue'
+import Holidays from '../ebook_reader/page/holidays/Holidays.vue'
+import NewsAnnouncements from '../ebook_reader/page/news-announcements/NewsAnnouncements.vue'
 </script>
 <script>
 const url = new URL(window.location.href);
@@ -87,6 +89,10 @@ export default {
           break;
         case 'terms-condition':
           this.currentComponent = TermsCondition
+        case 'holidays':
+          this.currentComponent = Holidays
+        case 'news-announcement':
+          this.currentComponent = NewsAnnouncements
         default:
           this.currentComponent = Home
           break;
@@ -123,6 +129,10 @@ export default {
           return MediaCategories
         case 'terms-condition':
           return TermsCondition
+        case 'holidays':
+          return Holidays
+        case 'news-announcement':
+          return NewsAnnouncements
         default:
           return Home
       }
