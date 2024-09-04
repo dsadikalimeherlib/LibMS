@@ -25,6 +25,15 @@
 
 
 </template>
+<script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../../books/store';
+const bookCategoryStore = useBooksStore();
+onMounted(() => {
+  bookCategoryStore.get_banners();
+
+});
+</script>
 <script>
 export default {
   data() {

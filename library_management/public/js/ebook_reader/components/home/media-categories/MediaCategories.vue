@@ -1,6 +1,6 @@
 <!-- template for the slider component -->
 <template>
-  <div class="book-category-section">
+  <div v-if="mediaCategoryStore.media_categories?.length > 0" class="book-category-section">
     <div class="container">
       <div class="title-wrapper">
         <h2>Multimedia Categories</h2>
@@ -10,6 +10,7 @@
         </div>
       </div>
       <div class="category-list-wrapper">
+
         <template v-for="item in mediaCategoryStore.media_categories" :key="item.category">
           <div class="item">
             <div class="icon-wrapper" style="background-image: url(/files/round.png);"><img src="/files/image.png">
@@ -27,29 +28,12 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useBooksStore } from '../../../../books/store';
-// const bookCategoryStore = useBooksStore();
-const mediaCategoryStore = {
-  media_categories: [
-    {
-      category: 'Category 1',
-    },
-    {
-      category: 'Category 2',
-    },
-    {
-      category: 'Category 3',
-    },
-    {
-      category: 'Category 4',
-    },
-    {
-      category: 'Category 5',
-    }
-  ]
-}
-// onMounted(() => {
-//   bookCategoryStore.get_book_categories({ length: 5 });
-// });
+const mediaCategoryStore = useBooksStore();
+
+onMounted(() => {
+  mediaCategoryStore.get_mulitmedia_category({ length: 5 });
+
+});
 </script>
 
 <script>

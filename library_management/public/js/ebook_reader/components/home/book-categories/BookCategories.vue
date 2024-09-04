@@ -27,29 +27,11 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useBooksStore } from '../../../../books/store';
-// const bookCategoryStore = useBooksStore();
-const bookCategoryStore = {
-  book_categories: [
-    {
-      category: 'Category 1',
-    },
-    {
-      category: 'Category 2',
-    },
-    {
-      category: 'Category 3',
-    },
-    {
-      category: 'Category 4',
-    },
-    {
-      category: 'Category 5',
-    }
-  ]
-}
-// onMounted(() => {
-//   bookCategoryStore.get_book_categories({ length: 5 });
-// });
+const bookCategoryStore = useBooksStore();
+
+onMounted(() => {
+  bookCategoryStore.get_book_categories({ length: 5 });
+});
 </script>
 
 <script>

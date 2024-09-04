@@ -188,6 +188,83 @@ export const useBooksStore = defineStore('books', {
                     }
                 }
             });
-        }
+        },
+
+        search(search) {
+
+            frappe.call({
+                method: "library_management.api.api.search",
+                args: {
+                    keyword: search,
+                },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.books = r.message;
+                    } else {
+                        this.books = [];
+                    }
+                }
+            });
+        },
+        get_banners() {
+            frappe.call({
+                method: "library_management.api.api.get_banners",
+
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.banners = r.message;
+                    } else {
+                        this.banners = [];
+                    }
+                }
+            });
+        },
+        get_book_list() {
+            frappe.call({
+                method: "library_management.api.api.get_book_list",
+                args: {
+                    size: 5,
+                },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.books = r.message;
+                    } else {
+                        this.books = [];
+                    }
+                }
+            });
+        },
+        get_mulitmedia_category({ length = null }) {
+            frappe.call({
+                method: "library_management.api.api.get_multimedia_categories",
+                args: {},
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        if (length !== null) {
+                            this.media_categories = r.message.slice(0, length);
+                        } else {
+                            this.media_categories = r.message;
+                        }
+                    } else {
+                        this.media_categories = [];
+                    }
+                }
+            });
+        },
+        get_media({ length = null }) {
+            frappe.call({
+                method: "library_management.api.api.get_multimedia_list",
+                args: { size: length },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.media_categories = r.message;
+                    } else {
+                        this.media_categories = [];
+                    }
+                }
+            });
+        },
+
+
     }
 })
