@@ -55,6 +55,7 @@ export default {
         url = `/app/books?page=${pageName}`
       }
       window.history.pushState('', '', url);
+
       switch (pageName) {
         case 'home':
           this.currentComponent = Home
@@ -97,7 +98,11 @@ export default {
         case 'fees':
           this.currentComponent = Fees
         default:
-          this.currentComponent = Home
+          if (this.page.includes('books&category=')) {
+            this.currentComponent = Books
+          } else {
+            this.currentComponent = Home
+          }
           break;
       }
     },
@@ -139,7 +144,12 @@ export default {
         case 'fees':
           return Fees
         default:
-          return Home
+          if (this.page.includes('books&category=')) {
+            return Books
+          } else {
+            return Home
+          }
+
       }
     },
   },

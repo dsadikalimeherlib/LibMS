@@ -11,7 +11,7 @@
       </div>
       <div class="category-list-wrapper">
         <template v-for="item in bookCategoryStore.book_categories" :key="item.category">
-          <div @click="handleClick('books')" class="item">
+          <div @click="handleClick(`books&category=${item.category}`)" class="item">
             <div class="icon-wrapper" style="background-image: url(/files/round.png);"><img src="/files/image.png">
             </div>
             <div class="title">{{ item.category }}</div>

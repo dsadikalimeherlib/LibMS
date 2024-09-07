@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <BookSort />
-                    <BookFilter />
+                    <BookFilter :setFilters="setFilters" />
                 </div>
             </div>
 
@@ -43,53 +43,20 @@ import BooksList from '../../components/books/BooksList.vue';
 import BookSort from '../../components/books/book-sort/BookSort.vue';
 import BookFilter from '../../components/books/book-filter/BookFilter.vue';
 
-// import { onMounted } from 'vue';
-// import { useBooksStore } from '../../../../books/store';
-// const bookstore = useBooksStore();
-const bookstore = {
-    books: [
-        {
-            book_title: 'Book1',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book2',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book3',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book4',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book5',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book6',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book7',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book8',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book9',
-            author: 'Author'
-        },
-        {
-            book_title: 'Book10',
-            author: 'Author'
-        }
-    ]
-}
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../books/store';
+const bookstore = useBooksStore();
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+const category = params.get('category');
+onMounted(() => {
+
+    bookstore.get_book_list({ length: 18, author: '', category: category !== null ? category : '' });
+});
+const setFilters = ({ length = 18, author = '', category = '' }) => {
+    bookstore.get_book_list({ length, author, category });
+};
+
 </script>
 <script>
 let showGridValue = localStorage.getItem('showGrid')

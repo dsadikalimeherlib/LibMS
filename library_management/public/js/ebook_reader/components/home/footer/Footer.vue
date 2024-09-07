@@ -32,7 +32,15 @@
 
 
 </template>
+<script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../../books/store';
+const companyDetailStore = useBooksStore();
 
+onMounted(() => {
+  companyDetailStore.get_company_detail();
+});
+</script>
 <script>
 export default {
   props: {

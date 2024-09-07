@@ -40,25 +40,6 @@ export const useBooksStore = defineStore('books', {
             });
         },
 
-        get_media({ length = null }) {
-            frappe.call({
-                method: "library_management.api.api.get_books",
-                args: {},
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        if (length !== null) {
-                            this.media = r.message.slice(0, length);
-                        } else {
-                            this.media = r.message;
-                        }
-
-
-                    } else {
-                        this.media = [];
-                    }
-                }
-            });
-        },
 
         get_book_categories({ length = null }) {
             frappe.call({
@@ -206,26 +187,14 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_banners() {
-            frappe.call({
-                method: "library_management.api.api.get_banners",
 
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.banners = r.message;
-                    } else {
-                        this.banners = [];
-                    }
-                }
-            });
-        },
         get_book_list({ length = 18, author = '', category = '' }) {
             frappe.call({
                 method: "library_management.api.api.get_book_list",
                 args: {
                     size: length,
-                    category: category,
-                    author: author,
+                    category: author,
+                    author: category,
 
                     //==not working
                     // pageOffset: 1,
@@ -245,50 +214,7 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_mulitmedia_category({ length = null }) {
-            frappe.call({
-                method: "library_management.api.api.get_multimedia_categories",
-                args: {},
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        if (length !== null) {
-                            this.media_categories = r.message.slice(0, length);
-                        } else {
-                            this.media_categories = r.message;
-                        }
-                    } else {
-                        this.media_categories = [];
-                    }
-                }
-            });
-        },
-        get_media({ length = null }) {
-            frappe.call({
-                method: "library_management.api.api.get_multimedia_list",
-                args: { size: length },
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.media_categories = r.message;
-                    } else {
-                        this.media_categories = [];
-                    }
-                }
-            });
-        },
 
-        get_company_detail() {
-            frappe.call({
-                method: "library_management.api.api.get_company_contact_details",
-                args: { size: length },
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.company_detail = r.message;
-                    } else {
-                        this.company_detail = [];
-                    }
-                }
-            });
-        },
 
         // get_languages() {
         //     frappe.call({

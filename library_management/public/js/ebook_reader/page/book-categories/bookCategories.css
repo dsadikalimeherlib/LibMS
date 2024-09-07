@@ -21,6 +21,7 @@
             padding: 16px 20px 20px;
             text-align: center;
             width: calc(20% - 32px);
+            cursor: pointer;
 
             .icon-wrapper {
                 width: 88px;

@@ -10,7 +10,7 @@
                     }}</div>
                 <div class="meta"><span class="label">Language:</span> {{ book.language }}</div>
                 <div class="meta"><span class="label">Sect:</span> Shia</div>
-                <div class="meta"><span class="label">Book type:</span> {{ book.category }}</div>
+                <div class="meta"><span class="label">Category:</span> {{ book.category }}</div>
                 <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
             </div>
         </div>

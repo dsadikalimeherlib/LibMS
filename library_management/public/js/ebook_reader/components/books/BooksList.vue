@@ -66,7 +66,7 @@
                     </th>
                     <th>
                         <div class="sort-title">
-                            Book type<div class="sort-icon-wrapper">
+                            Category<div class="sort-icon-wrapper">
                                 <div class="asc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="13"
                                         viewBox="0 0 10 13" fill="none">
                                         <path
@@ -108,18 +108,18 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-for="item in books" :key="item.book_title">
+                <template v-for="item in books" :key="item.title">
                     <tr @click="handleClick('book-detail')">
                         <td class="image-wrapper"><img :src="item.image ? item.image
                             : 'https://placehold.co/150?text=Item'" />
                         </td>
                         <td>
-                            <h2>{{ item.book_title }}</h2>
+                            <h2>{{ item.title }}</h2>
                         </td>
                         <td>{{ item.author
                             }}</td>
                         <td>Gujarati</td>
-                        <td>E-Book</td>
+                        <td>{{ item.category }}</td>
                         <td>Shia</td>
                         <td><span class="availability yes">Yes</span></td>
                     </tr>
