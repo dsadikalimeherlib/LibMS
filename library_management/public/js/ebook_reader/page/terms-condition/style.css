@@ -2,9 +2,8 @@
     padding: 50px 0;
 
     .title-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        text-align: center;
+        margin-bottom: 20px;
 
         h1 {
             color: #33363F;
@@ -68,6 +67,8 @@
         padding: 10px;
 
         color: #33363F;
+        background-color: #fff;
+        border-radius: 10px;
 
         font-size: 14px;
         font-style: normal;

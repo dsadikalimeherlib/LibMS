@@ -41,75 +41,17 @@ import MultimediaGrid from '../../components/multimedias/MultimediaGrid.vue';
 import MultimediaList from '../../components/multimedias/MultimediaList.vue';
 import MultimediaSort from '../../components/multimedias/multimedia-sort/MultimediaSort.vue';
 import MultimediaFilter from '../../components/multimedias/multimedia-filter/MultimediaFilter.vue';
+import { useBooksStore } from '../../../books/store';
+import { onMounted } from 'vue';
+const mediastore = useBooksStore();
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+const category = params.get('category');
+onMounted(() => {
 
-// const mediastore = useBooksStore();
-const mediastore = {
-    medias: [
-        {
-            title: 'Media 1',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Video',
-        },
-        {
-            title: 'Media 2',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Audio',
-        },
-        {
-            title: 'Media 3',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Video',
-        },
-        {
-            title: 'Media 4',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Audio',
-        },
-        {
-            title: 'Media 5',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Video',
-        },
-        {
-            title: 'Media 6',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Audio',
-        },
-        {
-            title: 'Media 7',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Video',
-        },
-        {
-            title: 'Media 8',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Audio',
-        },
-        {
-            title: 'Media 9',
-            date: '19-Sep-2022 4:07 PM',
-            category: 'કરબલાના બહાદુરો',
-            duration: '00:20:00',
-            media_type: 'Video',
-        }
-    ]
-}
+    mediastore.get_media({ length: 18, category: category !== null ? category : '' });
+});
+
 </script>
 <script>
 let showGridValue = localStorage.getItem('showGrid')

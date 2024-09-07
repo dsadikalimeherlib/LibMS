@@ -100,7 +100,14 @@ export default {
         default:
           if (this.page.includes('books&category=')) {
             this.currentComponent = Books
-          } else {
+          }
+          else if (this.page.includes('book-detail&id=')) {
+            this.currentComponent = BookDetail
+          }
+          else if (this.page.includes('multimedia&category=')) {
+            this.currentComponent = Multimedias
+          }
+          else {
             this.currentComponent = Home
           }
           break;
@@ -146,7 +153,14 @@ export default {
         default:
           if (this.page.includes('books&category=')) {
             return Books
-          } else {
+          }
+          else if (this.page.includes('book-detail&id=')) {
+            return BookDetail
+          }
+          else if (this.page.includes('multimedia&category=')) {
+            return Multimedias
+          }
+          else {
             return Home
           }
 

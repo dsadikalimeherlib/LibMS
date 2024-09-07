@@ -40,25 +40,6 @@ export const useBooksStore = defineStore('books', {
             });
         },
 
-        get_media({ length = null }) {
-            frappe.call({
-                method: "library_management.api.api.get_books",
-                args: {},
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        if (length !== null) {
-                            this.media = r.message.slice(0, length);
-                        } else {
-                            this.media = r.message;
-                        }
-
-
-                    } else {
-                        this.media = [];
-                    }
-                }
-            });
-        },
 
         get_book_categories({ length = null }) {
             frappe.call({
@@ -262,15 +243,15 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_media({ length = null }) {
+        get_media({ length = null, category = null }) {
             frappe.call({
                 method: "library_management.api.api.get_multimedia_list",
-                args: { size: length },
+                args: { size: length, category: category },
                 callback: (r) => {
                     if (r.message.length > 0) {
-                        this.media_categories = r.message;
+                        this.medias = r.message;
                     } else {
-                        this.media_categories = [];
+                        this.medias = [];
                     }
                 }
             });
@@ -289,6 +270,24 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
+        get_book_detail({ id }) {
+
+            frappe.call({
+                method: "library_management.api.api.get_book_detail",
+                args: {
+                    book_id: id,
+
+
+                },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.book = r.message;
+                    } else {
+                        this.book = [];
+                    }
+                }
+            });
+        },
 
         // get_languages() {
         //     frappe.call({
@@ -303,6 +302,20 @@ export const useBooksStore = defineStore('books', {
         //         }
         //     });
         // }
+
+        get_terms_and_conditions() {
+            frappe.call({
+                method: "library_management.api.api.get_terms_and_conditions",
+                callback: (r) => {
+
+
+                    this.terms_condition = r.message;
+
+                }
+            });
+        }
+
+
 
 
     }

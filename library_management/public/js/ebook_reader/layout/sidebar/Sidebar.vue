@@ -53,7 +53,7 @@
                     </div>
                     <div class="text">Multimedia</div>
                 </button>
-                <button>
+                <button @click="handleClick('media-categories')">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                             <path

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="book-detail-wrapper">
+    <!-- <div class="book-detail-wrapper">
         <div class="inner-container">
             <div class="book-image-title-wrapper">
                 <div class="image-wrapper"><v-img :src="book.image ? book.image
@@ -55,63 +55,75 @@
                                 <div class="book-access-item">
                                     <div class="access-number">{{ item.id }}</div>
                                     <div class="status" :class="{ active: item.avaiblity }">{{
-                                        item.avaiblity?'Available':'Not available' }}
+                                        item.avaiblity ? 'Available' : 'Not available' }}
                                     </div>
                                 </div>
                             </template>
-                        </div>
-                    </div>
-                </div>
+</div>
+</div>
+</div>
 
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+</div> -->
 </template>
 <script setup>
 import BookField from '../../components/book-field/BookField.vue';
 
 
 
-// import { onMounted } from 'vue';
-// import { useBooksStore } from '../../../../books/store';
-// const bookstore = useBooksStore();
-const bookstore = {
-    book:
-    // {
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../books/store';
+const bookstore = useBooksStore();
+// const bookstore = {
+//     book:
+//     // {
 
-    //     book_title: 'મુન્તખબ મીઝાનુલ હિકમા',
-    //     author: 'Author'
-    // }
-    {
-        id: "",
-        book_title: 'મુન્તખબ મીઝાનુલ હિકમા',
-        imageUrl: '',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint  occaecat cupidatat non proident, sunt in culpa qui officia deserunt  mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo.',
-        subjectCode: '297.13',
-        subject: 'Tafseer',
-        documentType: 'Tafseer',
-        translator: 'Tafseer',
-        volume: '2',
-        pages: '100',
-        author: 'author',
-        language: 'Gujarati',
-        publication: 'Meher Library & Seminar',
-        publicationYear: '2020',
-        ISBN: '0000',
-        category: 'Tafseer',
-        accessNumber:
-            [{
-                id: '0000',
-                avaiblity: true
-            }, {
-                id: '0001',
-                avaiblity: false
-            }]
+//     //     book_title: 'મુન્તખબ મીઝાનુલ હિકમા',
+//     //     author: 'Author'
+//     // }
+//     {
+//         id: "",
+//         book_title: 'મુન્તખબ મીઝાનુલ હિકમા',
+//         imageUrl: '',
+//         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint  occaecat cupidatat non proident, sunt in culpa qui officia deserunt  mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo.',
+//         subjectCode: '297.13',
+//         subject: 'Tafseer',
+//         documentType: 'Tafseer',
+//         translator: 'Tafseer',
+//         volume: '2',
+//         pages: '100',
+//         author: 'author',
+//         language: 'Gujarati',
+//         publication: 'Meher Library & Seminar',
+//         publicationYear: '2020',
+//         ISBN: '0000',
+//         category: 'Tafseer',
+//         accessNumber:
+//             [{
+//                 id: '0000',
+//                 avaiblity: true
+//             }, {
+//                 id: '0001',
+//                 avaiblity: false
+//             }]
 
-    }
+//     }
 
-}
-const book = bookstore.book
+// }
+
+
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+const id = params.get('id');
+onMounted(() => {
+    console.log('id', id);
+
+    bookstore.get_book_detail({ id: id });
+    // const book = bookstore.book
+    // console.log('book', book);
+
+});
 </script>
 <script>
 export default {
