@@ -55,7 +55,7 @@ def get_books_by_keyword(keyword):
         )
         .orderby(
             bk.book_title,
-            bt.book_category,
+            bk.book_category,
             bk.digital_file_type,
             bk.author
         )
@@ -86,7 +86,7 @@ def get_book_tags(tag):
         )
         .orderby(
             bk.book_title,
-            bt.book_category,
+            bk.book_category,
             bk.digital_file_type,
             bk.author
         )
@@ -197,8 +197,8 @@ def get_multimedia_list(
         )
         .orderby(
             mm.multimedia_title,
-            md.duration,
-            md.multimedia_category
+            mm.duration,
+            mm.multimedia_category
         )
     )
     if publication_year:

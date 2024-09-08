@@ -12,13 +12,13 @@
                         fill="white" />
                 </svg>
             </div>
-            <div class="duration">{{ media.duration }}</div>
+            <!-- <div class="duration">{{ media.duration }}</div> -->
         </div>
         <div class="book-detail">
             <div class="title">{{ media.title }}</div>
             <div class="meta-wrapper">
-                <div class="meta"><span class="label">Date:</span> {{ media.date
-                    }}</div>
+                <!-- <div class="meta"><span class="label">Date:</span> {{ media.date
+                    }}</div> -->
                 <div class="meta"><span class="label">Category:</span> {{ media.category
                     }}</div>
                 <div class="meta"><span class="label">Type:</span> {{ media.media_type

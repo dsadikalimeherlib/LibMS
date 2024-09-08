@@ -44,7 +44,7 @@ import { onMounted } from 'vue';
 import { useBooksStore } from '../../../books/store';
 const bookCategoryStore = useBooksStore();
 onMounted(() => {
-    bookCategoryStore.search('test');
+    bookCategoryStore.search('Hajjaj ibn Yusuf ath-Thaqafi, Historical Stories For Children 1');
 
 });
 </script>
