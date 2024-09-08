@@ -313,7 +313,23 @@ export const useBooksStore = defineStore('books', {
 
                 }
             });
+        },
+
+        get_holidays({ from_date = '', to_date = '' }) {
+            frappe.call({
+                method: "library_management.api.api.get_holidays",
+                args: { from_date: from_date, to_date: to_date },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.holidays = r.message;
+                    } else {
+                        this.holidays = [];
+                    }
+                }
+
+            });
         }
+
 
 
 

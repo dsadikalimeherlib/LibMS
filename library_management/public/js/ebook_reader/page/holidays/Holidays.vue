@@ -4,11 +4,13 @@
             <div class="title-wrapper">
                 <h1>Holiday List</h1>
                 <div class="year-dropdown">
-                    <select>
-                        <option>2024</option>
-                        <option>2023</option>
+                    <select @change="setYear">
+                        <template v-for="years in years" :key="years">
+                            <option :value="years">{{ years }}</option>
+                        </template>
                     </select>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
+                    <svg class="drpodown-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
+                        viewBox="0 0 12 7" fill="none">
                         <path
                             d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
                             stroke="#545353" stroke-width="2.31353" stroke-linecap="round" stroke-linejoin="round" />
@@ -37,6 +39,31 @@
     </div>
 </template>
 <script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../books/store';
+
+const bookStore = useBooksStore();
+function getYearStartAndEndDates(year) {
+    // Start date: January 1st of the given year at 00:00:00
+    const startDate = new Date(year, 0, 1); // Month is 0-based, so 0 represents January
+
+    // End date: December 31st of the given year at 23:59:00
+    const endDate = new Date(year, 11, 31, 23, 59, 0); // Month is 0-based, so 11 represents December
+
+    return {
+        startDate,
+        endDate
+    };
+}
+const { startDate, endDate } = getYearStartAndEndDates(2024);
+onMounted(() => {
+
+    bookStore.get_holidays({ from_date: startDate, to_date: endDate });
+});
+const setYear = (event) => {
+    const { startDate, endDate } = getYearStartAndEndDates(event.target.value);
+    bookStore.get_holidays({ from_date: startDate, to_date: endDate });
+};
 const holidays =
     [
         {
@@ -91,6 +118,7 @@ const holidays =
             ]
         }
     ]
+const years = ['2024', '2023']
 </script>
 <style>
 @import './holiday.css'

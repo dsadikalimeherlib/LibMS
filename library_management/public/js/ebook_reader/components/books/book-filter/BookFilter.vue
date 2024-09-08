@@ -189,7 +189,7 @@
 </template>
 <script setup>
 import BookFilterItem from './BookFilterItem.vue';
-import { useBooksStore } from '../../../../books/bookStore';
+import { useBooksStore } from '../../../../books/store';
 import { onMounted } from 'vue';
 const bookStore = useBooksStore();
 // onMounted(() => {

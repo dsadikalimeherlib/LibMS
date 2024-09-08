@@ -26,10 +26,23 @@
             border-radius: 10px;
             background: #D5DAE4;
             display: inline-flex;
-            padding: 5px 10px;
+
             justify-content: center;
             align-items: center;
             gap: 10px;
+
+            select {
+                padding: 5px 40px 5px 10px;
+                cursor: pointer;
+                position: relative;
+                z-index: 1;
+            }
+
+            .drpodown-arrow {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+            }
         }
     }
 
