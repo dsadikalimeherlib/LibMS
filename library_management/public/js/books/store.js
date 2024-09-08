@@ -200,13 +200,14 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_book_list({ length = 18, author = '', category = '' }) {
+        get_book_list({ length = 18, author = '', category = '', pageOffset = 0, hasMoreBooks, loadMore = false }) {
             frappe.call({
                 method: "library_management.api.api.get_book_list",
                 args: {
                     size: length,
-                    category: category,
-                    author: author,
+                    category,
+                    author,
+                    pageOffset
 
                     //==not working
                     // pageOffset: 1,
@@ -218,10 +219,22 @@ export const useBooksStore = defineStore('books', {
 
                 },
                 callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.books = r.message;
+                    if (loadMore) {
+                        if (r.message.length < length) {
+                            hasMoreBooks.value = false; // No more books to load
+                        }
+                        if (r.message.length > 0) {
+                            this.books = [...this.books, ...r.message]; // Append new data to existing books
+                        }
+                        else {
+                            this.books = [];
+                        }
                     } else {
-                        this.books = [];
+                        if (r.message.length > 0) {
+                            this.books = r.message;
+                        } else {
+                            this.books = [];
+                        }
                     }
                 }
             });

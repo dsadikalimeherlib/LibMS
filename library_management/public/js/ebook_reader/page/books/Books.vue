@@ -43,20 +43,21 @@ import BooksList from '../../components/books/BooksList.vue';
 import BookSort from '../../components/books/book-sort/BookSort.vue';
 import BookFilter from '../../components/books/book-filter/BookFilter.vue';
 
-import { onBeforeUnmount, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useBooksStore } from '../../../books/store';
 const bookstore = useBooksStore();
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const category = params.get('category');
+const pageOffset = ref(0);
+const length = 18
+const hasMoreBooks = ref(true);
+
 onMounted(() => {
-    // window.addEventListener('scroll', handleScroll); // Attach scroll listener
-    bookstore.get_book_list({ length: 18, author: '', category: category !== null ? category : '' });
+
+    bookstore.get_book_list({ length, author: '', category: category !== null ? category : '' });
 });
-onBeforeUnmount(() => {
-    // window.removeEventListener('scroll', handleScroll); // Clean up the scroll listener
-});
-const setFilters = ({ length = 18, author = '', category = '' }) => {
+const setFilters = ({ length, author = '', category = '' }) => {
     bookstore.get_book_list({ length, author, category });
 };
 const handleScroll = (event) => {
@@ -69,8 +70,11 @@ const handleScroll = (event) => {
 };
 
 const loadMoreData = () => {
-    // Logic to load more books
-    bookstore.get_book_list({ length: bookstore.books.length + 6, author: '', category: category !== null ? category : '' });
+    if (hasMoreBooks.value) {
+        pageOffset.value += 1
+        // Logic to load more books
+        bookstore.get_book_list({ length, author: '', category: category !== null ? category : '', pageOffset: pageOffset.value, hasMoreBooks, loadMore: true });
+    }
 };
 
 </script>
