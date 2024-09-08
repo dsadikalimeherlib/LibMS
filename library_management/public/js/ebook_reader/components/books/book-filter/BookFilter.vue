@@ -32,9 +32,11 @@
                     <div class="item">
                         <div class="label">Book title</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+                            <select v-model="book_title" @change="setBookTitle">
+                                <option value="">Select Book title</option>
+                                <template v-for="book_title in book_titles" :key="book_title">
+                                    <option :value="book_title">{{ book_title }}</option>
+                                </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -87,6 +89,7 @@
                         <div class="label">Subject</div>
                         <div class="field">
                             <select v-model="subject" @change="setSubject">
+                                <option value="">Select Subject</option>
                                 <option>Tafseer</option>
                                 <option>Tafseer1</option>
                             </select>
@@ -122,10 +125,10 @@
                     <div class="item">
                         <div class="label">Publication Year</div>
                         <div class="field">
-                            <select v-model="publicationYear" @change="setPublicationYear">
+                            <select v-model="publication_year" @change="setpublication_year">
                                 <option value="">Select Publication Year</option>
-                                <template v-for="publicationYear in publicationYears" :key="publicationYear">
-                                    <option :value="publicationYear">{{ publicationYear }}</option>
+                                <template v-for="publication_year in publication_years" :key="publication_year">
+                                    <option :value="publication_year">{{ publication_year }}</option>
                                 </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
@@ -199,7 +202,7 @@ const bookStore = useBooksStore();
 // console.log('bookStore', bookStore);
 
 const languageList = [{
-    code: 'gj',
+    code: 'gu',
     language: 'Gujarati'
 },
 {
@@ -215,10 +218,12 @@ const languages = languageList.map(item => ({
     label: item.language,
     value: item.code
 }));
+const book_titles = ['Book1', 'Book3', 'Book5', 'Book6', 'Breaking The Mould']
 const authors = ['Test Author', 'Aasif Sheikh', 'Mohammad Faris']
 const publications = ['Test Publication', 'Meher Library and Jafri Seminary', 'Aazaman Firang Wa Irtabatati Islami', 'Lion Publications']
-const publicationYears = ['2001', '2002', '2003', '2004', '2005',]
+const publication_years = ['2001', '2002', '2003', '2004', '2005',]
 const categories = ['Normal Book', 'E-Book', 'Tafsheer']
+
 </script>
 
 <script>
@@ -231,13 +236,13 @@ export default {
     },
     data() {
         return {
-            title: '',
+            book_title: '',
             length: 18,
             author: '',
             category: '',
             language: '',
             publication: '',
-            publicationYear: '',
+            publication_year: '',
             subject: '',
             showSortPopup: false,
             bookType: '',
@@ -246,7 +251,7 @@ export default {
     },
     methods: {
         checkfilterApplied() {
-            if (this.title == '' && this.author == '' && this.category == '' && this.language == '' && this.publication == '' && this.publicationYear == '' && this.subject == '' && this.bookType == '') {
+            if (this.book_title == '' && this.author == '' && this.category == '' && this.language == '' && this.publication == '' && this.publication_year == '' && this.subject == '' && this.bookType == '') {
                 this.filterApplied = false
             } else {
                 this.filterApplied = true
@@ -257,13 +262,13 @@ export default {
         },
         handleFilterChange() {
             if (this.setFilters) {
-                this.setFilters({ length: this.length, author: this.author, category: this.category })
+                this.setFilters({ length: this.length, author: this.author, category: this.category, publication_year: this.publication_year, publication: this.publication, book_title: this.book_title, language: this.language, subject: this.subject })
                 this.setShowSortPopup(false)
                 this.checkfilterApplied()
             }
         },
-        setTitle(event) {
-            this.title = event.target.value
+        setBookTitle(event) {
+            this.book_title = event.target.value
         },
         setSubject(event) {
             this.subject = event.target.value
@@ -280,8 +285,8 @@ export default {
         setPublication(event) {
             this.publication = event.target.value
         },
-        setPublicationYear(event) {
-            this.publicationYear = event.target.value
+        setpublication_year(event) {
+            this.publication_year = event.target.value
         },
         setLanguage(event) {
             this.language = event.target.value
@@ -291,12 +296,12 @@ export default {
         },
 
         clearFilters() {
-            this.title = ""
+            this.book_title = ""
             this.subject = ""
             this.author = ""
             this.category = ""
             this.publication = ""
-            this.publicationYear = ""
+            this.publication_year = ""
             this.language = ""
             this.bookType = ""
             this.handleFilterChange({ length: 18, author: '', category: '' })

@@ -200,22 +200,20 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_book_list({ length = 18, author = '', category = '', pageOffset = 0, hasMoreBooks, loadMore = false }) {
+        get_book_list({ book_title = '', length = 18, author = '', category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort, language, subject, publication }) {
             frappe.call({
                 method: "library_management.api.api.get_book_list",
                 args: {
-                    size: length,
+                    book_title,
                     category,
                     author,
-                    pageOffset
-
-                    //==not working
-                    // pageOffset: 1,
-                    // sort: 'desc',
-
-                    // bookTitle: 'Takfeeri Anasir ki Fitna Angeziyan - Urdu',
-                    // publication: 'Test Publication'
-                    // publicationYear: '2010',
+                    size: length,
+                    subject,
+                    publication_year,
+                    publication,
+                    language,
+                    page_offset,
+                    sort
 
                 },
                 callback: (r) => {
