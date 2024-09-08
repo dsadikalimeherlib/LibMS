@@ -1,6 +1,6 @@
 <template>
     <div class="icons-wrapper sort">
-        <span class="selected-circle" />
+        <span v-if="filterApplied" class="selected-circle" />
         <div @click="setShowSortPopup(!showSortPopup)" class="title-icon-wrapper">
             Filters
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -240,10 +240,18 @@ export default {
             publicationYear: '',
             subject: '',
             showSortPopup: false,
-            bookType: ''
+            bookType: '',
+            filterApplied: false
         };
     },
     methods: {
+        checkfilterApplied() {
+            if (this.title == '' && this.author == '' && this.category == '' && this.language == '' && this.publication == '' && this.publicationYear == '' && this.subject == '' && this.bookType == '') {
+                this.filterApplied = false
+            } else {
+                this.filterApplied = true
+            }
+        },
         setShowSortPopup(value) {
             this.showSortPopup = value
         },
@@ -251,6 +259,7 @@ export default {
             if (this.setFilters) {
                 this.setFilters({ length: this.length, author: this.author, category: this.category })
                 this.setShowSortPopup(false)
+                this.checkfilterApplied()
             }
         },
         setTitle(event) {
@@ -292,6 +301,7 @@ export default {
             this.bookType = ""
             this.handleFilterChange({ length: 18, author: '', category: '' })
             this.setShowSortPopup(false)
+            this.filterApplied = false
         }
 
     },

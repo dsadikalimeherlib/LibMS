@@ -5,7 +5,7 @@
       <div class="slider-container">
         <div class="slider">
           <!-- Display each banner -->
-          <div v-for="(banner, index) in banners" :key="index" class="slide"
+          <div v-for="(banner, index) in bookCategoryStore.banners" :key="index" class="slide"
             :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
             <img :src="banner.image" :alt="banner.title" />
           </div>
@@ -16,8 +16,8 @@
 
       </div>
       <div class="pagination-dots">
-        <span v-for="(banner, index) in banners" :key="index" class="dot" :class="{ active: index === currentIndex }"
-          @click="goToSlide(index)"></span>
+        <span v-for="(banner, index) in bookCategoryStore.banners" :key="index" class="dot"
+          :class="{ active: index === currentIndex }" @click="goToSlide(index)"></span>
       </div>
     </div>
   </div>
@@ -26,54 +26,53 @@
 
 </template>
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useBooksStore } from '../../../../books/store';
-const bookCategoryStore = useBooksStore();
-onMounted(() => {
-  bookCategoryStore.get_banners();
 
+const bookCategoryStore = useBooksStore(); // Use the store
+const currentIndex = ref(0);
+let autoSlideInterval = null;
+
+// Fetch the banners when the component mounts
+onMounted(() => {
+  bookCategoryStore.get_banners(); // Call the API to fetch banners
+  startAutoSlide(); // Start auto-sliding when banners are loaded
 });
-</script>
-<script>
-export default {
-  data() {
-    return {
-      banners: [
-        { image: "/files/banner.png", title: "Banner 1" },
-        { image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/5689/grooves.jpg", title: "Banner 2" },
-        { image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/5689/sunset.jpg", title: "Banner 3" }
-      ],
-      currentIndex: 0,
-      autoSlideInterval: null // To hold the interval reference for auto-sliding
-    };
-  },
-  methods: {
-    nextSlide() {
-      this.currentIndex = (this.currentIndex + 1) % this.banners.length; // Loop back to the start
-    },
-    prevSlide() {
-      this.currentIndex =
-        (this.currentIndex - 1 + this.banners.length) % this.banners.length; // Loop back to the end
-    },
-    goToSlide(index) {
-      this.currentIndex = index;
-      this.resetAutoSlide(); // Reset the auto-slide when user manually selects a slide
-    },
-    startAutoSlide() {
-      this.autoSlideInterval = setInterval(this.nextSlide, 3000); // Auto-slide every 3 seconds
-    },
-    resetAutoSlide() {
-      clearInterval(this.autoSlideInterval);
-      this.startAutoSlide();
-    }
-  },
-  mounted() {
-    this.startAutoSlide(); // Start auto-sliding when the component is mounted
-  },
-  beforeDestroy() {
-    clearInterval(this.autoSlideInterval); // Clean up the interval when the component is destroyed
-  }
-};
+
+// Auto-slide function to automatically change slides
+function startAutoSlide() {
+  autoSlideInterval = setInterval(nextSlide, 3000); // Auto-slide every 3 seconds
+}
+
+// Clear and reset the auto-slide interval
+function resetAutoSlide() {
+  clearInterval(autoSlideInterval);
+  startAutoSlide();
+}
+
+// Navigate to the next slide
+function nextSlide() {
+  currentIndex.value =
+    (currentIndex.value + 1) % bookCategoryStore.banners.length;
+}
+
+// Navigate to the previous slide
+function prevSlide() {
+  currentIndex.value =
+    (currentIndex.value - 1 + bookCategoryStore.banners.length) %
+    bookCategoryStore.banners.length;
+}
+
+// Navigate to a specific slide
+function goToSlide(index) {
+  currentIndex.value = index;
+  resetAutoSlide();
+}
+
+// Clear the interval when the component is destroyed
+onBeforeUnmount(() => {
+  clearInterval(autoSlideInterval);
+});
 </script>
 
 <style scoped></style>

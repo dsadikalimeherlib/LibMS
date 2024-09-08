@@ -13,7 +13,9 @@
 
         <template v-for="item in mediaCategoryStore.media_categories" :key="item.category">
           <div class="item">
-            <div class="icon-wrapper" style="background-image: url(/files/round.png);"><img src="/files/image.png">
+            <div class="icon-wrapper" style="background-image: url(/files/round.png);"><img :src="item.image ? item.image
+              : 'https://placehold.co/150?text=Item'" />
+
             </div>
             <div class="title">{{ item.category }}</div>
           </div>

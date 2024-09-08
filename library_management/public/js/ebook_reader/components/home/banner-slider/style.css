@@ -1,6 +1,8 @@
 .banner-section {
-    margin-bottom: 87px;
+    padding-bottom: 30px;
     position: relative;
+    overflow: hidden;
+    margin-bottom: 57px;
 
     .slider-container {
         position: relative;
@@ -15,6 +17,7 @@
         position: relative;
 
         background: none;
+        margin: 0 -15px;
 
         &:before {
             display: none
@@ -26,6 +29,7 @@
         box-sizing: border-box;
         position: relative;
         transition: 1s ease-in-out all;
+        padding: 0 15px;
 
         img {
             border-radius: 20px;
@@ -69,7 +73,7 @@
 
     .pagination-dots {
         position: absolute;
-        bottom: -30px;
+        bottom: 8px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
