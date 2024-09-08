@@ -12,6 +12,15 @@
         width: 100%;
 
         tr {
+            cursor: pointer;
+
+            &:hover {
+                td {
+                    background-color: #eaeaea !important;
+                }
+
+            }
+
             td {
 
                 &:first-child {
@@ -32,7 +41,7 @@
             border-radius: 0px 10px 10px 0px;
             background: #FFF;
             box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.10);
-
+            cursor: default;
 
 
             th {

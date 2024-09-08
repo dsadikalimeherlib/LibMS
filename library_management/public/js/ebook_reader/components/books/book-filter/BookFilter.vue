@@ -1,6 +1,6 @@
 <template>
     <div class="icons-wrapper sort">
-        <span class="selected-circle" />
+        <span v-if="filterApplied" class="selected-circle" />
         <div @click="setShowSortPopup(!showSortPopup)" class="title-icon-wrapper">
             Filters
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -19,7 +19,7 @@
             <div class="title-wrapper">
                 <div class="title">Filters</div>
                 <div class="right">
-                    <div class="clear">Clear All</div>
+                    <div @click="clearFilters" class="clear">Clear All</div>
                     <div @click="setShowSortPopup(false)" class="close-icon"><svg xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M18 6L6 18" stroke="#222222" stroke-linecap="round" stroke-linejoin="round" />
@@ -48,9 +48,11 @@
                     <div class="item">
                         <div class="label">Author</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+                            <select v-model="author" @change="setAuthor">
+                                <option value="">Select Author</option>
+                                <template v-for="author in authors" :key="author">
+                                    <option :value="author">{{ author }}</option>
+                                </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -64,9 +66,13 @@
                     <div class="item">
                         <div class="label">Language</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+
+                            <select v-model="language" @change="setLanguage">
+                                <option value="">Select Language</option>
+                                <template v-for="language in languages" :key="language.label">
+                                    <option :value="language.value">{{ language.label }}</option>
+                                </template>
+
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -80,7 +86,7 @@
                     <div class="item">
                         <div class="label">Subject</div>
                         <div class="field">
-                            <select>
+                            <select v-model="subject" @change="setSubject">
                                 <option>Tafseer</option>
                                 <option>Tafseer1</option>
                             </select>
@@ -98,9 +104,11 @@
                     <div class="item">
                         <div class="label">Publication</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+                            <select v-model="publication" @change="setPublication">
+                                <option value="">Select Publication</option>
+                                <template v-for="publication in publications" :key="publication">
+                                    <option :value="publication">{{ publication }}</option>
+                                </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -114,9 +122,11 @@
                     <div class="item">
                         <div class="label">Publication Year</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+                            <select v-model="publicationYear" @change="setPublicationYear">
+                                <option value="">Select Publication Year</option>
+                                <template v-for="publicationYear in publicationYears" :key="publicationYear">
+                                    <option :value="publicationYear">{{ publicationYear }}</option>
+                                </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -130,9 +140,12 @@
                     <div class="item">
                         <div class="label">Category</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+
+                            <select v-model="category" @change="setCategory">
+                                <option value="">Select Category</option>
+                                <template v-for="category in categories" :key="category">
+                                    <option :value="category">{{ category }}</option>
+                                </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -169,46 +182,128 @@
                 </div>
             </div>
             <div class="button-wrapper">
-                <div class="button">Apply</div>
+                <div @click="handleFilterChange" class="button">Apply</div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
 import BookFilterItem from './BookFilterItem.vue';
+import { useBooksStore } from '../../../../books/store';
+import { onMounted } from 'vue';
+const bookStore = useBooksStore();
+// onMounted(() => {
+
+//     bookStore.get_languages();
+// });
+// console.log('bookStore', bookStore);
+
+const languageList = [{
+    code: 'gj',
+    language: 'Gujarati'
+},
+{
+    code: 'en',
+    language: 'English'
+},
+{
+    code: 'ar',
+    language: 'Arabic'
+},
+]
+const languages = languageList.map(item => ({
+    label: item.language,
+    value: item.code
+}));
+const authors = ['Test Author', 'Aasif Sheikh', 'Mohammad Faris']
+const publications = ['Test Publication', 'Meher Library and Jafri Seminary', 'Aazaman Firang Wa Irtabatati Islami', 'Lion Publications']
+const publicationYears = ['2001', '2002', '2003', '2004', '2005',]
+const categories = ['Normal Book', 'E-Book', 'Tafsheer']
 </script>
 
 <script>
 export default {
+    props: {
+        setFilters: {
+            type: Function,
+            required: true
+        },
+    },
     data() {
         return {
-            array: [
-                {
-                    title: 'Book Title',
-                },
-                {
-                    title: 'Author',
-                },
-                {
-                    title: 'Language',
-                },
-                {
-                    title: 'Subject',
-                },
-                {
-                    title: 'Publication Year',
-                },
-                {
-                    title: 'Publisher',
-                }
-            ],
-            showSortPopup: false
+            title: '',
+            length: 18,
+            author: '',
+            category: '',
+            language: '',
+            publication: '',
+            publicationYear: '',
+            subject: '',
+            showSortPopup: false,
+            bookType: '',
+            filterApplied: false
         };
     },
     methods: {
+        checkfilterApplied() {
+            if (this.title == '' && this.author == '' && this.category == '' && this.language == '' && this.publication == '' && this.publicationYear == '' && this.subject == '' && this.bookType == '') {
+                this.filterApplied = false
+            } else {
+                this.filterApplied = true
+            }
+        },
         setShowSortPopup(value) {
             this.showSortPopup = value
+        },
+        handleFilterChange() {
+            if (this.setFilters) {
+                this.setFilters({ length: this.length, author: this.author, category: this.category })
+                this.setShowSortPopup(false)
+                this.checkfilterApplied()
+            }
+        },
+        setTitle(event) {
+            this.title = event.target.value
+        },
+        setSubject(event) {
+            this.subject = event.target.value
+        },
+        setLength(event) {
+            this.length = event.target.value
+        },
+        setAuthor(event) {
+            this.author = event.target.value
+        },
+        setCategory(event) {
+            this.category = event.target.value
+        },
+        setPublication(event) {
+            this.publication = event.target.value
+        },
+        setPublicationYear(event) {
+            this.publicationYear = event.target.value
+        },
+        setLanguage(event) {
+            this.language = event.target.value
+        },
+        setBookType() {
+            this.bookType = value
+        },
+
+        clearFilters() {
+            this.title = ""
+            this.subject = ""
+            this.author = ""
+            this.category = ""
+            this.publication = ""
+            this.publicationYear = ""
+            this.language = ""
+            this.bookType = ""
+            this.handleFilterChange({ length: 18, author: '', category: '' })
+            this.setShowSortPopup(false)
+            this.filterApplied = false
         }
+
     },
     computed: {
         middleIndex() {

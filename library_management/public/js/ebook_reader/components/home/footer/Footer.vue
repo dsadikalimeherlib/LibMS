@@ -26,14 +26,39 @@
       <div class="copy">Copyright © 2020 - 2024 Meher Library & Jafari Seminary. All rights reserved.</div>
     </div>
     <div class="right">
-      <button>Terms and Conditions</button>
+      <button @click="handleClick('terms-condition')">Terms and Conditions</button>
     </div>
   </div>
 
 
 </template>
+<script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../../books/store';
+const companyDetailStore = useBooksStore();
 
-
+onMounted(() => {
+  companyDetailStore.get_company_detail();
+});
+</script>
+<script>
+export default {
+  props: {
+    onLinkClick: {
+      type: Function,
+      required: true
+    }
+  },
+  methods: {
+    handleClick(pageName) {
+      // Call the function passed via prop
+      if (this.onLinkClick) {
+        this.onLinkClick(pageName);
+      }
+    }
+  }
+};
+</script>
 
 <style scoped>
 @import "./style.css";

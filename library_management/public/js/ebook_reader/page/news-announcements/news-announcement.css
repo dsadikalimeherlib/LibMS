@@ -1,0 +1,99 @@
+.news-announcement-page {
+    padding-top: 50px;
+
+    .news-announcement-container {
+        max-width: 1160px;
+        margin: 0 auto;
+
+        h1 {
+            color: #33363F;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .feature-news-section {
+            border-radius: 10px 10px 0px 0px;
+            background: #DAEFFF;
+            padding: 20px;
+            gap: 10px;
+            display: flex;
+            flex-direction: column;
+
+            .feature-news-title {
+                color: #1476BD;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+
+            .feature-news-description {
+                color: #1476BD;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .feature-news-date {
+                color: #1476BD;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+        }
+
+        .news-list {
+            display: flex;
+            padding: 30px 20px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: #fff;
+            border-radius: 0 0 10px 10px;
+
+            .news-item {
+                width: calc(25% - 15px);
+                border-right: 1px solid #EAEAEA;
+                padding-right: 20px;
+
+                &:nth-child(4n),
+                &:last-child {
+                    border-right: 0;
+                }
+
+                .news-title {
+                    color: #33363F;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+
+                .news-description {
+                    color: #33363F;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 160%;
+                    /* 22.4px */
+                }
+
+                .news-date {
+                    color: #4B556A;
+                    font-size: 11px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+            }
+
+        }
+    }
+}

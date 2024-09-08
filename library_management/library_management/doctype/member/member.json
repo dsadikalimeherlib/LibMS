@@ -14,6 +14,7 @@
   "member_name",
   "middle_name",
   "last_name",
+  "status_check",
   "column_break_s66x",
   "member_type",
   "birth_date",
@@ -225,6 +226,11 @@
    "label": "Member Type",
    "options": "Member Type",
    "reqd": 1
+  },
+  {
+   "fieldname": "status_check",
+   "fieldtype": "Button",
+   "label": "status_check"
   }
  ],
  "image_field": "image",
@@ -238,9 +244,13 @@
   {
    "link_doctype": "Customer",
    "link_fieldname": "customer_name"
+  },
+  {
+   "link_doctype": "Book Ledger",
+   "link_fieldname": "member"
   }
  ],
- "modified": "2024-08-13 11:52:39.703793",
+ "modified": "2024-08-29 15:37:51.905923",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Member",

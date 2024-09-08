@@ -39,7 +39,17 @@
         </div>
     </div>
 </template>
+<script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../books/store';
+const bookCategoryStore = useBooksStore();
+onMounted(() => {
+    bookCategoryStore.search('test');
+
+});
+</script>
 <script>
+
 export default {
     methods: {
         handleClick(pageName) {

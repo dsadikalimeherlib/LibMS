@@ -40,25 +40,6 @@ export const useBooksStore = defineStore('books', {
             });
         },
 
-        get_media({ length = null }) {
-            frappe.call({
-                method: "library_management.api.api.get_books",
-                args: {},
-                callback: (r) => {
-                    if (r.message.length > 0) {
-                        if (length !== null) {
-                            this.media = r.message.slice(0, length);
-                        } else {
-                            this.media = r.message;
-                        }
-
-
-                    } else {
-                        this.media = [];
-                    }
-                }
-            });
-        },
 
         get_book_categories({ length = null }) {
             frappe.call({
@@ -188,6 +169,170 @@ export const useBooksStore = defineStore('books', {
                     }
                 }
             });
+        },
+
+        search(search) {
+
+            frappe.call({
+                method: "library_management.api.api.search",
+                args: {
+                    keyword: search,
+                },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.books = r.message;
+                    } else {
+                        this.books = [];
+                    }
+                }
+            });
+        },
+        get_banners() {
+            frappe.call({
+                method: "library_management.api.api.get_banners",
+
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.banners = r.message;
+                    } else {
+                        this.banners = [];
+                    }
+                }
+            });
+        },
+        get_book_list({ length = 18, author = '', category = '' }) {
+            frappe.call({
+                method: "library_management.api.api.get_book_list",
+                args: {
+                    size: length,
+                    category: category,
+                    author: author,
+
+                    //==not working
+                    // pageOffset: 1,
+                    // sort: 'desc',
+
+                    // bookTitle: 'Takfeeri Anasir ki Fitna Angeziyan - Urdu',
+                    // publication: 'Test Publication'
+                    // publicationYear: '2010',
+
+                },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.books = r.message;
+                    } else {
+                        this.books = [];
+                    }
+                }
+            });
+        },
+        get_mulitmedia_category({ length = null }) {
+            frappe.call({
+                method: "library_management.api.api.get_multimedia_categories",
+                args: {},
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        if (length !== null) {
+                            this.media_categories = r.message.slice(0, length);
+                        } else {
+                            this.media_categories = r.message;
+                        }
+                    } else {
+                        this.media_categories = [];
+                    }
+                }
+            });
+        },
+        get_media({ length = null, category = null }) {
+            frappe.call({
+                method: "library_management.api.api.get_multimedia_list",
+                args: { size: length, category: category },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.medias = r.message;
+                    } else {
+                        this.medias = [];
+                    }
+                }
+            });
+        },
+
+        get_company_detail() {
+            frappe.call({
+                method: "library_management.api.api.get_company_contact_details",
+                args: { size: length },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.company_detail = r.message;
+                    } else {
+                        this.company_detail = [];
+                    }
+                }
+            });
+        },
+        get_book_detail({ id }) {
+
+            frappe.call({
+                method: "library_management.api.api.get_book_detail",
+                args: {
+                    book_id: id,
+
+
+                },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.book = r.message;
+                    } else {
+                        this.book = [];
+                    }
+                }
+            });
+        },
+
+        // get_languages() {
+        //     frappe.call({
+        //         method: "library_management.api.api.get_languages",
+        //         args: { size: length },
+        //         callback: (r) => {
+        //             if (r.message.length > 0) {
+        //                 this.company_detail = r.message;
+        //             } else {
+        //                 this.company_detail = [];
+        //             }
+        //         }
+        //     });
+        // }
+
+        get_terms_and_conditions() {
+            frappe.call({
+                method: "library_management.api.api.get_terms_and_conditions",
+                callback: (r) => {
+
+
+                    this.terms_condition = r.message;
+
+                }
+            });
+        },
+
+        get_holidays({ from_date = '', to_date = '' }) {
+            frappe.call({
+                method: "library_management.api.api.get_holidays",
+                args: { from_date: from_date, to_date: to_date },
+                callback: (r) => {
+                    if (r.message.length > 0) {
+                        this.holidays = r.message;
+                    } else {
+                        this.holidays = [];
+                    }
+                }
+
+            });
         }
+
+
+
+
+
     }
 })

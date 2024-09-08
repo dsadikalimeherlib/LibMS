@@ -110,6 +110,7 @@ section {
 
 body {
     line-height: 1;
+    overflow: visible !important;
 }
 
 ol,

@@ -9,6 +9,7 @@ class LibraryService(Document):
         self.create_from_library_service()
         
     def create_from_library_service(self):
+        uom = frappe.get_value('Library Setting', 'library_service_uom','library_service_uom')
         if self.is_new():                
             item_doc = frappe.get_doc({
                 'doctype': 'Item',
@@ -16,8 +17,10 @@ class LibraryService(Document):
                 'item_name': self.library_service,
                 'item_group': "Services",
                 'is_stock_item': 0,
-                'include_item_in_manufacturing': 0,
+                'stock_uom': uom,
+                'include_item_in_manufacturing': 0
             })
             item_doc.insert()
+            self.linked_item = item_doc.name
             self.item_name = item_doc.name
             frappe.msgprint("Item created successfully")

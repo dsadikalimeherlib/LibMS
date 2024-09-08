@@ -1,16 +1,16 @@
 <template>
-    <div @click="handleClick('book-detail')" class="bookItem">
+    <div @click="handleClick(`book-detail&id=${book.id}`)" class="bookItem">
         <div class="image-wrapper"><v-img :src="book.image ? book.image
             : 'https://placehold.co/150?text=Item'">
             </v-img></div>
         <div class="book-detail">
-            <div class="title">{{ book.book_title }}</div>
+            <div class="title">{{ book.title }}</div>
             <div class="meta-wrapper">
                 <div class="meta"><span class="label">Author:</span> {{ book.author
                     }}</div>
-                <div class="meta"><span class="label">Language:</span> Gujarati</div>
+                <div class="meta"><span class="label">Language:</span> {{ book.language }}</div>
                 <div class="meta"><span class="label">Sect:</span> Shia</div>
-                <div class="meta"><span class="label">Book type:</span> E-book</div>
+                <div class="meta"><span class="label">Category:</span> {{ book.category }}</div>
                 <div class="meta"><span class="label">Availability:</span> <span class="avail-value">Yes</span></div>
             </div>
         </div>

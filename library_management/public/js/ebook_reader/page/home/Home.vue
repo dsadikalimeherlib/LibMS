@@ -6,11 +6,11 @@
       <BannerSlider />
       <BookCategories :onLinkClick="onLinkClick" />
       <NewBooks :onLinkClick="onLinkClick" />
-      <MediaCategories />
-      <NewMedia />
-      <NewsAnnouncements />
+      <MediaCategories :onLinkClick="onLinkClick" />
+      <NewMedia :onLinkClick="onLinkClick" />
+      <NewsAnnouncements :onLinkClick="onLinkClick" />
     </div>
-    <Footer />
+    <Footer :onLinkClick="onLinkClick" />
     <!-- <v-app> -->
 
     <!-- <button @click="handleClick('about')">About</button>

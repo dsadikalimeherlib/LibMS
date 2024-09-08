@@ -8,21 +8,13 @@
  "engine": "InnoDB",
  "field_order": [
   "library_service",
-  "amount",
   "take_a_book_from_library",
   "razorpay_plan_id",
   "linked_item",
-  "days",
-  "complimentary_service"
+  "complimentary_service",
+  "library_service_plan_details"
  ],
  "fields": [
-  {
-   "fieldname": "amount",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Amount",
-   "reqd": 1
-  },
   {
    "fieldname": "razorpay_plan_id",
    "fieldtype": "Data",
@@ -36,11 +28,6 @@
    "label": "Linked Item",
    "options": "Item",
    "unique": 1
-  },
-  {
-   "fieldname": "days",
-   "fieldtype": "Data",
-   "label": "Days"
   },
   {
    "fieldname": "library_service",
@@ -62,10 +49,16 @@
    "fieldname": "take_a_book_from_library",
    "fieldtype": "Check",
    "label": "Take a book from Library"
+  },
+  {
+   "fieldname": "library_service_plan_details",
+   "fieldtype": "Table",
+   "label": "Library Service Plan Details",
+   "options": "Library Service Plan Details"
   }
  ],
  "links": [],
- "modified": "2024-06-26 10:32:11.531627",
+ "modified": "2024-08-23 16:34:00.424927",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Library Service",

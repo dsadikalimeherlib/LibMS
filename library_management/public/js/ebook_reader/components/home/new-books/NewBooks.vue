@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="book-list-wrapper">
-        <template v-for="item in bookstore.books" :key="item.book_title">
+        <template v-for="item in bookstore.books" :key="item.id">
           <Book :onLinkClick="onLinkClick" :book="item" />
         </template>
 
@@ -25,34 +25,10 @@
 import { onMounted } from 'vue';
 import { useBooksStore } from '../../../../books/store';
 import Book from '../../books/Book.vue';
-// const bookstore = useBooksStore();
-const bookstore = {
-  books: [
-    {
-      book_title: 'Book1',
-      author: 'Author'
-    },
-    {
-      book_title: 'Book2',
-      author: 'Author'
-    },
-    {
-      book_title: 'Book3',
-      author: 'Author'
-    },
-    {
-      book_title: 'Book4',
-      author: 'Author'
-    },
-    {
-      book_title: 'Book5',
-      author: 'Author'
-    }
-  ]
-}
+const bookstore = useBooksStore();
 onMounted(() => {
 
-  // bookstore.get_books({ length: 5 });
+  bookstore.get_book_list({ length: 5 });
 });
 </script>
 

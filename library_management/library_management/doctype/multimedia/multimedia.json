@@ -23,20 +23,18 @@
   "edition",
   "publication",
   "duration",
-  "disabled",
   "column_break_81u21",
   "author",
   "translator",
   "editor",
   "voice_over",
-  "audio_url",
-  "video_url",
+  "disabled",
   "multimedia_details_section1",
   "description",
   "column_break_y5d8z",
-  "digital_file_type",
   "image",
-  "url",
+  "media_type",
+  "media_url",
   "location",
   "section_break_fkgl",
   "route",
@@ -134,13 +132,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.is_digital_book == \"Yes\"",
-   "fieldname": "digital_file_type",
-   "fieldtype": "Select",
-   "label": "Digital File Type",
-   "options": "\nepub\npdf"
-  },
-  {
    "fieldname": "image",
    "fieldtype": "Attach Image",
    "in_preview": 1,
@@ -195,11 +186,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "url",
-   "fieldtype": "Data",
-   "label": "Url"
-  },
-  {
    "fieldname": "multimedia_details_section",
    "fieldtype": "Section Break",
    "label": "Multimedia Details"
@@ -220,14 +206,16 @@
    "label": "Duration"
   },
   {
-   "fieldname": "audio_url",
-   "fieldtype": "Data",
-   "label": "Audio URL"
+   "fieldname": "media_type",
+   "fieldtype": "Select",
+   "label": "Media Type",
+   "options": "\nAudio\nVideo",
+   "reqd": 1
   },
   {
-   "fieldname": "video_url",
+   "fieldname": "media_url",
    "fieldtype": "Data",
-   "label": "Video URL"
+   "label": "Media URL"
   }
  ],
  "has_web_view": 1,
@@ -244,7 +232,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2024-08-19 18:03:23.208228",
+ "modified": "2024-08-21 15:57:00.601501",
  "modified_by": "Administrator",
  "module": "Library Management",
  "name": "Multimedia",

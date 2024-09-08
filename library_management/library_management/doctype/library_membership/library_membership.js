@@ -12,10 +12,30 @@ frappe.ui.form.on('Library Membership', {
                 ]
             };
         });
+        frm.set_query("library_service_plan", "library_membership_details", function (doc, cdt, cdn) {
+            const child = locals[cdt][cdn];
+            return {
+                query: "library_management.library_management.doctype.library_membership.library_membership.get_service_plans",
+                filters: {
+                    'library_service': child.library_service
+                }
+            }
+        });
+    },
+    onload(frm) {
+        frm.set_query("library_service_plan", "library_membership_details", function (doc, cdt, cdn) {
+            const child = locals[cdt][cdn];
+            return {
+                query: "library_management.library_management.doctype.library_membership.library_membership.get_service_plans",
+                filters: {
+                    'library_service': child.library_service
+                }
+            }
+        });  
     },
     expired(frm) {
         frappe.call({
-            method: "auto_expire_memberships",
+            method: "library_management.library_management.doctype.library_membership.library_membership.auto_expire_memberships",
             args: {
                 member: frm.doc.member
             },
@@ -26,62 +46,35 @@ frappe.ui.form.on('Library Membership', {
     }
 });
 
-frappe.ui.form.on("Library Membership Details", {
-    plan: function(frm, cdt, cdn) {
-        // var from_date = frappe.datetime.get_today();
-        var child_doc = locals[cdt][cdn];
-        var plan = child_doc.plan;
-        if(plan == "Daily"){
-            frappe.msgprint(__('Daily.'));
-            var due = frappe.datetime.add_days(frm.doc.from_date, 1);
-            frappe.model.set_value(cdt, cdn, 'due_date', due);
-            frappe.model.set_value(cdt, cdn, 'days', 1);
-        }
-        else if(plan == "Weekly") {
-            frappe.msgprint(__('Weekly.'));
-            var due = frappe.datetime.add_days(frm.doc.from_date, 7);
-            frappe.model.set_value(cdt, cdn, 'due_date', due);
-            frappe.model.set_value(cdt, cdn, 'days', 7);
-        }
-        else if(plan == "Monthly") {
-            frappe.msgprint(__('Monthly.'));
-            var due = frappe.datetime.add_days(frm.doc.from_date, 30);
-            frappe.model.set_value(cdt, cdn, 'due_date', due);
-            frappe.model.set_value(cdt, cdn, 'days', 30);
-        }
-        else if(plan == "Quarterly"){
-            frappe.msgprint(__('Quarterly.'));
-            var due = frappe.datetime.add_days(frm.doc.from_date, 90);
-            frappe.model.set_value(cdt, cdn, 'due_date', due);
-            frappe.model.set_value(cdt, cdn, 'days', 90);
-        }
-        else if(plan == "Half yearly"){
-            frappe.msgprint(__('Half yearly.'));
-            var due = frappe.datetime.add_days(frm.doc.from_date, 180);
-            frappe.model.set_value(cdt, cdn, 'due_date', due);
-            frappe.model.set_value(cdt, cdn, 'days', 180);
-        }
-        else if(plan == "Yearly"){
-            frappe.msgprint(__('Yearly.'));
-            var due = frappe.datetime.add_days(frm.doc.from_date, 365);
-            frappe.model.set_value(cdt, cdn, 'due_date', due);
-            frappe.model.set_value(cdt, cdn, 'days', 365);
+frappe.ui.form.on('Library Membership Details', {
+    library_service_plan: function(frm, cdt, cdn) {
+        var child = locals[cdt][cdn];
+        if (child.library_service_plan && child.library_service) {
+            // Call the server-side method to get days and amount
+            frappe.call({
+                method: "library_management.library_management.doctype.library_membership.library_membership.get_service_plan_details",
+                args: {
+                    'library_service_plan': child.library_service_plan,
+                    'library_service': child.library_service
+                },
+                callback: function(r) {
+                    if (r.message) {
+                        // Set the fetched values to fields in the child table
+                        frappe.model.set_value(cdt, cdn, 'days', r.message.days);
+                        frappe.model.set_value(cdt, cdn, 'amount', r.message.amount);
+                        var due = frappe.datetime.add_days(frm.doc.from_date, r.message.days);
+                        frappe.model.set_value(cdt, cdn, 'due_date', due);
+                    } else {
+                        console.warn('No details found for the selected Library Service Plan and Library Service.');
+                    }
+                }
+            });
         }
     },
     from_date: function (frm, cdt, cdn) {
         var child_doc = locals[cdt][cdn];
         var day = child_doc.days;
-        console.log('Days:', day);
         var due = frappe.datetime.add_days(child_doc.from_date, day);
         frappe.model.set_value(cdt, cdn, 'due_date', due);
     }
 });
-
-// frappe.ui.form.on("Library Membership Details", {
-//     from_date: function (frm, cdt, cdn) {
-//         var child_doc = locals[cdt][cdn];
-//         var due = frappe.datetime.add_days(child_doc.from_date, 30);
-//         frappe.model.set_value(cdt, cdn, 'due_date', due);
-//     }
-// });
-
