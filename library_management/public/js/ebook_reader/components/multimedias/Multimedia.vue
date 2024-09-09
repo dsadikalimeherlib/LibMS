@@ -12,7 +12,7 @@
                         fill="white" />
                 </svg>
             </div>
-            <!-- <div class="duration">{{ media.duration }}</div> -->
+            <div v-if="media.duration !== null" class="duration">{{ media.duration }}</div>
         </div>
         <div class="book-detail">
             <div class="title">{{ media.title }}</div>

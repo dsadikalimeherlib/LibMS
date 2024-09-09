@@ -8,9 +8,9 @@
                 <path d="M16.9531 17.5L12.4955 12.8846" stroke="#818098" stroke-width="2.31353" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-            <input v-model="message" @click="setShowSearchSuggestions(true)"
+            <input v-model="message" @input="debouncedSearch"
                 placeholder="Looking for specific book? Enter Book Title here.." />
-            <div v-if="message !== ''" @click="clearSearchInput()" class="close-btn">
+            <div v-if="message !== ''" @click="clearSearchInput" class="close-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M18 6L6 18" stroke="#222222" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M6 6L18 18" stroke="#222222" stroke-linecap="round" stroke-linejoin="round" />
@@ -19,38 +19,75 @@
         </div>
         <div v-if="showSearchSuggestions" class="search-dropdown">
             <ul class="tab-wrapper">
-                <li class="active">All<span>14</span></li>
-                <li>Books<span>8</span></li>
-                <li>Magazines<span>8</span></li>
-                <li>E-books<span>8</span></li>
-                <li>Video<span>8</span></li>
-                <li>Audio<span>8</span></li>
+                <ul class="tab-wrapper">
+                    <li @click="filterResults('', searchStore.results)" :class="selectedFilter == '' ? 'active' : ''">
+                        All<span>{{
+                            searchStore.totalResults }}</span></li>
+                    <template v-for="searchFitler in searchFitlers" :key="searchFitler">
+                        <li @click="filterResults(searchFitler, searchStore.results)"
+                            :class="selectedFilter == searchFitler ? 'active' : ''">{{ searchFitler
+                            }}s<span>{{
+                                searchStore.categoryCounts[searchFitler] || 0 }}</span></li>
+                    </template>
+                </ul>
             </ul>
             <ul class="results">
-                <li>
-                    <div class="result-title">The Keys of understanding <span>qur</span>an</div>
-                    <div class="category">Book</div>
-                </li>
-                <li>
-                    <div class="result-title">The Keys of understanding quran</div>
-                    <div class="category">Book</div>
-                </li>
+
+                <template v-for="result in showFilteredData ? filteredData : searchStore.results" :key="result.id">
+                    <li
+                        @click="handleClick(`${result.type == 'Video' || result.type == 'Audio' ? `media-detail&id=${result.id}` : `book-detail&id=${result.id}`}`); clearSearchInput()">
+                        <div class="result-title">{{ result.name }}</div>
+                        <div class="category">{{ result.category }}</div>
+                    </li>
+                </template>
             </ul>
         </div>
     </div>
 </template>
 <script setup>
-import { onMounted } from 'vue';
+import { debounce } from "lodash";
+import { onMounted, ref } from 'vue';
 import { useBooksStore } from '../../../books/store';
-const bookCategoryStore = useBooksStore();
+const searchStore = useBooksStore();
+const message = ref('');
+const showSearchSuggestions = ref(false);
+const searchFitlers = ['Book', 'Magazine', 'E-Book', 'Video', 'Audio']
 onMounted(() => {
-    bookCategoryStore.search('Hajjaj ibn Yusuf ath-Thaqafi, Historical Stories For Children 1');
+    searchStore.search('Hajjaj ibn Yusuf ath-Thaqafi, Historical Stories For Children 1');
 
 });
+
+// Debounced search method
+const debouncedSearch = debounce(() => {
+    if (message.value.trim() === '') {
+        showSearchSuggestions.value = false;
+        return;
+    }
+    searchStore.search(message.value);
+    showSearchSuggestions.value = true;
+}, 300); // 300ms debounce delay
+
+// Lifecycle hook
+onMounted(() => {
+    searchStore.search('Hajjaj ibn Yusuf ath-Thaqafi, Historical Stories For Children 1');
+});
+
+// Method to clear search input
+const clearSearchInput = () => {
+    message.value = ""; // Clear the input value
+    showSearchSuggestions.value = false; // Hide the suggestions
+};
+
 </script>
 <script>
 
 export default {
+    props: {
+        onLinkClick: {
+            type: Function,
+            required: true
+        },
+    },
     methods: {
         handleClick(pageName) {
             // Call the function passed via prop
@@ -61,15 +98,33 @@ export default {
         setShowSearchSuggestions(value) {
             this.showSearchSuggestions = value
         },
-        clearSearchInput() {
-            this.message = ""
-            this.showSearchSuggestions = false
+        filterResults(key, data) {
+            let filteredData = []
+            if (key == '') {
+                this.showFilteredData = false
+            } else if (key == 'Video' || key == 'Audio') {
+                this.showFilteredData = true
+                filteredData = data.filter(item => item.type.toLowerCase() == key.toLowerCase());
+            } else {
+                this.showFilteredData = true
+                filteredData = data.filter(item => item.category.toLowerCase() == key.toLowerCase());
+            }
+
+            this.selectedFilter = key
+
+
+            this.filteredData = filteredData
+
+
         }
     },
     data() {
         return {
             showSearchSuggestions: false,
-            message: ''
+            message: '',
+            filteredData: [],
+            showFilteredData: false,
+            selectedFilter: ''
         };
     },
 }

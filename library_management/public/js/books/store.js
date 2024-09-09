@@ -179,10 +179,32 @@ export const useBooksStore = defineStore('books', {
                     keyword: search,
                 },
                 callback: (r) => {
+
                     if (r.message.length > 0) {
-                        this.books = r.message;
+                        this.results = r.message;
+                        let videoCount = 0;
+                        let audioCount = 0;
+                        let fil = r.message?.reduce((acc, item) => {
+                            if (item.type == 'Video') {
+                                videoCount = videoCount + 1
+                            }
+                            else if (item.type == 'Audio') {
+                                audioCount = audioCount + 1
+
+                            }
+                            else {
+                                // If the category is already present, increment its count, otherwise set it to 1
+                                acc[item.category] = (acc[item.category] || 0) + 1;
+                            }
+                            return { ...acc, Video: videoCount, Audio: audioCount };
+                        }, {});
+
+                        this.categoryCounts = fil
+                        // Total results count
+                        this.totalResults = r.message.length;
+
                     } else {
-                        this.books = [];
+                        this.results = [];
                     }
                 }
             });
@@ -340,7 +362,6 @@ export const useBooksStore = defineStore('books', {
 
             });
         }
-
 
 
 
