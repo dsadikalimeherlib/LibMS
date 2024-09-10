@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="book-list-wrapper">
-        <template v-for="item in mediastore.media" :key="item.title">
+        <template v-for="item in mediastore.medias" :key="item.title">
           <Multimedia :onLinkClick="onLinkClick" :media="item" />
         </template>
 

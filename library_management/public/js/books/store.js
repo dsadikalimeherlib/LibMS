@@ -179,10 +179,32 @@ export const useBooksStore = defineStore('books', {
                     keyword: search,
                 },
                 callback: (r) => {
+
                     if (r.message.length > 0) {
-                        this.books = r.message;
+                        this.results = r.message;
+                        let videoCount = 0;
+                        let audioCount = 0;
+                        let fil = r.message?.reduce((acc, item) => {
+                            if (item.type == 'Video') {
+                                videoCount = videoCount + 1
+                            }
+                            else if (item.type == 'Audio') {
+                                audioCount = audioCount + 1
+
+                            }
+                            else {
+                                // If the category is already present, increment its count, otherwise set it to 1
+                                acc[item.category] = (acc[item.category] || 0) + 1;
+                            }
+                            return { ...acc, Video: videoCount, Audio: audioCount };
+                        }, {});
+
+                        this.categoryCounts = fil
+                        // Total results count
+                        this.totalResults = r.message.length;
+
                     } else {
-                        this.books = [];
+                        this.results = [];
                     }
                 }
             });
@@ -200,28 +222,39 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_book_list({ length = 18, author = '', category = '' }) {
+        get_book_list({ book_title = '', length = 18, author = '', category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort, language, subject, publication }) {
             frappe.call({
                 method: "library_management.api.api.get_book_list",
                 args: {
+                    book_title,
+                    category,
+                    author,
                     size: length,
-                    category: category,
-                    author: author,
-
-                    //==not working
-                    // pageOffset: 1,
-                    // sort: 'desc',
-
-                    // bookTitle: 'Takfeeri Anasir ki Fitna Angeziyan - Urdu',
-                    // publication: 'Test Publication'
-                    // publicationYear: '2010',
+                    subject,
+                    publication_year,
+                    publication,
+                    language,
+                    page_offset,
+                    sort
 
                 },
                 callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.books = r.message;
+                    if (loadMore) {
+                        if (r.message.length < length) {
+                            hasMoreBooks.value = false; // No more books to load
+                        }
+                        if (r.message.length > 0) {
+                            this.books = [...this.books, ...r.message]; // Append new data to existing books
+                        }
+                        else {
+                            this.books = [];
+                        }
                     } else {
-                        this.books = [];
+                        if (r.message.length > 0) {
+                            this.books = r.message;
+                        } else {
+                            this.books = [];
+                        }
                     }
                 }
             });
@@ -243,15 +276,28 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_media({ length = null, category = null }) {
+        get_media({ length = null, category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort }) {
             frappe.call({
                 method: "library_management.api.api.get_multimedia_list",
-                args: { size: length, category: category },
+                args: { size: length, category, publication_year, page_offset },
+
                 callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.medias = r.message;
+                    if (loadMore) {
+                        if (r.message.length < length) {
+                            hasMoreBooks.value = false; // No more books to load
+                        }
+                        if (r.message.length > 0) {
+                            this.medias = [...this.medias, ...r.message]; // Append new data to existing medias
+                        }
+                        else {
+                            this.medias = [];
+                        }
                     } else {
-                        this.medias = [];
+                        if (r.message.length > 0) {
+                            this.medias = r.message;
+                        } else {
+                            this.medias = [];
+                        }
                     }
                 }
             });
@@ -329,7 +375,6 @@ export const useBooksStore = defineStore('books', {
 
             });
         }
-
 
 
 

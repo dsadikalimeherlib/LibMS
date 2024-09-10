@@ -1,5 +1,5 @@
 <template>
-    <div class="medias-wrapper">
+    <div class="medias-wrapper" @scroll="handleScroll">
         <div class="inner-container">
             <div class="page-header">
                 <h1>Multimedia</h1>
@@ -27,12 +27,12 @@
                         </div>
                     </div>
                     <MultimediaSort />
-                    <MultimediaFilter />
+                    <MultimediaFilter :setFilters="setFilters" />
                 </div>
             </div>
 
-            <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :medias="mediastore.medias" />
-            <MultimediaList :onLinkClick="onLinkClick" v-else :medias="mediastore.medias" />
+            <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :medias="store.medias" />
+            <MultimediaList :onLinkClick="onLinkClick" v-else :medias="store.medias" />
         </div>
     </div>
 </template>
@@ -42,16 +42,45 @@ import MultimediaList from '../../components/multimedias/MultimediaList.vue';
 import MultimediaSort from '../../components/multimedias/multimedia-sort/MultimediaSort.vue';
 import MultimediaFilter from '../../components/multimedias/multimedia-filter/MultimediaFilter.vue';
 import { useBooksStore } from '../../../books/store';
-import { onMounted } from 'vue';
-const mediastore = useBooksStore();
+import { onMounted, reactive, ref } from 'vue';
+const store = useBooksStore();
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const category = params.get('category');
+const pageOffset = ref(0);
+const length = 15
+const hasMoreBooks = ref(true);
+const filters = reactive({
+    length,
+    category: category !== null ? category : '',
+    publication_year: ''
+});
 onMounted(() => {
 
-    mediastore.get_media({ length: 18, category: category !== null ? category : '' });
+    store.get_media({ length, category: category !== null ? category : '' });
 });
+const setFilters = ({ category, publication_year }) => {
+    // Update the filter values
+    filters.category = category;
+    filters.page_offset = 0;  // Reset page offset on new filter
+    filters.publication_year = publication_year;
 
+    store.get_media({ length, category, publication_year });
+};
+const handleScroll = (event) => {
+    const element = event.target;
+    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+        loadMoreData();
+    }
+};
+
+const loadMoreData = () => {
+    if (hasMoreBooks.value) {
+        pageOffset.value += 1
+        // Logic to load more books
+        store.get_media({ length, author: filters.author, category: category !== null ? category : filters.category, page_offset: pageOffset.value, hasMoreBooks, loadMore: true, book_title: filters.book_title, subject: filters.subject, publication_year: filters.publication_year, publication: filters.publication, language: filters.language });
+    }
+};
 </script>
 <script>
 let showGridValue = localStorage.getItem('showGrid')

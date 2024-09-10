@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="left">
-            <Search />
+            <Search :onLinkClick="onLinkClick" />
         </div>
         <div class="right">
             <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
@@ -19,6 +19,16 @@
 <script setup>
 import UserIcon from '../../components/home/header-banner/UserIcon.vue';
 import Search from '../../components/search/Search.vue';
+</script>
+<script>
+export default {
+    props: {
+        onLinkClick: {
+            type: Function,
+            required: true
+        },
+    }
+}
 </script>
 <style scoped>
 @import "./style.css";

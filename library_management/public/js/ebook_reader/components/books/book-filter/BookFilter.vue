@@ -29,22 +29,21 @@
             </div>
             <div class="sort-filter-column-wrapper filter">
                 <div class="column">
-                    <div class="item">
+                    <!-- <div class="item">
                         <div class="label">Book title</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
+                            <select v-model="book_title" @change="setBookTitle">
+                                <option value="">Select Book title</option>
+                                <template v-for="book_title in book_titles" :key="book_title">
+                                    <option :value="book_title">{{ book_title }}</option>
+                                </template>
+</select>
+<svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
+    <path d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
+        stroke="#545353" stroke-width="2.31353" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+</div>
+</div> -->
                     <div class="item">
                         <div class="label">Author</div>
                         <div class="field">
@@ -87,6 +86,7 @@
                         <div class="label">Subject</div>
                         <div class="field">
                             <select v-model="subject" @change="setSubject">
+                                <option value="">Select Subject</option>
                                 <option>Tafseer</option>
                                 <option>Tafseer1</option>
                             </select>
@@ -122,10 +122,10 @@
                     <div class="item">
                         <div class="label">Publication Year</div>
                         <div class="field">
-                            <select v-model="publicationYear" @change="setPublicationYear">
+                            <select v-model="publication_year" @change="setpublication_year">
                                 <option value="">Select Publication Year</option>
-                                <template v-for="publicationYear in publicationYears" :key="publicationYear">
-                                    <option :value="publicationYear">{{ publicationYear }}</option>
+                                <template v-for="publication_year in publication_years" :key="publication_year">
+                                    <option :value="publication_year">{{ publication_year }}</option>
                                 </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
@@ -199,7 +199,7 @@ const bookStore = useBooksStore();
 // console.log('bookStore', bookStore);
 
 const languageList = [{
-    code: 'gj',
+    code: 'gu',
     language: 'Gujarati'
 },
 {
@@ -215,10 +215,12 @@ const languages = languageList.map(item => ({
     label: item.language,
     value: item.code
 }));
+// const book_titles = ['Book1', 'Book3', 'Book5', 'Book6', 'Breaking The Mould']
 const authors = ['Test Author', 'Aasif Sheikh', 'Mohammad Faris']
 const publications = ['Test Publication', 'Meher Library and Jafri Seminary', 'Aazaman Firang Wa Irtabatati Islami', 'Lion Publications']
-const publicationYears = ['2001', '2002', '2003', '2004', '2005',]
+const publication_years = ['2001', '2002', '2003', '2004', '2005',]
 const categories = ['Normal Book', 'E-Book', 'Tafsheer']
+
 </script>
 
 <script>
@@ -231,13 +233,12 @@ export default {
     },
     data() {
         return {
-            title: '',
-            length: 18,
+            book_title: '',
             author: '',
             category: '',
             language: '',
             publication: '',
-            publicationYear: '',
+            publication_year: '',
             subject: '',
             showSortPopup: false,
             bookType: '',
@@ -246,7 +247,7 @@ export default {
     },
     methods: {
         checkfilterApplied() {
-            if (this.title == '' && this.author == '' && this.category == '' && this.language == '' && this.publication == '' && this.publicationYear == '' && this.subject == '' && this.bookType == '') {
+            if (this.book_title == '' && this.author == '' && this.category == '' && this.language == '' && this.publication == '' && this.publication_year == '' && this.subject == '' && this.bookType == '') {
                 this.filterApplied = false
             } else {
                 this.filterApplied = true
@@ -255,21 +256,18 @@ export default {
         setShowSortPopup(value) {
             this.showSortPopup = value
         },
-        handleFilterChange() {
+        handleFilterChange({ author = null, category = null, publication_year = null, publication = null, book_title = null, language = null, subject = null }) {
             if (this.setFilters) {
-                this.setFilters({ length: this.length, author: this.author, category: this.category })
+                this.setFilters({ author: author !== null ? author : this.author, category: category !== null ? category : this.category, publication_year: publication_year !== null ? publication_year : this.publication_year, publication: publication !== null ? publication : this.publication, book_title: book_title !== null ? book_title : this.book_title, language: language !== null ? language : this.language, subject: subject !== null ? subject : this.subject })
                 this.setShowSortPopup(false)
                 this.checkfilterApplied()
             }
         },
-        setTitle(event) {
-            this.title = event.target.value
+        setBookTitle(event) {
+            this.book_title = event.target.value
         },
         setSubject(event) {
             this.subject = event.target.value
-        },
-        setLength(event) {
-            this.length = event.target.value
         },
         setAuthor(event) {
             this.author = event.target.value
@@ -280,8 +278,8 @@ export default {
         setPublication(event) {
             this.publication = event.target.value
         },
-        setPublicationYear(event) {
-            this.publicationYear = event.target.value
+        setpublication_year(event) {
+            this.publication_year = event.target.value
         },
         setLanguage(event) {
             this.language = event.target.value
@@ -291,15 +289,15 @@ export default {
         },
 
         clearFilters() {
-            this.title = ""
+            this.book_title = ""
             this.subject = ""
             this.author = ""
             this.category = ""
             this.publication = ""
-            this.publicationYear = ""
+            this.publication_year = ""
             this.language = ""
             this.bookType = ""
-            this.handleFilterChange({ length: 18, author: '', category: '' })
+            this.handleFilterChange({ author: "", category: "", publication_year: "", publication: "", book_title: "", language: "", subject: "" })
             this.setShowSortPopup(false)
             this.filterApplied = false
         }

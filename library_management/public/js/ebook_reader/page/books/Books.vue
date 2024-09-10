@@ -32,8 +32,8 @@
                 </div>
             </div>
 
-            <BooksGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="bookstore.books" />
-            <BooksList :onLinkClick="onLinkClick" v-else :books="bookstore.books" />
+            <BooksGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="store.books" />
+            <BooksList :onLinkClick="onLinkClick" v-else :books="store.books" />
         </div>
     </div>
 </template>
@@ -43,34 +43,59 @@ import BooksList from '../../components/books/BooksList.vue';
 import BookSort from '../../components/books/book-sort/BookSort.vue';
 import BookFilter from '../../components/books/book-filter/BookFilter.vue';
 
-import { onBeforeUnmount, onMounted } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useBooksStore } from '../../../books/store';
-const bookstore = useBooksStore();
+const store = useBooksStore();
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const category = params.get('category');
+const pageOffset = ref(0);
+const length = 18
+const hasMoreBooks = ref(true);
+// Reactive object to store filter state
+const filters = reactive({
+    length,
+    author: '',
+    category: category !== null ? category : '',
+    book_title: '',
+    subject: '',
+    page_offset: 0,
+    publication_year: '',
+    publication: ''
+});
 onMounted(() => {
-    // window.addEventListener('scroll', handleScroll); // Attach scroll listener
-    bookstore.get_book_list({ length: 18, author: '', category: category !== null ? category : '' });
+
+    store.get_book_list({ length, author: '', category: category !== null ? category : '' });
 });
-onBeforeUnmount(() => {
-    // window.removeEventListener('scroll', handleScroll); // Clean up the scroll listener
-});
-const setFilters = ({ length = 18, author = '', category = '' }) => {
-    bookstore.get_book_list({ length, author, category });
+
+const setFilters = ({ author, category, book_title, subject, publication_year, publication, language }) => {
+    // Update the filter values
+    filters.author = author;
+    filters.category = category;
+    filters.book_title = book_title;
+    filters.subject = subject;
+    filters.publication_year = publication_year
+    filters.page_offset = 0;  // Reset page offset on new filter
+    filters.publication = publication;
+    filters.language = language
+
+    store.get_book_list({ length, author, category, book_title, subject, publication_year, publication, language });
 };
+
+
 const handleScroll = (event) => {
     const element = event.target;
-    console.log(element.scrollHeight, element.scrollTop, element.clientHeight);
-
     if (element.scrollHeight - element.scrollTop === element.clientHeight) {
         loadMoreData();
     }
 };
 
 const loadMoreData = () => {
-    // Logic to load more books
-    bookstore.get_book_list({ length: bookstore.books.length + 6, author: '', category: category !== null ? category : '' });
+    if (hasMoreBooks.value) {
+        pageOffset.value += 1
+        // Logic to load more books
+        store.get_book_list({ length, author: filters.author, category: category !== null ? category : filters.category, page_offset: pageOffset.value, hasMoreBooks, loadMore: true, book_title: filters.book_title, subject: filters.subject, publication_year: filters.publication_year, publication: filters.publication, language: filters.language });
+    }
 };
 
 </script>

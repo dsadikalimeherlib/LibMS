@@ -42,6 +42,10 @@
                 font-weight: 700;
                 line-height: normal;
                 padding: 10px 15px;
+
+                &.image-column {
+                    text-align: left;
+                }
             }
 
             .sort-title {

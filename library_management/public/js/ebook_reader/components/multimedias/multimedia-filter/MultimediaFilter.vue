@@ -1,6 +1,6 @@
 <template>
     <div class="icons-wrapper sort">
-        <span class="selected-circle" />
+        <span v-if="filterApplied" class="selected-circle" />
         <div @click="setShowSortPopup(!showSortPopup)" class="title-icon-wrapper">
             Filters
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -19,7 +19,7 @@
             <div class="title-wrapper">
                 <div class="title">Filters</div>
                 <div class="right">
-                    <div class="clear">Clear All</div>
+                    <div class="clear" @click="clearFilters">Clear All</div>
                     <div @click="setShowSortPopup(false)" class="close-icon"><svg xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M18 6L6 18" stroke="#222222" stroke-linecap="round" stroke-linejoin="round" />
@@ -29,8 +29,8 @@
             </div>
             <div class="sort-filter-column-wrapper filter">
                 <div class="column">
-                    <div class="item">
-                        <div class="label">Book title</div>
+                    <!-- <div class="item">
+                        <div class="label">Title</div>
                         <div class="field">
                             <select>
                                 <option>Tafseer</option>
@@ -44,95 +44,16 @@
                                     stroke-linejoin="round" />
                             </svg>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="label">Author</div>
-                        <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="label">Language</div>
-                        <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="label">Subject</div>
-                        <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="item">
-                        <div class="label">Publication</div>
-                        <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="label">Publication Year</div>
-                        <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
+                    </div> -->
+
                     <div class="item">
                         <div class="label">Category</div>
                         <div class="field">
-                            <select>
-                                <option>Tafseer</option>
-                                <option>Tafseer1</option>
+                            <select v-model="category" @change="setCategory">
+                                <option value="">Select Category</option>
+                                <template v-for="category in store.media_categories" :key="category">
+                                    <option :value="category.category">{{ category.category }}</option>
+                                </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
                                 viewBox="0 0 12 7" fill="none">
@@ -143,69 +64,98 @@
                             </svg>
                         </div>
                     </div>
+
+                </div>
+                <div class="column">
+
                     <div class="item">
-                        <div class="label">Book Type</div>
-                        <div class="radio-fields">
-                            <label>
-                                <div class="radio-input-wrapper"><input name="book-type" checked type="radio" /><span
-                                        class="radio" />
-                                </div>
-                                <div class="radio-label">All</div>
-                            </label>
-                            <label>
-                                <div class="radio-input-wrapper"><input name="book-type" type="radio" /><span
-                                        class="radio" />
-                                </div>
-                                <div class="radio-label">Religious</div>
-                            </label>
-                            <label>
-                                <div class="radio-input-wrapper"><input name="book-type" type="radio" /><span
-                                        class="radio" />
-                                </div>
-                                <div class="radio-label">Academic</div>
-                            </label>
+                        <div class="label">Publication Year</div>
+                        <div class="field">
+                            <select v-model="publication_year" @change="setpublication_year">
+                                <option value="">Select Publication Year</option>
+                                <template v-for="publication_year in publication_years" :key="publication_year">
+                                    <option :value="publication_year">{{ publication_year }}</option>
+                                </template>
+                            </select>
+                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
+                                viewBox="0 0 12 7" fill="none">
+                                <path
+                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
+                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <div class="button-wrapper">
-                <div class="button">Apply</div>
+                <div @click="handleFilterChange" class="button">Apply</div>
             </div>
         </div>
     </div>
 </template>
 
+<script setup>
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../../books/store';
+const store = useBooksStore();
 
+onMounted(() => {
+    store.get_mulitmedia_category({ length: null });
+
+});
+// const titles = ['Book1', 'Book3', 'Book5', 'Book6', 'Breaking The Mould']
+const publication_years = ['2001', '2002', '2003', '2004', '2005',]
+
+</script>
 <script>
 export default {
+    props: {
+        setFilters: {
+            type: Function,
+            required: true
+        },
+    },
     data() {
         return {
-            array: [
-                {
-                    title: 'Book Title',
-                },
-                {
-                    title: 'Author',
-                },
-                {
-                    title: 'Language',
-                },
-                {
-                    title: 'Subject',
-                },
-                {
-                    title: 'Publication Year',
-                },
-                {
-                    title: 'Publisher',
-                }
-            ],
-            showSortPopup: false
+            showSortPopup: false,
+            category: '',
+            publication_year: '',
+            filterApplied: false
         };
     },
     methods: {
         setShowSortPopup(value) {
             this.showSortPopup = value
+        },
+        setCategory(event) {
+            this.category = event.target.value
+        },
+        setpublication_year(event) {
+            this.publication_year = event.target.value
+        },
+        handleFilterChange({ length = null, category = null, publication_year = null }) {
+            if (this.setFilters) {
+                this.setFilters({ length: length !== null ? length : this.length, category: category !== null ? category : this.category, publication_year: publication_year !== null ? publication_year : this.publication_year })
+                this.setShowSortPopup(false)
+                this.checkfilterApplied()
+            }
+        },
+        checkfilterApplied() {
+            if (this.category == '' && this.publication_year == '') {
+                this.filterApplied = false
+            } else {
+                this.filterApplied = true
+            }
+        },
+        clearFilters() {
+            this.category = ""
+            this.publication_year = ""
+            this.handleFilterChange({ length: "", category: "", publication_year: "" })
+            this.setShowSortPopup(false)
+            this.filterApplied = false
         }
     },
     computed: {

@@ -1,5 +1,7 @@
 .medias-wrapper {
-
+    height: calc(100vh - 107px);
+    overflow-y: auto;
+    overflow-x: hidden;
 
     .inner-container {
         padding: 20px;
@@ -169,9 +171,14 @@
 
                                 .field {
                                     position: relative;
-                                    padding: 10px 30px 10px 10px;
                                     background: #EEEEF1;
                                     border-radius: 5px;
+
+                                    select {
+                                        width: 100%;
+                                        padding: 10px 30px 10px 10px;
+                                        cursor: pointer;
+                                    }
 
                                     .dropdown-icon {
                                         position: absolute;

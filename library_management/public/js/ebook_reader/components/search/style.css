@@ -80,7 +80,8 @@
             padding-bottom: 20px;
             display: flex;
             flex-direction: column;
-
+            max-height: 400px;
+            overflow-y: auto;
 
             li {
                 display: flex;

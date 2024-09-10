@@ -2,7 +2,7 @@
     <div class="inner-layout">
         <Sidebar :onLinkClick="onLinkClick" />
         <div class="right-column">
-            <Header />
+            <Header :onLinkClick="onLinkClick" />
             <component :onLinkClick="onLinkClick" :is="customComponent" />
         </div>
     </div>

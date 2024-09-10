@@ -33,7 +33,7 @@
       </div>
       <div class="banner">
         <div class="title">Explore Books, Magazines, Journal and more...</div>
-        <Search />
+        <Search :onLinkClick="onLinkClick" />
       </div>
     </div>
     <Navigation :onLinkClick="onLinkClick" />
