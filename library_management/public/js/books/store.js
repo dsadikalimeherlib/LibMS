@@ -276,15 +276,28 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_media({ length = null, category = null }) {
+        get_media({ length = null, category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort }) {
             frappe.call({
                 method: "library_management.api.api.get_multimedia_list",
-                args: { size: length, category: category },
+                args: { size: length, category, publication_year, page_offset },
+
                 callback: (r) => {
-                    if (r.message.length > 0) {
-                        this.medias = r.message;
+                    if (loadMore) {
+                        if (r.message.length < length) {
+                            hasMoreBooks.value = false; // No more books to load
+                        }
+                        if (r.message.length > 0) {
+                            this.medias = [...this.medias, ...r.message]; // Append new data to existing medias
+                        }
+                        else {
+                            this.medias = [];
+                        }
                     } else {
-                        this.medias = [];
+                        if (r.message.length > 0) {
+                            this.medias = r.message;
+                        } else {
+                            this.medias = [];
+                        }
                     }
                 }
             });

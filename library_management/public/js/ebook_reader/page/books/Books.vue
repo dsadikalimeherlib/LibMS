@@ -32,8 +32,8 @@
                 </div>
             </div>
 
-            <BooksGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="bookstore.books" />
-            <BooksList :onLinkClick="onLinkClick" v-else :books="bookstore.books" />
+            <BooksGrid :onLinkClick="onLinkClick" v-if="showGrid" :books="store.books" />
+            <BooksList :onLinkClick="onLinkClick" v-else :books="store.books" />
         </div>
     </div>
 </template>
@@ -45,7 +45,7 @@ import BookFilter from '../../components/books/book-filter/BookFilter.vue';
 
 import { onMounted, reactive, ref } from 'vue';
 import { useBooksStore } from '../../../books/store';
-const bookstore = useBooksStore();
+const store = useBooksStore();
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const category = params.get('category');
@@ -65,12 +65,11 @@ const filters = reactive({
 });
 onMounted(() => {
 
-    bookstore.get_book_list({ length, author: '', category: category !== null ? category : '' });
+    store.get_book_list({ length, author: '', category: category !== null ? category : '' });
 });
 
-const setFilters = ({ length, author, category, book_title, subject, publication_year, publication, language }) => {
+const setFilters = ({ author, category, book_title, subject, publication_year, publication, language }) => {
     // Update the filter values
-    filters.length = length;
     filters.author = author;
     filters.category = category;
     filters.book_title = book_title;
@@ -80,7 +79,7 @@ const setFilters = ({ length, author, category, book_title, subject, publication
     filters.publication = publication;
     filters.language = language
 
-    bookstore.get_book_list({ length, author, category, book_title, subject, publication_year, publication, language });
+    store.get_book_list({ length, author, category, book_title, subject, publication_year, publication, language });
 };
 
 
@@ -95,7 +94,7 @@ const loadMoreData = () => {
     if (hasMoreBooks.value) {
         pageOffset.value += 1
         // Logic to load more books
-        bookstore.get_book_list({ length, author: filters.author, category: category !== null ? category : filters.category, page_offset: pageOffset.value, hasMoreBooks, loadMore: true, book_title: filters.book_title, subject: filters.subject, publication_year: filters.publication_year, publication: filters.publication, language: filters.language });
+        store.get_book_list({ length, author: filters.author, category: category !== null ? category : filters.category, page_offset: pageOffset.value, hasMoreBooks, loadMore: true, book_title: filters.book_title, subject: filters.subject, publication_year: filters.publication_year, publication: filters.publication, language: filters.language });
     }
 };
 

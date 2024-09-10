@@ -1,7 +1,7 @@
 <template>
     <div @click="handleClick('media-detail')" class="media-item">
         <div class="image-wrapper">
-            <v-img :src="media.image ? media.image
+            <v-img :src="media.image_url ? media.image_url
                 : '/files/default-media.png'">
             </v-img>
             <div class="player-icon">

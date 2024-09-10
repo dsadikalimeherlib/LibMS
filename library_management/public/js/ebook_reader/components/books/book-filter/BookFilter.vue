@@ -29,7 +29,7 @@
             </div>
             <div class="sort-filter-column-wrapper filter">
                 <div class="column">
-                    <div class="item">
+                    <!-- <div class="item">
                         <div class="label">Book title</div>
                         <div class="field">
                             <select v-model="book_title" @change="setBookTitle">
@@ -37,16 +37,13 @@
                                 <template v-for="book_title in book_titles" :key="book_title">
                                     <option :value="book_title">{{ book_title }}</option>
                                 </template>
-                            </select>
-                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
-                                viewBox="0 0 12 7" fill="none">
-                                <path
-                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
-                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
+</select>
+<svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
+    <path d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
+        stroke="#545353" stroke-width="2.31353" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+</div>
+</div> -->
                     <div class="item">
                         <div class="label">Author</div>
                         <div class="field">
@@ -218,7 +215,7 @@ const languages = languageList.map(item => ({
     label: item.language,
     value: item.code
 }));
-const book_titles = ['Book1', 'Book3', 'Book5', 'Book6', 'Breaking The Mould']
+// const book_titles = ['Book1', 'Book3', 'Book5', 'Book6', 'Breaking The Mould']
 const authors = ['Test Author', 'Aasif Sheikh', 'Mohammad Faris']
 const publications = ['Test Publication', 'Meher Library and Jafri Seminary', 'Aazaman Firang Wa Irtabatati Islami', 'Lion Publications']
 const publication_years = ['2001', '2002', '2003', '2004', '2005',]
@@ -237,7 +234,6 @@ export default {
     data() {
         return {
             book_title: '',
-            length: 18,
             author: '',
             category: '',
             language: '',
@@ -260,9 +256,9 @@ export default {
         setShowSortPopup(value) {
             this.showSortPopup = value
         },
-        handleFilterChange() {
+        handleFilterChange({ author = null, category = null, publication_year = null, publication = null, book_title = null, language = null, subject = null }) {
             if (this.setFilters) {
-                this.setFilters({ length: this.length, author: this.author, category: this.category, publication_year: this.publication_year, publication: this.publication, book_title: this.book_title, language: this.language, subject: this.subject })
+                this.setFilters({ author: author !== null ? author : this.author, category: category !== null ? category : this.category, publication_year: publication_year !== null ? publication_year : this.publication_year, publication: publication !== null ? publication : this.publication, book_title: book_title !== null ? book_title : this.book_title, language: language !== null ? language : this.language, subject: subject !== null ? subject : this.subject })
                 this.setShowSortPopup(false)
                 this.checkfilterApplied()
             }
@@ -272,9 +268,6 @@ export default {
         },
         setSubject(event) {
             this.subject = event.target.value
-        },
-        setLength(event) {
-            this.length = event.target.value
         },
         setAuthor(event) {
             this.author = event.target.value
@@ -304,7 +297,7 @@ export default {
             this.publication_year = ""
             this.language = ""
             this.bookType = ""
-            this.handleFilterChange({ length: 18, author: '', category: '' })
+            this.handleFilterChange({ author: "", category: "", publication_year: "", publication: "", book_title: "", language: "", subject: "" })
             this.setShowSortPopup(false)
             this.filterApplied = false
         }

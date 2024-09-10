@@ -3,7 +3,7 @@
         <table>
             <thead>
                 <tr class="t-header-row">
-                    <th>Image</th>
+                    <th class="image-column">Image</th>
                     <th>
                         <div class="sort-title">
                             Title<div class="sort-icon-wrapper">
@@ -111,7 +111,7 @@
                     <tr @click="handleClick('media-detail')">
                         <td>
                             <div class="image-wrapper">
-                                <img :src="item.image ? item.image
+                                <img :src="item.image_url ? item.image_url
                                     : '/files/default-media.png'" />
                                 <div class="player-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"

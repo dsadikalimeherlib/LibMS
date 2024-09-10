@@ -210,7 +210,7 @@ def get_multimedia_list(
     if size:
         multimedia_query = multimedia_query.limit(size)
     if page_offset:
-        multimedia_query = multimedia_query.offset(page_number)
+        multimedia_query = multimedia_query.offset(page_offset)
     if sort:
         if sort.lower() == "asc":
             multimedia_query = multimedia_query.orderby(order=Order.asc)
