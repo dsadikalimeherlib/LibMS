@@ -110,7 +110,7 @@
             <tbody>
                 <template v-for="item in books" :key="item.title">
                     <tr @click="handleClick('book-detail')">
-                        <td class="image-wrapper"><img :src="item.image ? item.image
+                        <td class="image-wrapper"><img :src="item.image_url ? item.image_url
                             : 'https://placehold.co/150?text=Item'" />
                         </td>
                         <td>

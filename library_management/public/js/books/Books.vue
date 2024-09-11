@@ -107,6 +107,9 @@ export default {
           else if (this.page.includes('multimedia&category=')) {
             this.currentComponent = Multimedias
           }
+          else if (this.page.includes('media-detail&id=')) {
+            this.currentComponent = MediaDetail
+          }
           else {
             this.currentComponent = Home
           }
@@ -159,6 +162,9 @@ export default {
           }
           else if (this.page.includes('multimedia&category=')) {
             return Multimedias
+          }
+          else if (this.page.includes('media-detail&id=')) {
+            return MediaDetail
           }
           else {
             return Home

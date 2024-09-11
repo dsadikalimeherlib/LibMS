@@ -2,10 +2,13 @@
 
     <div class="media-detail-wrapper">
         <div class="inner-container">
-            <div class="media-image-title-wrapper">
+            <div v-if="store.media_detail" class="media-image-title-wrapper">
+                {{
+                    console.log('media_detail', store.media_detail)
 
+                }}
                 <div class="image-wrapper">
-                    <v-img :src="media.image_url !== '' ? media.image_url
+                    <v-img :src="store.media_detail.image_url !== null ? store.media_detail.image_url
                         : '/files/default-media.png'">
                     </v-img>
                     <div class="player-icon">
@@ -18,15 +21,19 @@
                     </div>
                 </div>
                 <div class="title-wrapper">
-                    <h1>{{ media.title }}</h1>
+                    <h1>{{ store.media_detail.title }}</h1>
                 </div>
 
             </div>
-            <div class="media-detail-section">
+            <div v-if="store.media_detail" class="media-detail-section">
                 <div class="description-wrapper">
-                    <div class="description">{{ media.description }} </div>
+                    <div class="category-field">
+                        <div class="label">Category</div>
+                        <div class="value">{{ store.media_detail.category }}</div>
+                    </div>
+                    <div class="description" v-html="store.media_detail.description"></div>
                     <div class="button-wrapper">
-                        <div v-if="media.media_type == 'Video'" class="primary-button"
+                        <div v-if="store.media_detail.media_type == 'Video'" class="primary-button"
                             @click="handleClick('video-player')"><svg xmlns="http://www.w3.org/2000/svg" width="19"
                                 height="20" viewBox="0 0 19 20" fill="none">
                                 <path
@@ -53,7 +60,7 @@
                     </div>
                 </div>
 
-                <div v-if="media.media_type == 'Audio'" class="audio-player">
+                <div v-if="store.media_detail.media_type == 'Audio'" class="audio-player">
                     <audio ref="audio" @timeupdate="updateProgress" @ended="resetPlayer">
                         <source :src="audioSrc" type="audio/mpeg" />
                         Your browser does not support the audio element.
@@ -103,35 +110,16 @@
     </div>
 </template>
 <script setup>
-import BookField from '../../components/book-field/BookField.vue';
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../books/store';
+const store = useBooksStore();
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+const media_id = params.get('id');
+onMounted(() => {
 
-
-
-// import { onMounted } from 'vue';
-// import { useBooksStore } from '../../../../books/store';
-// const bookstore = useBooksStore();
-const mediastore = {
-    media:
-    // {
-
-    //     book_title: 'મુન્તખબ મીઝાનુલ હિકમા',
-    //     author: 'Author'
-    // }
-    {
-        id: "",
-        title: 'Media 1',
-        date: '19-Sep-2022 4:07 PM',
-        category: 'કરબલાના બહાદુરો',
-        duration: '00:20:00',
-        media_type: 'Video',
-        image_url: '',
-        media_url: '',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint  occaecat cupidatat non proident, sunt in culpa qui officia deserunt  mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo.'
-
-    }
-
-}
-const media = mediastore.media
+    store.get_mediaDetail({ media_id });
+});
 </script>
 <script>
 export default {

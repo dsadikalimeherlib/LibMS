@@ -246,6 +246,7 @@ def get_book_list(
             bk.language,
             bk.aws_key,
             bk.digital_file_type,
+            bk.image.as_("image_url"),
             bk.book_tag,
         )
         .where(
@@ -286,8 +287,8 @@ def get_book_list(
             book_query = book_query.orderby(order=Order.desc)
     
     books = book_query.run(as_dict=True)
-    for book in books:
-        book["image_url"] = get_book_image(book)
+    # for book in books:
+    #     book["image_url"] = get_book_image(book)
     return books
 
 
@@ -302,9 +303,10 @@ def get_book_detail(book_id):
             bk.book_code,
             bk.subject,
             bk.author,
-            bk,isbn,
+            # bk,isbn,
             bk.language,
             bk.translator,
+            bk.image.as_("image_url"),
             bk.aws_key,
             bk.book_tag,
             bk.volume,
@@ -324,11 +326,13 @@ def get_book_detail(book_id):
         )
     ).run(as_dict=True)
 
-    if len(book_details) > 0:
-        book = book[0]
-        book["image_url"] = get_book_image(book)
-        return book
+    # if len(book_details) > 0:
+    #     book = book[0]
+    #     book["image_url"] = get_book_image(book)
+    #     return book
 
+    if len(book_details) > 0:
+        return book_details[0]
     return {}
 
 

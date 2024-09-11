@@ -1,5 +1,5 @@
 <template>
-    <div @click="handleClick('media-detail')" class="media-item">
+    <div @click="handleClick(`media-detail&id=${media.id}`)" class="media-item">
         <div class="image-wrapper">
             <v-img :src="media.image_url ? media.image_url
                 : '/files/default-media.png'">

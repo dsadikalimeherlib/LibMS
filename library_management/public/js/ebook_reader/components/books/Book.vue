@@ -1,6 +1,6 @@
 <template>
     <div @click="handleClick(`book-detail&id=${book.id}`)" class="bookItem">
-        <div class="image-wrapper"><v-img :src="book.image ? book.image
+        <div class="image-wrapper"><v-img :src="book.image_url ? book.image_url
             : 'https://placehold.co/150?text=Item'">
             </v-img></div>
         <div class="book-detail">

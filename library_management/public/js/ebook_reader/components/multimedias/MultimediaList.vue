@@ -108,7 +108,7 @@
             </thead>
             <tbody>
                 <template v-for="item in medias" :key="item.title">
-                    <tr @click="handleClick('media-detail')">
+                    <tr @click="handleClick(`media-detail&id=${item.id}`)">
                         <td>
                             <div class="image-wrapper">
                                 <img :src="item.image_url ? item.image_url
