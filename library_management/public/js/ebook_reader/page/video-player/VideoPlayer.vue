@@ -1,28 +1,30 @@
 <template>
-    <div class="video-player-wrapper">
+    <div v-if="store.media_detail" class="video-player-wrapper">
+
         <div class="left-column">
             <div class="iframe-wrapper">
-                <Video :media="media" />
+                <Video :media="store.media_detail" />
             </div>
             <div class="video-detail">
-                <div class="title">{{ media.title }}</div>
+                <div class="title">{{ store.media_detail.title }}</div>
                 <div class="meta-wrapper">
-                    <div class="meta">
-                        <div class="label">Date:</div>
-                        <div class="value">{{ media.date }}</div>
+                    <div v-if="store.media_detail.year_of_publication !== null" class="meta">
+                        <div class="label">Year:</div>
+                        <div class="value">{{ store.media_detail.year_of_publication }}</div>
                     </div>
                     <div class="meta">
                         <div class="label">Category:</div>
-                        <div class="value">{{ media.category }}</div>
+                        <div class="value">{{ store.media_detail.category }}</div>
                     </div>
                 </div>
-                <div class="description">{{ media.description }}</div>
+                <div v-html="store.media_detail.description" class="description"></div>
             </div>
         </div>
         <div class="right-column">
             <div class="related-medias-section">
-                <template v-for="item in medias" :key="item.title">
-                    <MultimediaHorizonta :onLinkClick="onLinkClick" :media="item" />
+                <template v-for="item in store.medias" :key="item.title">
+                    <MultimediaHorizonta v-if="media_id !== item.id && item.media_type == 'Video'"
+                        :onLinkClick="onLinkClick" :media="item" />
                 </template>
 
 
@@ -38,9 +40,17 @@ import Video from '../../components/multimedias/Video.vue';
 
 
 
-// import { onMounted } from 'vue';
-// import { useBooksStore } from '../../../../books/store';
-// const bookstore = useBooksStore();
+import { onMounted } from 'vue';
+import { useBooksStore } from '../../../books/store';
+const store = useBooksStore();
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+const media_id = params.get('id');
+onMounted(() => {
+
+    store.get_mediaDetail({ media_id });
+});
+
 const mediastore = {
     media:
     // {

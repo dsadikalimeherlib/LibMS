@@ -1,7 +1,7 @@
 <template>
-    <div @click="handleClick('video-player')" class="media-item">
+    <div @click="handleClick(`video-player&id=${media.id}`, true)" class="media-item">
         <div class="image-wrapper">
-            <v-img :src="media.image ? media.image
+            <v-img :src="media.image_url ? media.image_url
                 : '/files/default-media.png'">
             </v-img>
             <div class="player-icon">
@@ -40,11 +40,11 @@ export default {
         }
     },
     methods: {
-        handleClick(pageName) {
+        handleClick(pageName, refresh) {
 
             // Call the function passed via prop
             if (this.onLinkClick) {
-                this.onLinkClick(pageName);
+                this.onLinkClick(pageName, refresh);
             }
         }
     }

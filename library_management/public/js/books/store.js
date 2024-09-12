@@ -382,6 +382,7 @@ export const useBooksStore = defineStore('books', {
                 callback: (r) => {
                     if (r.message.id) {
                         this.media_detail = r.message;
+                        this.get_media({ length: 10, category: r.message.category })
                     } else {
                         this.media_detail = [];
                     }

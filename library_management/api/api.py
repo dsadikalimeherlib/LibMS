@@ -346,6 +346,7 @@ def get_multimedia_detail(media_id):
             mm.media_type,
             mm.media_url,
             mm.author,
+            mm.duration,
             mm.description,
             mm.image.as_("image_url"),
             mm.year_of_publication,

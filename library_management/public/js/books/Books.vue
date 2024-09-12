@@ -48,14 +48,19 @@ export default {
     };
   },
   methods: {
-    setCurrentComponent(pageName) {
+    setCurrentComponent(pageName, refresh = false) {
       this.page = pageName
-      let url = `/app/books`
+      let newUrl = `/app/books`
       if (pageName !== 'home') {
-        url = `/app/books?page=${pageName}`
+        newUrl = `/app/books?page=${pageName}`
       }
-      window.history.pushState('', '', url);
+      console.log('refresh', refresh);
 
+      if (refresh) {
+        window.location.href = newUrl
+      } else {
+        window.history.pushState('', '', newUrl);
+      }
       switch (pageName) {
         case 'home':
           this.currentComponent = Home
@@ -109,6 +114,9 @@ export default {
           }
           else if (this.page.includes('media-detail&id=')) {
             this.currentComponent = MediaDetail
+          }
+          else if (this.page.includes('video-player&id=')) {
+            this.currentComponent = VideoPlayer
           }
           else {
             this.currentComponent = Home
@@ -165,6 +173,9 @@ export default {
           }
           else if (this.page.includes('media-detail&id=')) {
             return MediaDetail
+          }
+          else if (this.page.includes('video-player&id=')) {
+            return VideoPlayer
           }
           else {
             return Home
