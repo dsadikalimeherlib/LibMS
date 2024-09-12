@@ -379,7 +379,7 @@ def get_terms_and_conditions():
     ).run(as_dict=True)
 
     if len(terms_and_conditions) > 0:
-        return terms_and_conditions[0]
+        return terms_and_conditions
     return {}
 
 
