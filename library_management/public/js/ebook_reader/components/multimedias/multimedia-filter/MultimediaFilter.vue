@@ -65,6 +65,25 @@
                         </div>
                     </div>
 
+                    <div class="item">
+                        <div class="label">Multimedia Type</div>
+                        <div class="field">
+                            <select v-model="media_type" @change="setMedia_type">
+                                <option value="">Select Type</option>
+                                <template v-for="type in types" :key="type">
+                                    <option :value="type">{{ type }}</option>
+                                </template>
+                            </select>
+                            <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
+                                viewBox="0 0 12 7" fill="none">
+                                <path
+                                    d="M10 2L6.22154 4.93122C6.16061 4.97551 6.08174 5 6 5C5.91826 5 5.83939 4.97551 5.77846 4.93122L2 2"
+                                    stroke="#545353" stroke-width="2.31353" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="column">
 
@@ -108,7 +127,7 @@ onMounted(() => {
 });
 // const titles = ['Book1', 'Book3', 'Book5', 'Book6', 'Breaking The Mould']
 const publication_years = ['2001', '2002', '2003', '2004', '2005',]
-
+const types = ['Video', 'Audio']
 </script>
 <script>
 export default {
@@ -123,7 +142,8 @@ export default {
             showSortPopup: false,
             category: '',
             publication_year: '',
-            filterApplied: false
+            filterApplied: false,
+            media_type: ''
         };
     },
     methods: {
@@ -136,9 +156,12 @@ export default {
         setpublication_year(event) {
             this.publication_year = event.target.value
         },
-        handleFilterChange({ length = null, category = null, publication_year = null }) {
+        setMedia_type(event) {
+            this.media_type = event.target.value
+        },
+        handleFilterChange({ length = null, category = null, publication_year = null, media_type = null }) {
             if (this.setFilters) {
-                this.setFilters({ length: length !== null ? length : this.length, category: category !== null ? category : this.category, publication_year: publication_year !== null ? publication_year : this.publication_year })
+                this.setFilters({ length: length !== null ? length : this.length, category: category !== null ? category : this.category, publication_year: publication_year !== null ? publication_year : this.publication_year, media_type: media_type !== null ? media_type : this.media_type })
                 this.setShowSortPopup(false)
                 this.checkfilterApplied()
             }

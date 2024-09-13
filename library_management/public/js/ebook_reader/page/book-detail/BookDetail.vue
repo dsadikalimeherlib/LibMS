@@ -3,9 +3,7 @@
     <div class="book-detail-wrapper">
         <div v-if="store.book" class="inner-container">
             <div class="book-image-title-wrapper">
-                <div class="image-wrapper"><v-img :src="store.book.image_url ? store.book.image_url
-                    : 'https://placehold.co/150?text=Item'">
-                    </v-img></div>
+
                 <div class="title-wrapper">
                     <h1>{{ store.book.title }}</h1>
                     <!-- <div class="subtitle">અનુવાદક & પ્રકાશક: મેહેર લાઇબ્રેરી & જાફરી સેમિનરી</div> -->
@@ -13,6 +11,9 @@
 
             </div>
             <div class="book-detail-section">
+                <div class="image-wrapper"><v-img :src="store.book.image_url ? store.book.image_url
+                    : 'https://placehold.co/150?text=Item'">
+                    </v-img></div>
                 <div class="description-wrapper">
                     <div class="description" v-html="store.book.description"></div>
                     <div class="button-wrapper">

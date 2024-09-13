@@ -178,7 +178,8 @@ def get_multimedia_list(
     publication_year=None,
     size=None,
     page_offset=None,
-    sort=None
+    sort=None,
+    media_type=None
 ):
     mm = DocType("Multimedia")
     multimedia_query = (
@@ -205,6 +206,8 @@ def get_multimedia_list(
         multimedia_query = multimedia_query.where(mm.year_of_publication == publication_year)
     if category:
         multimedia_query = multimedia_query.where(mm.multimedia_category == category)
+    if media_type:
+        multimedia_query = multimedia_query.where(mm.media_type == media_type)
     if title:
         multimedia_query = multimedia_query.where(mm.multimedia_title.like("%" + title + "%"))
     if size:

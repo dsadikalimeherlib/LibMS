@@ -8,6 +8,18 @@
     gap: 30px;
     align-self: stretch;
 
+    &.Video {
+        .Audio {
+            display: none;
+        }
+    }
+
+    &.Audio {
+        .Video {
+            display: none;
+        }
+    }
+
     table {
         width: 100%;
 

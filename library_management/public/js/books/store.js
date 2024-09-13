@@ -276,12 +276,13 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_media({ length = null, category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort }) {
+        get_media({ length = null, category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort, media_type = "" }) {
             frappe.call({
                 method: "library_management.api.api.get_multimedia_list",
-                args: { size: length, category, publication_year, page_offset },
+                args: { size: length, category, publication_year, page_offset, media_type },
 
                 callback: (r) => {
+                    this.medias = [];
                     if (loadMore) {
                         if (r.message.length < length) {
                             hasMoreBooks.value = false; // No more books to load

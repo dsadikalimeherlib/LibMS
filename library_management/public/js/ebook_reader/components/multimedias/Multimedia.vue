@@ -1,5 +1,6 @@
 <template>
-    <div @click="handleClick(`media-detail&id=${media.id}`)" class="media-item">
+    <div v-if="media_type == '' || media_type == media.media_type" @click="handleClick(`media-detail&id=${media.id}`)"
+        :class="media.media_type" class="media-item">
         <div class="image-wrapper">
             <v-img :src="media.image_url ? media.image_url
                 : '/files/default-media.png'">
@@ -38,6 +39,10 @@ export default {
         },
         onLinkClick: {
             type: Function,
+            required: true
+        },
+        media_type: {
+            type: String,
             required: true
         }
     },
