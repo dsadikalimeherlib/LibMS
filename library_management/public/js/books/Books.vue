@@ -38,13 +38,16 @@ import Fees from '../ebook_reader/page/fees/Fees.vue'
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const pageValue = params.get('page');
+const theme = localStorage.getItem('whiteTheme')
+
+
 export default {
 
   data() {
     return {
       page: pageValue == null ? 'home' : pageValue,
       currentComponent: Home,
-      whiteTheme: true
+      whiteTheme: theme !== null ? JSON.parse(theme) : true
     };
   },
   methods: {
@@ -126,6 +129,7 @@ export default {
     },
     setWhiteTheme(flag) {
       this.whiteTheme = flag
+      localStorage.setItem('whiteTheme', flag)
     }
   },
   computed: {
