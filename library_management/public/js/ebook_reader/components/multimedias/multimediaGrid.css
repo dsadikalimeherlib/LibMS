@@ -3,6 +3,17 @@
     display: flex;
     flex-wrap: wrap;
 
+    &.Video {
+        .Audio {
+            display: none;
+        }
+    }
+
+    &.Audio {
+        .Video {
+            display: none;
+        }
+    }
 }
 
 .media-grid-section {

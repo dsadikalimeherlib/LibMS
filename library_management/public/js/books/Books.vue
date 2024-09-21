@@ -38,24 +38,32 @@ import Fees from '../ebook_reader/page/fees/Fees.vue'
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const pageValue = params.get('page');
+const theme = localStorage.getItem('whiteTheme')
+
+
 export default {
 
   data() {
     return {
       page: pageValue == null ? 'home' : pageValue,
       currentComponent: Home,
-      whiteTheme: true
+      whiteTheme: theme !== null ? JSON.parse(theme) : true
     };
   },
   methods: {
-    setCurrentComponent(pageName) {
+    setCurrentComponent(pageName, refresh = false) {
       this.page = pageName
-      let url = `/app/books`
+      let newUrl = `/app/books`
       if (pageName !== 'home') {
-        url = `/app/books?page=${pageName}`
+        newUrl = `/app/books?page=${pageName}`
       }
-      window.history.pushState('', '', url);
+      console.log('refresh', refresh);
 
+      if (refresh) {
+        window.location.href = newUrl
+      } else {
+        window.history.pushState('', '', newUrl);
+      }
       switch (pageName) {
         case 'home':
           this.currentComponent = Home
@@ -107,6 +115,12 @@ export default {
           else if (this.page.includes('multimedia&category=')) {
             this.currentComponent = Multimedias
           }
+          else if (this.page.includes('media-detail&id=')) {
+            this.currentComponent = MediaDetail
+          }
+          else if (this.page.includes('video-player&id=')) {
+            this.currentComponent = VideoPlayer
+          }
           else {
             this.currentComponent = Home
           }
@@ -115,6 +129,7 @@ export default {
     },
     setWhiteTheme(flag) {
       this.whiteTheme = flag
+      localStorage.setItem('whiteTheme', flag)
     }
   },
   computed: {
@@ -159,6 +174,12 @@ export default {
           }
           else if (this.page.includes('multimedia&category=')) {
             return Multimedias
+          }
+          else if (this.page.includes('media-detail&id=')) {
+            return MediaDetail
+          }
+          else if (this.page.includes('video-player&id=')) {
+            return VideoPlayer
           }
           else {
             return Home

@@ -3,7 +3,7 @@
         <!-- YouTube Player Container -->
         <div id="youtube-player"></div>
         <div v-if="showBanner" class="video-banner">
-            <v-img :src="media.image_url !== '' ? media.image_url
+            <v-img :src="media.image_url !== null ? media.image_url
                 : '/files/default-media.png'">
             </v-img>
             <div @click="togglePlay" class="player-icon">

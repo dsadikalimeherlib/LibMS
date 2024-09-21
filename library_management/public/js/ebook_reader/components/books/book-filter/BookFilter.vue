@@ -143,8 +143,8 @@
 
                             <select v-model="category" @change="setCategory">
                                 <option value="">Select Category</option>
-                                <template v-for="category in categories" :key="category">
-                                    <option :value="category">{{ category }}</option>
+                                <template v-for="category in store.book_categories" :key="category.category">
+                                    <option :value="category.category">{{ category.category }}</option>
                                 </template>
                             </select>
                             <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7"
@@ -191,12 +191,12 @@
 import BookFilterItem from './BookFilterItem.vue';
 import { useBooksStore } from '../../../../books/store';
 import { onMounted } from 'vue';
-const bookStore = useBooksStore();
-// onMounted(() => {
+const store = useBooksStore();
+onMounted(() => {
 
-//     bookStore.get_languages();
-// });
-// console.log('bookStore', bookStore);
+    store.get_book_categories({ length: null });
+});
+// console.log('store', store);
 
 const languageList = [{
     code: 'gu',

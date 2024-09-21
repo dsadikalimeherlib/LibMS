@@ -1,5 +1,5 @@
 <template>
-    <div class="media-table-wrapper">
+    <div class="media-table-wrapper" :class="media_type">
         <table>
             <thead>
                 <tr class="t-header-row">
@@ -108,7 +108,7 @@
             </thead>
             <tbody>
                 <template v-for="item in medias" :key="item.title">
-                    <tr @click="handleClick('media-detail')">
+                    <tr @click="handleClick(`media-detail&id=${item.id}`)" :class="item.media_type">
                         <td>
                             <div class="image-wrapper">
                                 <img :src="item.image_url ? item.image_url
@@ -150,6 +150,10 @@ export default {
             type: Function,
             required: true
         },
+        media_type: {
+            type: String,
+            required: true
+        }
     },
     methods: {
         handleClick(pageName) {

@@ -3,7 +3,7 @@
 
         <div class="container">
             <div class="title-wrapper">
-                <h1>{{ termsstore.terms_condition?.title }}</h1>
+                <h1>Terms and Condition</h1>
                 <!-- <div class="dropdown-wrapper">
                     <select>
                         <option>English</option>
@@ -17,36 +17,31 @@
                 </div> -->
             </div>
 
-            <div class="accordion-content" v-html="termsstore.terms_condition?.description">
 
-            </div>
 
-            <!-- <div class="accordion">
-                <!- - Iterate over the accordion items -- >
+            <div class="accordion">
+                <!-- Iterate over the accordion items -->
+                <div v-for="(item, index) in termsstore.terms_condition" :key="index" class="accordion-item">
+                    <!-- Accordion Header -->
+                    <div class="accordion-header" @click="toggle(index)">
+                        {{ item.title }}
+                        <svg v-if="activeIndex === index" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
+                            viewBox="0 0 19 19" fill="none">
+                            <circle cx="9.5" cy="9.5" r="9.5" fill="#EEEEF1" />
+                            <path d="M15 9L4 9" stroke="#33363F" />
+                        </svg>
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19"
+                            fill="none">
+                            <circle cx="9.5" cy="9.5" r="9.5" fill="#EEEEF1" />
+                            <path d="M15 9L4 9" stroke="#33363F" />
+                            <line x1="9.5" y1="4" x2="9.5" y2="15" stroke="#33363F" />
+                        </svg>
+                    </div>
 
-            <div v-for="(item, index) in items" :key="index" class="accordion-item">
-                <! -- Accordion Header -- >
-                <div class="accordion-header" @click="toggle(index)">
-                    {{ item.title }}
-                    <svg v-if="activeIndex === index" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
-                        viewBox="0 0 19 19" fill="none">
-                        <circle cx="9.5" cy="9.5" r="9.5" fill="#EEEEF1" />
-                        <path d="M15 9L4 9" stroke="#33363F" />
-                    </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19"
-                        fill="none">
-                        <circle cx="9.5" cy="9.5" r="9.5" fill="#EEEEF1" />
-                        <path d="M15 9L4 9" stroke="#33363F" />
-                        <line x1="9.5" y1="4" x2="9.5" y2="15" stroke="#33363F" />
-                    </svg>
-                </div>
-
-                <! -- Accordion Content -- >
-                <div class="accordion-content" v-show="activeIndex === index">
-                    {{ item.content }}
+                    <!-- Accordion Content -->
+                    <div class="accordion-content" v-html="item.description" v-show="activeIndex === index"> </div>
                 </div>
             </div>
-        </div> -->
         </div>
     </div>
 </template>
@@ -61,6 +56,20 @@ onMounted(() => {
 });
 
 
+</script>
+<script>
+export default {
+    data() {
+        return {
+            activeIndex: null
+        };
+    },
+    methods: {
+        toggle(index) {
+            this.activeIndex = this.activeIndex === index ? null : index;
+        }
+    }
+}
 </script>
 
 <style scoped>

@@ -80,6 +80,29 @@
             min-height: 230px;
         }
 
+        .category-field {
+            margin-bottom: 30px;
+            display: flex;
+            column-gap: 10px;
+
+            .label {
+                color: #545353;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+
+            .value {
+                color: #999;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                min-width: 155px;
+            }
+        }
+
         .description {
             color: #33363F;
             font-size: 14px;

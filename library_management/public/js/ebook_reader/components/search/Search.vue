@@ -35,7 +35,7 @@
 
                 <template v-for="result in showFilteredData ? filteredData : searchStore.results" :key="result.id">
                     <li
-                        @click="handleClick(`${result.type == 'Video' || result.type == 'Audio' ? `media-detail&id=${result.id}` : `book-detail&id=${result.id}`}`); clearSearchInput()">
+                        @click="handleClick(`${result.type == 'Video' || result.type == 'Audio' ? `media-detail&id=${result.id}` : `book-detail&id=${result.id}`}`, true); clearSearchInput()">
                         <div class="result-title">{{ result.name }}</div>
                         <div class="category">{{ result.category }}</div>
                     </li>
@@ -89,10 +89,10 @@ export default {
         },
     },
     methods: {
-        handleClick(pageName) {
+        handleClick(pageName, refresh) {
             // Call the function passed via prop
             if (this.onLinkClick) {
-                this.onLinkClick(pageName);
+                this.onLinkClick(pageName, refresh);
             }
         },
         setShowSearchSuggestions(value) {

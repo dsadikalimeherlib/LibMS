@@ -77,5 +77,16 @@
         .title {
             color: #fff;
         }
+
+        .icon-wrapper {
+            background: #202020 !important;
+            border-radius: 90px;
+        }
+    }
+
+    .bookItem {
+        .image-wrapper {
+            background: #202020 !important;
+        }
     }
 }

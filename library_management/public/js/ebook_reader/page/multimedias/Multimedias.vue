@@ -31,8 +31,11 @@
                 </div>
             </div>
 
-            <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :medias="store.medias" />
-            <MultimediaList :onLinkClick="onLinkClick" v-else :medias="store.medias" />
+
+
+            <MultimediaGrid :onLinkClick="onLinkClick" v-if="showGrid" :medias="store.medias"
+                :media_type="media_typeRef" />
+            <MultimediaList :onLinkClick="onLinkClick" v-else :medias="store.medias" :media_type="media_typeRef" />
         </div>
     </div>
 </template>
@@ -48,24 +51,28 @@ const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const category = params.get('category');
 const pageOffset = ref(0);
+const media_typeRef = ref('');
 const length = 15
 const hasMoreBooks = ref(true);
 const filters = reactive({
     length,
     category: category !== null ? category : '',
-    publication_year: ''
+    publication_year: '',
+    media_type: ''
 });
 onMounted(() => {
 
     store.get_media({ length, category: category !== null ? category : '' });
 });
-const setFilters = ({ category, publication_year }) => {
+const setFilters = ({ category, publication_year, media_type }) => {
     // Update the filter values
     filters.category = category;
     filters.page_offset = 0;  // Reset page offset on new filter
     filters.publication_year = publication_year;
+    filters.media_type = media_type
+    media_typeRef.value = media_type
 
-    store.get_media({ length, category, publication_year });
+    store.get_media({ length, category, publication_year, media_type });
 };
 const handleScroll = (event) => {
     const element = event.target;
@@ -78,7 +85,7 @@ const loadMoreData = () => {
     if (hasMoreBooks.value) {
         pageOffset.value += 1
         // Logic to load more books
-        store.get_media({ length, author: filters.author, category: category !== null ? category : filters.category, page_offset: pageOffset.value, hasMoreBooks, loadMore: true, book_title: filters.book_title, subject: filters.subject, publication_year: filters.publication_year, publication: filters.publication, language: filters.language });
+        store.get_media({ length, category: category !== null ? category : filters.category, page_offset: pageOffset.value, hasMoreBooks, loadMore: true, publication_year: filters.publication_year, publication: filters.publication, media_type: filters.media_type });
     }
 };
 </script>

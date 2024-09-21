@@ -1,8 +1,8 @@
 <template>
     <div class="media-grid-section">
-        <div class="media-list-wrapper">
+        <div class="media-list-wrapper" :class="media_type">
             <template v-for="item in medias" :key="item.title">
-                <Multimedia :onLinkClick="onLinkClick" :media="item" />
+                <Multimedia :onLinkClick="onLinkClick" :media="item" :media_type="media_type" />
             </template>
 
 
@@ -27,6 +27,10 @@ export default {
             type: Function,
             required: true
         },
+        media_type: {
+            type: String,
+            required: true
+        }
     },
     methods: {
         handleClick(pageName) {

@@ -276,12 +276,13 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_media({ length = null, category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort }) {
+        get_media({ length = null, category = '', page_offset = 0, hasMoreBooks, loadMore = false, publication_year = '', sort, media_type = "" }) {
             frappe.call({
                 method: "library_management.api.api.get_multimedia_list",
-                args: { size: length, category, publication_year, page_offset },
+                args: { size: length, category, publication_year, page_offset, media_type },
 
                 callback: (r) => {
+                    this.medias = [];
                     if (loadMore) {
                         if (r.message.length < length) {
                             hasMoreBooks.value = false; // No more books to load
@@ -316,17 +317,17 @@ export const useBooksStore = defineStore('books', {
                 }
             });
         },
-        get_book_detail({ id }) {
+        get_book_detail({ book_id }) {
 
             frappe.call({
                 method: "library_management.api.api.get_book_detail",
                 args: {
-                    book_id: id,
+                    book_id,
 
 
                 },
                 callback: (r) => {
-                    if (r.message.length > 0) {
+                    if (r.message.id) {
                         this.book = r.message;
                     } else {
                         this.book = [];
@@ -374,7 +375,22 @@ export const useBooksStore = defineStore('books', {
                 }
 
             });
-        }
+        },
+        get_mediaDetail({ media_id = '' }) {
+            frappe.call({
+                method: "library_management.api.api.get_multimedia_detail",
+                args: { media_id },
+                callback: (r) => {
+                    if (r.message.id) {
+                        this.media_detail = r.message;
+                        this.get_media({ length: 10, category: r.message.category })
+                    } else {
+                        this.media_detail = [];
+                    }
+                }
+
+            });
+        },
 
 
 
